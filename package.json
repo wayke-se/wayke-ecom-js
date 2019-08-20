@@ -18,12 +18,20 @@
     "type-check": "tsc --noEmit --skipLibCheck",
     "version": "npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wayke/wayke-ecom-js.git"
+  },
   "keywords": [
     "wayke",
     "ecom"
   ],
   "author": "Björn Vikström",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wayke/wayke-ecom-js/issues"
+  },
+  "homepage": "https://github.com/wayke/wayke-ecom-js#readme",
   "devDependencies": {
     "@pika/pack": "^0.5.0",
     "@pika/plugin-build-node": "^0.6.0",
