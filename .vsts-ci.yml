@@ -1,0 +1,39 @@
+steps:
+- task: Npm@1
+  displayName: 'npm ci'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'ci'
+
+- task: Npm@1
+  condition: succeeded()
+  displayName: 'npm lint'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run lint'
+
+- task: Npm@1
+  condition: succeeded()
+  displayName: 'npm type-check'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run type-check'
+
+- task: Npm@1
+  condition: succeeded()
+  displayName: 'npm build'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run build:tsc'
+
+- task: Npm@1
+  condition: succeeded()
+  displayName: 'npm test'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'test'

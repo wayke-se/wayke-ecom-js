@@ -1,0 +1,33 @@
+import { IAddress, ICustomer } from "./types";
+
+export class CustomerBuilder {
+    private properties: { [key: string]: any } = {};
+    public withAddress(address: IAddress): CustomerBuilder {
+        this.properties.address = address;
+        this.properties.name = address.name;
+
+        return this;
+    }
+
+    public withPersonalNumber(personalNumber: string): CustomerBuilder {
+        this.properties.personalNumber = personalNumber;
+
+        return this;
+    }
+
+    public withEmail(email: string): CustomerBuilder {
+        this.properties.email = email;
+
+        return this;
+    }
+
+    public withPhoneNumber(phoneNumber: string): CustomerBuilder {
+        this.properties.phoneNumber = phoneNumber;
+
+        return this;
+    }
+
+    public build(): ICustomer {
+        return this.properties as ICustomer;
+    }
+}

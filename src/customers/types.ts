@@ -1,0 +1,27 @@
+export interface IAddressLookupRequest {
+    personalNumber: string;
+}
+
+export interface IAddressLookupResponseData extends IAddress {
+    personalNumber: string;
+}
+
+export interface IAddressLookupResponse {
+    getAddress(): IAddress;
+}
+
+export interface IAddress {
+    city: string;
+    name: string;
+    postalCode: string;
+    street: string;
+    street2: string;
+}
+
+export interface ICustomer {
+    name: string;
+    personalNumber: string;
+    email: string;
+    phoneNumber: string;
+    address: IAddress;
+}
