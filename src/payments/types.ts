@@ -47,4 +47,6 @@ export interface IPaymentLookupResponseData {
     residual: IPaymentRangeSpec;
     duration: IPaymentRangeSpec;
     downPayment: IPaymentRangeSpec;
+    link?: string;
+    totalResidualValue: number;
 }
