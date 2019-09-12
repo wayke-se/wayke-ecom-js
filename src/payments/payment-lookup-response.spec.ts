@@ -85,4 +85,30 @@ describe("PaymentLookupResponse", () => {
             expect(actual).toEqual(expected);
         });
     });
+
+    describe(":getTotalResidualValue()", () => {
+        it("returns the specified response", () => {
+            const expected = 50000;
+            const response = fixture("IPaymentLookupResponse", {
+                totalResidualValue: expected,
+            });
+            const actual = new PaymentLookupResponse(
+                response
+            ).getTotalResidualValue();
+
+            expect(actual).toEqual(expected);
+        });
+    });
+
+    describe(":getPublicURL()", () => {
+        it("returns the specified response", () => {
+            const expected = "https://www.outbound.com";
+            const response = fixture("IPaymentLookupResponse", {
+                link: expected,
+            });
+            const actual = new PaymentLookupResponse(response).getPublicURL();
+
+            expect(actual).toEqual(expected);
+        });
+    });
 });

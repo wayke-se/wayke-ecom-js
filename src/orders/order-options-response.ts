@@ -5,7 +5,6 @@ import {
     IOrderOptionsResponse,
     IOrderOptionsResponseData,
     IPaymentOption,
-    IPaymentOptionResponseData,
 } from "./types";
 
 export class OrderOptionsResponse implements IOrderOptionsResponse {

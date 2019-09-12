@@ -167,6 +167,8 @@ factory.define("IPaymentLookupResponse", [
     "residual".fromFixture("IPaymentRangeSpec"),
     "duration".fromFixture("IPaymentRangeSpec"),
     "downPayment".fromFixture("IPaymentRangeSpec"),
+    "totalResidualValue".asNumber(),
+    "link",
 ]);
 
 factory.define("IVehicleLookupRequest", [

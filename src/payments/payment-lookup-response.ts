@@ -50,4 +50,12 @@ export class PaymentLookupResponse implements IPaymentLookupResponse {
     public getResidualValueSpec(): IPaymentRangeSpec {
         return this.response.residual;
     }
+
+    public getTotalResidualValue(): number {
+        return this.response.totalResidualValue;
+    }
+
+    public getPublicURL(): string | undefined {
+        return this.response.link;
+    }
 }
