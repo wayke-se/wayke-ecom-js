@@ -35,6 +35,8 @@ export interface IPaymentLookupResponse {
     getDurationSpec(): IPaymentRangeSpec;
     getDownPaymentSpec(): IPaymentRangeSpec;
     getResidualValueSpec(): IPaymentRangeSpec;
+    getTotalResidualValue(): number;
+    getPublicURL(): string | undefined;
 }
 
 export interface IPaymentLookupResponseData {
