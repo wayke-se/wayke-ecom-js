@@ -49,7 +49,7 @@ export interface IOrderPaymentRequest {
 
 export interface IOrderOptionsResponseData {
     conditions: string | undefined;
-    contactInformation: IContactInformation;
+    contactInformation: IContactInformation | undefined;
     delivery: IDeliveryOption[];
     insurance: IAvailableInsuranceOption | undefined;
     payment: IPaymentOptionResponseData[];
