@@ -26,10 +26,17 @@ By default the package reads an environment variable called `WAYKE_ECOM_API_ADDR
 
     const newConfig = {
         api: {
-            address: "https://ecom.wayketech.se",
+            address: "[ECOM_API_URL]",
         },
     };
     config.bind(newConfig);
+
+The `[ECOM_API_URL]` is either of the following urls:
+
+| Environment | Url |
+| ----------- | --- |
+| Test | https://ecom.wayketech.se |
+| Production | https://ecom.wayke.se |
 
 ## Using
 
