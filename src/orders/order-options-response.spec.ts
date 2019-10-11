@@ -87,6 +87,18 @@ describe("OrderOptionsResponse", () => {
         });
     });
 
+    describe(":getContactInformation()", () => {
+        it("returns the contact information from the response object", () => {
+            const response = fixture("IOrderOptionsResponse");
+            const expected = response.contactInformation;
+            const actual = new OrderOptionsResponse(
+                response
+            ).getContactInformation();
+
+            expect(actual).toEqual(expected);
+        });
+    });
+
     describe(":allowsTradeIn()", () => {
         it("returns the trade in flag from the response object", () => {
             const response = fixture("IOrderOptionsResponse");

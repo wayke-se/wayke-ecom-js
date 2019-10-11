@@ -30,6 +30,7 @@ export interface IOrderOptionsResponse {
     getDeliveryOptions(): IDeliveryOption[];
     getInsuranceOption(): IAvailableInsuranceOption | undefined;
     getOrderConditions(): string | undefined;
+    getContactInformation(): IContactInformation | undefined;
     allowsTradeIn(): boolean;
 }
 
@@ -48,6 +49,7 @@ export interface IOrderPaymentRequest {
 
 export interface IOrderOptionsResponseData {
     conditions: string | undefined;
+    contactInformation: IContactInformation;
     delivery: IDeliveryOption[];
     insurance: IAvailableInsuranceOption | undefined;
     payment: IPaymentOptionResponseData[];
@@ -101,4 +103,14 @@ export interface IPaymentOption {
     price: number | undefined;
     type: PaymentType;
     unit: string | undefined;
+}
+
+export interface IContactInformation {
+    address: string | undefined,
+    city: string | undefined,
+    email: string | undefined,
+    homePage: string | undefined,
+    name: string | undefined,
+    phone: string | undefined,
+    zip: string | undefined,
 }

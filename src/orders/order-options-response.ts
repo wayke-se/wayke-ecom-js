@@ -1,6 +1,7 @@
 import { PaymentLookupResponse } from "../payments/payment-lookup-response";
 import {
     IAvailableInsuranceOption,
+    IContactInformation,
     IDeliveryOption,
     IOrderOptionsResponse,
     IOrderOptionsResponseData,
@@ -60,6 +61,10 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
 
     public getOrderConditions(): string | undefined {
         return this.response.conditions;
+    }
+
+    public getContactInformation(): IContactInformation | undefined {
+        return this.response.contactInformation;
     }
 
     public allowsTradeIn(): boolean {
