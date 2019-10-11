@@ -72,6 +72,15 @@ factory.define("IInsuranceOptionsResponse", [
     "details".fromFixture("IInsuranceOptionsResponse.Details"),
 ]);
 
+factory.define("IContactInformation", [
+    "address",
+    "city",
+    "email",
+    "homePage",
+    "name",
+    "phone",
+    "zip"
+]);
 factory.define("IOrderDelivery", [
     "deliveryTime",
     "price",
@@ -127,6 +136,7 @@ factory.define("IOrderOptionsRequest", [
 ]);
 factory.define("IOrderOptionsResponse", [
     "conditions",
+    "contactInformation".fromFixture("IContactInformation"),
     "delivery".asListOfFixtures("IOrderDelivery", 2),
     "insurance".fromFixture("IOrderInsurance"),
     "payment".asListOfFixtures("IOrderPayment", 2),
