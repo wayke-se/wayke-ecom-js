@@ -91,6 +91,7 @@ factory.define("IOrderInsurance", [
     "logo",
     "title",
     "url",
+    "ecomInsuranceText"
 ]);
 
 factory.define("IOrderPayment", [
