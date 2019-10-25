@@ -55,6 +55,7 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
                   logo: this.response.insurance.logo,
                   title: this.response.insurance.title,
                   url: this.response.insurance.url,
+                  ecomInsuranceText: this.response.insurance.ecomInsuranceText,
               }
             : undefined;
     }

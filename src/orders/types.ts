@@ -79,6 +79,7 @@ export interface IAvailableInsuranceOption {
     logo: string | undefined;
     title: string;
     url: string | undefined;
+    ecomInsuranceText: string | undefined;
 }
 
 export enum PaymentType {
@@ -106,11 +107,11 @@ export interface IPaymentOption {
 }
 
 export interface IContactInformation {
-    address: string | undefined,
-    city: string | undefined,
-    email: string | undefined,
-    homePage: string | undefined,
-    name: string | undefined,
-    phone: string | undefined,
-    zip: string | undefined,
+    address: string | undefined;
+    city: string | undefined;
+    email: string | undefined;
+    homePage: string | undefined;
+    name: string | undefined;
+    phone: string | undefined;
+    zip: string | undefined;
 }
