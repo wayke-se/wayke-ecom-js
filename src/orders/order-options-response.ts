@@ -64,6 +64,10 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
         return this.response.conditions;
     }
 
+    public getOrderReturnConditions(): string | undefined {
+        return this.response.returnConditions;
+    }
+
     public getContactInformation(): IContactInformation | undefined {
         return this.response.contactInformation;
     }

@@ -137,6 +137,7 @@ factory.define("IOrderOptionsRequest", [
 ]);
 factory.define("IOrderOptionsResponse", [
     "conditions",
+    "returnConditions",
     "contactInformation".fromFixture("IContactInformation"),
     "delivery".asListOfFixtures("IOrderDelivery", 2),
     "insurance".fromFixture("IOrderInsurance"),

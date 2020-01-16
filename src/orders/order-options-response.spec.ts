@@ -87,6 +87,18 @@ describe("OrderOptionsResponse", () => {
         });
     });
 
+    describe(":getOrderReturnConditions()", () => {
+        it("returns the return conditions from the response object", () => {
+            const response = fixture("IOrderOptionsResponse");
+            const expected = response.returnConditions;
+            const actual = new OrderOptionsResponse(
+                response
+            ).getOrderReturnConditions();
+
+            expect(actual).toEqual(expected);
+        });
+    });
+
     describe(":getContactInformation()", () => {
         it("returns the contact information from the response object", () => {
             const response = fixture("IOrderOptionsResponse");
