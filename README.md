@@ -61,6 +61,7 @@ The returned `IOrderOptionsResponse` exposes helper methods to select partial da
 - `.getDeliveryOptions()` returns a `IDeliveryOption[]`
 - `.getInsuranceOption()` returns a `IInsuranceOption` if available
 - `.getOrderConditions()` returns a `string` with conditions for possible orders
+- `.getOrderReturnConditions()` returns a `string` with return conditions for possible orders
 - `.getContactInformation()` returns a `IContactInformation` if available
 - `.allowsTradeIn()` returns `true`/`false` if the retailer allows a trade-in vehicle for possible orders
 

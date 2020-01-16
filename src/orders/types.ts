@@ -49,6 +49,7 @@ export interface IOrderPaymentRequest {
 
 export interface IOrderOptionsResponseData {
     conditions: string | undefined;
+    returnConditions: string | undefined;
     contactInformation: IContactInformation | undefined;
     delivery: IDeliveryOption[];
     insurance: IAvailableInsuranceOption | undefined;
