@@ -30,6 +30,7 @@ export interface IOrderOptionsResponse {
     getDeliveryOptions(): IDeliveryOption[];
     getInsuranceOption(): IAvailableInsuranceOption | undefined;
     getOrderConditions(): string | undefined;
+    getOrderReturnConditions(): string | undefined;
     getContactInformation(): IContactInformation | undefined;
     allowsTradeIn(): boolean;
 }
