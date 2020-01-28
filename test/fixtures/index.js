@@ -138,6 +138,7 @@ factory.define("IOrderOptionsRequest", [
 factory.define("IOrderOptionsResponse", [
     "conditions",
     "returnConditions",
+    "conditionsPdfUri",
     "contactInformation".fromFixture("IContactInformation"),
     "delivery".asListOfFixtures("IOrderDelivery", 2),
     "insurance".fromFixture("IOrderInsurance"),

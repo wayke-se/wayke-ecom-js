@@ -31,6 +31,7 @@ export interface IOrderOptionsResponse {
     getInsuranceOption(): IAvailableInsuranceOption | undefined;
     getOrderConditions(): string | undefined;
     getOrderReturnConditions(): string | undefined;
+    getConditionsPdfUri(): string | null | undefined;
     getContactInformation(): IContactInformation | undefined;
     allowsTradeIn(): boolean;
 }
@@ -51,6 +52,7 @@ export interface IOrderPaymentRequest {
 export interface IOrderOptionsResponseData {
     conditions: string | undefined;
     returnConditions: string | undefined;
+    conditionsPdfUri: string | null | undefined;
     contactInformation: IContactInformation | undefined;
     delivery: IDeliveryOption[];
     insurance: IAvailableInsuranceOption | undefined;

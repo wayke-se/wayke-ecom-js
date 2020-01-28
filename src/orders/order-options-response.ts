@@ -68,6 +68,10 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
         return this.response.returnConditions;
     }
 
+    public getConditionsPdfUri(): string | null | undefined {
+        return this.response.conditionsPdfUri;
+    }
+
     public getContactInformation(): IContactInformation | undefined {
         return this.response.contactInformation;
     }

@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/ecom",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A SDK to utilize Wayke e-commerce APIs",
   "main": "src/index.ts",
   "typings": "src/index.d.ts",

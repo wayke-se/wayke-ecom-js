@@ -99,6 +99,18 @@ describe("OrderOptionsResponse", () => {
         });
     });
 
+    describe(":getConditionsPdfUri()", () => {
+        it("returns the conditions PDF URI from the response object", () => {
+            const response = fixture("IOrderOptionsResponse");
+            const expected = response.conditionsPdfUri;
+            const actual = new OrderOptionsResponse(
+                response
+            ).getConditionsPdfUri();
+
+            expect(actual).toEqual(expected);
+        });
+    });
+
     describe(":getContactInformation()", () => {
         it("returns the contact information from the response object", () => {
             const response = fixture("IOrderOptionsResponse");
