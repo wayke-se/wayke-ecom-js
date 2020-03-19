@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/ecom",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A SDK to utilize Wayke e-commerce APIs",
   "main": "src/index.ts",
   "typings": "src/index.d.ts",
@@ -39,7 +39,7 @@
     "@pika/plugin-build-web": "^0.9.2",
     "@pika/plugin-ts-standard-pkg": "^0.9.2",
     "@types/jest": "^25.1.4",
-    "@types/node": "^13.9.1",
+    "@types/node": "^13.9.2",
     "autofixture": "^1.1.0",
     "coveralls": "^3.0.9",
     "jest": "^25.1.0",
