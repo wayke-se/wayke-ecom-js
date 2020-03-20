@@ -6,7 +6,8 @@ import {
 import * as http from "../index";
 
 const buildInsuranceRequest = (
-    request: IInsuranceOptionsRequest
+    request: IInsuranceOptionsRequest,
+    { requestForgeryToken }: http.IHttpStateContext
 ): RequestInit => {
     const content = {
         drivingDistance: request.drivingDistance,
@@ -19,6 +20,7 @@ const buildInsuranceRequest = (
         .builder()
         .method("post")
         .accept("application/json")
+        .requestForgeryToken(requestForgeryToken)
         .content(content)
         .build();
 };
@@ -38,8 +40,10 @@ export const find = (
     config: IConfiguration
 ): Promise<IInsuranceOptionsResponseData> =>
     http
-        .json<IInsuranceOptionsResponseData>(
-            `${config.getApiAddress()}/insurance`,
-            buildInsuranceRequest(request)
+        .captureStateContext(
+            http.json<IInsuranceOptionsResponseData>(
+                `${config.getApiAddress()}/v2/insurance`,
+                buildInsuranceRequest(request, http.context())
+            )
         )
         .then(validateResponse);

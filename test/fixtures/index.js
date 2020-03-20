@@ -3,6 +3,7 @@ const factory = require("autofixture");
 factory.define("IApiResponse", [
     "successful".asBoolean(),
     "response",
+    "requestForgeryToken",
 ]);
 
 const IAddress = [
@@ -186,12 +187,15 @@ factory.define("IPaymentLookupResponse", [
 
 factory.define("IVehicleLookupRequest", [
     "registrationNumber",
+    "mileage".asNumber(),
+    "condition".pickFrom(["Ok", "Good", "VeryGood"]),
 ]);
 factory.define("IVehicleLookupResponse", [
     "manufacturer",
     "modelName",
     "modelSeries",
     "modelYear".asNumber(),
+    "valuation".asNumber(),
 ]);
 
 module.exports = factory;

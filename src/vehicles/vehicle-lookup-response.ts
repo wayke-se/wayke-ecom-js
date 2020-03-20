@@ -26,6 +26,7 @@ export class VehicleLookupResponse implements IVehicleLookupResponse {
             modelName: this.response.modelName,
             modelSeries: this.response.modelSeries,
             modelYear: this.response.modelYear,
+            valuation: this.response.valuation,
         };
     }
 }
