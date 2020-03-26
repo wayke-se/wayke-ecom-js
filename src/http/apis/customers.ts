@@ -2,9 +2,7 @@ import { IConfiguration } from "../../config";
 import { IAddress, IAddressLookupRequest } from "../../customers/types";
 import * as http from "../index";
 
-const buildLookupRequest = (
-    lookupRequest: IAddressLookupRequest
-): RequestInit =>
+const buildLookupRequest = (): RequestInit =>
     http
         .builder()
         .method("get")
@@ -28,6 +26,6 @@ export const lookupAddress = (
             `${config.getApiAddress()}/address?SocialId=${
                 lookupRequest.personalNumber
             }`,
-            buildLookupRequest(lookupRequest)
+            buildLookupRequest()
         )
         .then(validateResponse);

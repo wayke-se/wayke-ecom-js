@@ -30,7 +30,7 @@ class HttpRequestBuilder {
                 break;
         }
 
-        contentType ? (this._headers["Content-Type"] = contentType) : false;
+        if (contentType) this._headers["Content-Type"] = contentType;
 
         return this;
     }
