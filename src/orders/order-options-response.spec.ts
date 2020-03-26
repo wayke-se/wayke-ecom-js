@@ -40,6 +40,20 @@ describe("OrderOptionsResponse", () => {
 
             expect(actual).toEqual([]);
         });
+        it("returns undefined for missing loan details", () => {
+            const response = fixture("IOrderOptionsResponse");
+            response.payment = response.payment.map((x: any) => ({
+                ...x,
+                loanDetails: null,
+            }));
+
+            const actual = new OrderOptionsResponse(response)
+                .getPaymentOptions()
+                .map(x => x.loanDetails)
+                .filter(x => !!x);
+
+            expect(actual.length).toBe(0);
+        });
     });
 
     describe(":getDeliveryOptions()", () => {
@@ -72,6 +86,16 @@ describe("OrderOptionsResponse", () => {
             ).getInsuranceOption();
 
             expect(actual).toEqual(expected);
+        });
+        it("returns undefined when no IOptionsInsurance is available on response", () => {
+            const response = fixture("IOrderOptionsResponse");
+            delete response.insurance;
+
+            const actual = new OrderOptionsResponse(
+                response
+            ).getInsuranceOption();
+
+            expect(actual).toBeUndefined();
         });
     });
 
@@ -128,6 +152,16 @@ describe("OrderOptionsResponse", () => {
             const response = fixture("IOrderOptionsResponse");
             const expected = response.tradeIn;
             const actual = new OrderOptionsResponse(response).allowsTradeIn();
+
+            expect(actual).toEqual(expected);
+        });
+    });
+
+    describe(":useBankId()", () => {
+        it("returns the use bank id flag from the response object", () => {
+            const response = fixture("IOrderOptionsResponse");
+            const expected = response.useBankId;
+            const actual = new OrderOptionsResponse(response).useBankId();
 
             expect(actual).toEqual(expected);
         });

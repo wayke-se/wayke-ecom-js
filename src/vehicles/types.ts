@@ -1,5 +1,13 @@
+export enum VehicleCondition {
+    VeryGood = "VeryGood",
+    Good = "Good",
+    Ok = "Ok",
+}
+
 export interface IVehicleLookupRequest {
     registrationNumber: string;
+    mileage: number;
+    condition: VehicleCondition;
 }
 
 export interface IVehicleLookupResponse {
@@ -11,6 +19,7 @@ export interface IVehicleLookupResponseData {
     modelName: string;
     modelSeries: string;
     modelYear: number;
+    valuation: number;
 }
 
 export interface IVehicle {
@@ -18,6 +27,7 @@ export interface IVehicle {
     modelName: string;
     modelSeries: string;
     modelYear: number;
+    valuation: number;
 }
 
 export interface IVehicleTrade {
@@ -25,10 +35,4 @@ export interface IVehicleTrade {
     mileage: number;
     condition: VehicleCondition;
     comments: string;
-}
-
-export enum VehicleCondition {
-    VeryGood = "VeryGood",
-    Good = "Good",
-    Ok = "Ok",
 }

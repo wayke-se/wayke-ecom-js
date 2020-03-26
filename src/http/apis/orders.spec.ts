@@ -9,12 +9,8 @@ const fixture = (name: string, withValues: any = undefined): any =>
 describe("API: Orders", () => {
     describe("init()", () => {
         it("calls the correct URL", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const fake = fixture("IConfiguration");
+            const config = Configuration.bind(fake);
 
             const http = require("..");
             http.json = jest.fn(
@@ -31,17 +27,43 @@ describe("API: Orders", () => {
             const request = fixture("IOrderOptionsRequest");
             await init(request, config);
 
-            const expected = `${address}/orders/new?vehicleId=${request.id}`;
+            const expected = `${fake.api.address}/v2/orders/new?vehicleId=${request.id}`;
             const args = http.json.mock.calls[0];
             expect(args[0]).toEqual(expected);
         });
-        it("throws error if response was unsuccessful", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
+        it("sets request forgery token", async () => {
+            const config = Configuration.bind(fixture("IConfiguration"));
+
+            const expected = "rf-token";
+            const httpContext = { requestForgeryToken: undefined };
+
+            const http = require("..");
+            http.captureStateContext = jest.fn(promise => {
+                return promise.then((response: any) => {
+                    httpContext.requestForgeryToken =
+                        response.requestForgeryToken;
+                    return response;
+                });
             });
+            http.json = jest.fn(
+                () =>
+                    new Promise(resolve => {
+                        const data = fixture("IOrderOptionsResponse");
+                        const response = fixture("IApiResponse", {
+                            response: data,
+                            successful: true,
+                            requestForgeryToken: expected,
+                        });
+                        resolve(response);
+                    })
+            );
+            const request = fixture("IOrderOptionsRequest");
+            await init(request, config);
+
+            expect(httpContext.requestForgeryToken).toEqual(expected);
+        });
+        it("throws error if response was unsuccessful", async () => {
+            const config = Configuration.bind(fixture("IConfiguration"));
 
             const http = require("..");
             http.json = jest.fn(
@@ -64,12 +86,7 @@ describe("API: Orders", () => {
             expect(err).toBeInstanceOf(Error);
         });
         it("throws error if data validation fails", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const config = Configuration.bind(fixture("IConfiguration"));
 
             const http = require("..");
             http.json = jest.fn(
@@ -96,14 +113,11 @@ describe("API: Orders", () => {
 
     describe("create()", () => {
         it("calls the correct URL", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const fake = fixture("IConfiguration");
+            const config = Configuration.bind(fake);
 
             const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
                     new Promise(resolve => {
@@ -118,19 +132,39 @@ describe("API: Orders", () => {
             const request = fixture("IOrderCreateRequest");
             await create(request, config);
 
-            const expected = `${address}/orders`;
+            const expected = `${fake.api.address}/v2/orders`;
             const args = http.json.mock.calls[0];
             expect(args[0]).toEqual(expected);
         });
+        it("uses request forgery token", async () => {
+            const config = Configuration.bind(fixture("IConfiguration"));
+
+            const expected = "rf-token";
+            const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: expected }));
+            http.json = jest.fn(
+                () =>
+                    new Promise(resolve => {
+                        const data = fixture("IOrderCreateResponse");
+                        const response = fixture("IApiResponse", {
+                            response: data,
+                            successful: true,
+                        });
+                        resolve(response);
+                    })
+            );
+            const request = fixture("IOrderCreateRequest");
+            await create(request, config);
+
+            const args = http.json.mock.calls[0];
+            const headers = args[1].headers;
+            expect(headers["x-rf-token"]).toEqual(expected);
+        });
         it("throws error if response was unsuccessful", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const config = Configuration.bind(fixture("IConfiguration"));
 
             const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
                     new Promise(resolve => {
@@ -151,14 +185,10 @@ describe("API: Orders", () => {
             expect(err).toBeInstanceOf(Error);
         });
         it("throws error if data validation fails", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const config = Configuration.bind(fixture("IConfiguration"));
 
             const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
                     new Promise(resolve => {
@@ -180,14 +210,10 @@ describe("API: Orders", () => {
             expect(err).toBeInstanceOf(Error);
         });
         it("doesn't populate `insurance` property if not set", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const config = Configuration.bind(fixture("IConfiguration"));
 
             const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
                     new Promise(resolve => {
@@ -209,14 +235,10 @@ describe("API: Orders", () => {
             expect(body.insurance).toBeUndefined();
         });
         it("populates request with personal number from customer, if not available on insurance", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const config = Configuration.bind(fixture("IConfiguration"));
 
             const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
                     new Promise(resolve => {
@@ -238,6 +260,33 @@ describe("API: Orders", () => {
 
             const expected = request.customer.personalNumber;
             const actual = body.insurance.socialId;
+            expect(actual).toEqual(expected);
+        });
+        it("populates request with origin from config", async () => {
+            const config = Configuration.bind(fixture("IConfiguration"));
+
+            const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
+            http.json = jest.fn(
+                () =>
+                    new Promise(resolve => {
+                        const data = fixture("IOrderCreateResponse");
+                        const response = fixture("IApiResponse", {
+                            response: data,
+                            successful: true,
+                        });
+                        resolve(response);
+                    })
+            );
+
+            const request = fixture("IOrderCreateRequest");
+            await create(request, config);
+
+            const args = http.json.mock.calls[0];
+            const body = JSON.parse(args[1].body);
+
+            const expected = JSON.stringify(config.getOrigin());
+            const actual = JSON.stringify(body.origin);
             expect(actual).toEqual(expected);
         });
     });

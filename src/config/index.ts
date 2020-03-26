@@ -1,5 +1,6 @@
-export interface IConfiguration {
-    getApiAddress(): string;
+export interface IOriginConfiguration {
+    topic: string;
+    channel: string;
 }
 
 export interface IApiConfiguration {
@@ -8,7 +9,25 @@ export interface IApiConfiguration {
 
 export interface IConfigurationRoot {
     api: IApiConfiguration;
+    origin?: IOriginConfiguration;
 }
+
+export interface IConfiguration {
+    getApiAddress(): string;
+    getOrigin(): IOriginConfiguration | undefined;
+}
+
+const createDefaultOrigin = (): IOriginConfiguration | undefined => {
+    if (!window || !window.location) return undefined;
+
+    const topic = window.location.host.replace("www.", "");
+    const channel = "Web";
+
+    return {
+        topic,
+        channel,
+    };
+};
 
 const createDefaultConfig = (): IConfigurationRoot | undefined => {
     if (process.env.WAYKE_ECOM_API_ADDRESS) {
@@ -16,6 +35,7 @@ const createDefaultConfig = (): IConfigurationRoot | undefined => {
             api: {
                 address: process.env.WAYKE_ECOM_API_ADDRESS,
             },
+            origin: createDefaultOrigin(),
         };
     }
 
@@ -43,6 +63,12 @@ class Configuration implements IConfiguration {
             api: {
                 address: newConfig.api.address,
             },
+            origin: newConfig.origin
+                ? {
+                      topic: newConfig.origin.topic,
+                      channel: newConfig.origin.channel,
+                  }
+                : createDefaultOrigin(),
         };
 
         return Configuration.instance;
@@ -65,6 +91,14 @@ class Configuration implements IConfiguration {
         }
 
         return this.config.api.address;
+    }
+
+    public getOrigin(): IOriginConfiguration | undefined {
+        if (!this.config) {
+            throw Configuration.notBoundError;
+        }
+
+        return this.config.origin;
     }
 }
 

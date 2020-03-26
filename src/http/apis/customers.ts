@@ -2,13 +2,14 @@ import { IConfiguration } from "../../config";
 import { IAddress, IAddressLookupRequest } from "../../customers/types";
 import * as http from "../index";
 
-const buildLookupRequest = (
-    lookupRequest: IAddressLookupRequest
-): RequestInit =>
+const buildLookupRequest = ({
+    requestForgeryToken,
+}: http.IHttpStateContext): RequestInit =>
     http
         .builder()
         .method("get")
         .accept("application/json")
+        .requestForgeryToken(requestForgeryToken)
         .build();
 
 const validateResponse = (response: http.IApiResponse<IAddress>): IAddress => {
@@ -24,10 +25,12 @@ export const lookupAddress = (
     config: IConfiguration
 ): Promise<IAddress> =>
     http
-        .json<IAddress>(
-            `${config.getApiAddress()}/address?SocialId=${
-                lookupRequest.personalNumber
-            }`,
-            buildLookupRequest(lookupRequest)
+        .captureStateContext(
+            http.json<IAddress>(
+                `${config.getApiAddress()}/v2/address?SocialId=${
+                    lookupRequest.personalNumber
+                }`,
+                buildLookupRequest(http.context())
+            )
         )
         .then(validateResponse);

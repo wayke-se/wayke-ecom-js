@@ -3,6 +3,7 @@ import HttpRequestBuilder from "./http-request-builder";
 export interface IApiResponse<T> {
     successful: boolean;
     response: T;
+    requestForgeryToken: string | undefined;
 }
 
 const httpStatusCheck = (
@@ -12,7 +13,7 @@ const httpStatusCheck = (
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
-    // tslint:disable
+    /* eslint-disable */
     if (process.env.NODE_ENV === "development") {
         console.group(`Asynchronous request failed!`);
         console.log(`URL was ${response.url}`);
@@ -20,8 +21,24 @@ const httpStatusCheck = (
         console.log(`Request:`, request);
         console.groupEnd();
     }
-    // tslint:enable
+    /* eslint-enable */
     throw new Error(String(response.status));
+};
+
+export interface IHttpStateContext {
+    requestForgeryToken: string | undefined;
+}
+
+const httpStateContext: IHttpStateContext = {
+    requestForgeryToken: undefined,
+};
+
+export const context = () => ({ ...httpStateContext });
+
+export const contextualize = (response: IApiResponse<any>) => {
+    httpStateContext.requestForgeryToken =
+        response.requestForgeryToken || httpStateContext.requestForgeryToken;
+    return response;
 };
 
 export const raw = (url: string, options: RequestInit): Promise<Response> =>
@@ -39,5 +56,9 @@ export const json = <T>(
 
         return response.json();
     });
+
+export const captureStateContext = <T>(
+    promise: Promise<IApiResponse<T>>
+): Promise<IApiResponse<T>> => promise.then(contextualize);
 
 export const builder = (): HttpRequestBuilder => new HttpRequestBuilder();

@@ -9,14 +9,11 @@ const fixture = (name: string, withData: any = undefined): any =>
 describe("API: Insurances", () => {
     describe("find()", () => {
         it("calls the correct URL", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const fake = fixture("IConfiguration");
+            const config = Configuration.bind(fake);
 
             const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
                     new Promise(resolve => {
@@ -30,19 +27,68 @@ describe("API: Insurances", () => {
             );
             await find(fixture("IInsuranceOptionsRequest"), config);
 
-            const expected = `${address}/insurance`;
+            const expected = `${fake.api.address}/v2/insurance`;
             const args = http.json.mock.calls[0];
             expect(args[0]).toEqual(expected);
         });
-        it("throws error if response was unsuccessful", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+        it("uses request forgery token", async () => {
+            const config = Configuration.bind(fixture("IConfiguration"));
+
+            const expected = "rf-token";
+            const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: expected }));
+            http.json = jest.fn(
+                () =>
+                    new Promise(resolve => {
+                        const data = fixture("IInsuranceOptionsResponse");
+                        const response = fixture("IApiResponse", {
+                            response: data,
+                            successful: true,
+                        });
+                        resolve(response);
+                    })
+            );
+            await find(fixture("IInsuranceOptionsRequest"), config);
+
+            const args = http.json.mock.calls[0];
+            const headers = args[1].headers;
+            expect(headers["x-rf-token"]).toEqual(expected);
+        });
+        it("sets request forgery token", async () => {
+            const config = Configuration.bind(fixture("IConfiguration"));
+
+            const expected = "rf-token";
+            const httpContext = { requestForgeryToken: undefined };
 
             const http = require("..");
+            http.captureStateContext = jest.fn(promise => {
+                return promise.then((response: any) => {
+                    httpContext.requestForgeryToken =
+                        response.requestForgeryToken;
+                    return response;
+                });
+            });
+            http.json = jest.fn(
+                () =>
+                    new Promise(resolve => {
+                        const data = fixture("IInsuranceOptionsResponse");
+                        const response = fixture("IApiResponse", {
+                            response: data,
+                            successful: true,
+                            requestForgeryToken: expected,
+                        });
+                        resolve(response);
+                    })
+            );
+            await find(fixture("IInsuranceOptionsRequest"), config);
+
+            expect(httpContext.requestForgeryToken).toEqual(expected);
+        });
+        it("throws error if response was unsuccessful", async () => {
+            const config = Configuration.bind(fixture("IConfiguration"));
+
+            const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
                     new Promise(resolve => {
@@ -63,14 +109,10 @@ describe("API: Insurances", () => {
             expect(err).toBeInstanceOf(Error);
         });
         it("throws error if data validation fails", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const config = Configuration.bind(fixture("IConfiguration"));
 
             const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
                     new Promise(resolve => {

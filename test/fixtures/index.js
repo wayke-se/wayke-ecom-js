@@ -1,8 +1,28 @@
 const factory = require("autofixture");
 
+factory.define("IApiConfiguration", [
+    "address",
+]);
+
+factory.define("IOriginConfiguration", [
+    "topic",
+    "channel",
+]);
+
+factory.define("IConfiguration", [
+    "api".fromFixture("IApiConfiguration"),
+    "origin".fromFixture("IOriginConfiguration"),
+]);
+
 factory.define("IApiResponse", [
     "successful".asBoolean(),
     "response",
+    "requestForgeryToken",
+]);
+
+factory.define("IDistance", [
+    "value".asNumber(),
+    "unit".pickFrom(["m", "km"]),
 ]);
 
 const IAddress = [
@@ -11,6 +31,7 @@ const IAddress = [
     "postalCode",
     "street",
     "street2",
+    "distance".fromFixture("IDistance"),
 ];
 factory.define("IAddress", IAddress);
 
@@ -82,9 +103,13 @@ factory.define("IContactInformation", [
     "zip"
 ]);
 factory.define("IOrderDelivery", [
-    "deliveryTime",
-    "price",
     "type".pickFrom(["Pickup", "Delivery"]),
+    "deliveryTime",
+    "startupCost".asNumber(),
+    "unitPrice".asNumber(),
+    "unit".pickFrom(["km"]),
+    "minQuantity".asNumber(),
+    "maxQuantity".asNumber(),
 ]);
 factory.define("IOrderInsurance", [
     "description",
@@ -186,12 +211,60 @@ factory.define("IPaymentLookupResponse", [
 
 factory.define("IVehicleLookupRequest", [
     "registrationNumber",
+    "mileage".asNumber(),
+    "condition".pickFrom(["Ok", "Good", "VeryGood"]),
 ]);
 factory.define("IVehicleLookupResponse", [
     "manufacturer",
     "modelName",
     "modelSeries",
     "modelYear".asNumber(),
+    "valuation".asNumber(),
+]);
+
+factory.define("IBankIdAuthRequest", [
+    "ipAddress",
+    "method".pickFrom(["SameDevice", "QrCode"]),
+]);
+
+factory.define("IBankIdAuthApiResponse", [
+    "orderRef",
+    "method".pickFrom(["SameDevice", "QrCode"]),
+    "qrCodeAsBase64",
+    "autoLaunchUrl",
+]);
+
+factory.define("IBankIdCollectRequest", [
+    "orderRef",
+    "method".pickFrom(["SameDevice", "QrCode"]),
+]);
+
+factory.define("IBankIdCollectApiResponse", [
+    "orderRef",
+    "status".pickFrom(["pending", "failed", "complete"]),
+    "hintCode".pickFrom([
+        "outstandingTransaction",
+        "noClient",
+        "started",
+        "userSign",
+        "expiredTransaction",
+        "certificateErr",
+        "userCancel",
+        "cancelled",
+        "startFailed",
+        ""
+    ]),
+    "completionData".fromFixture("IBankIdCompletionData"),
+]);
+factory.define("IBankIdCompletionData", [
+    "signature",
+    "ocspResponse",
+    "personalNumber",
+    "address".fromFixture("IAddress"),
+]);
+
+factory.define("IBankIdCancelRequest", [
+    "orderRef",
 ]);
 
 module.exports = factory;

@@ -20,7 +20,7 @@ The SDK exposes five namespaces, each containing functionality for a specific se
 
 ## Configuring
 
-By default the package reads an environment variable called `WAYKE_ECOM_API_ADDRESS` to know the location of the restful API. However, this is not always possible or the desired behavior - so as an alternative configuration option, a SDK consumer can manually bind an address for the API. This should preferrably be done in a setup file in the consuming project, and only run once:
+By default the library reads an environment variable called `WAYKE_ECOM_API_ADDRESS` to know the location of the restful API. However, this is not always possible or the desired behavior - so as an alternative configuration option, a SDK consumer can manually bind an address for the API. This should preferrably be done in a setup file in the consuming project, and only run once:
 
     import { config } from "@wayke-se/ecom";
 
@@ -37,6 +37,25 @@ The `[ECOM_API_URL]` is either of the following urls:
 | ----------- | --- |
 | Test | https://ecom.wayketech.se |
 | Production | https://ecom.wayke.se |
+
+The library also tries to guess the origin of the runtime application, to mark where an order originates (when creating it). By default it uses `window.location.host` to create what's called a "topic". A "topic" is a categorization for an order origin. Parallell with the "topic", a "channel" is also automatically created for the origin. This value is `Web` when `window.location.host` is available during the runtime.
+
+To manually set these values, to enable a more granular control over the order origins, a configuration takes these parameters as:
+
+    import { config } from "@wayke-se/ecom";
+
+    const newConfig = {
+        api: {
+            address: "[ECOM_API_URL]",
+        },
+        origin: {
+            topic: "[Dealer Specific Topic]",
+            channel: "[Ecom Channel Name]",
+        },
+    };
+    config.bind(newConfig);
+
+As an example, orders originating from https://www.wayke.se will have a topic `Wayke` and a channel `wayke.se`. For orders originating from the Wayke iOS app, the topic will be `Wayke` and the channel `iOS-app`. For Android, the channel will be `Android-app`.
 
 ## Using
 
@@ -113,8 +132,16 @@ When a customer wants to submit a vehicle for trade-in with the order, we need t
 
     const response = await vehicles.lookupVehicle(request);
 
+To include a valuation for the vehicle in question, add a mileage and a VehicleCondition to the request:
+
+    const request = vehicles.newLookupRequest()
+        .withRegistrationNumber("REGISTRATION-NUMBER")
+        .withMileage(12345)
+        .withCondition(VehicleCondition.VeryGood)
+        .build();
+
 The returned `IVehicleLookupResponse` exposes only one method:
-- `.getVehicle()` returns a `IVehicle` object containing manufacturer, model series, and model name for the vehicle.
+- `.getVehicle()` returns a `IVehicle` object containing manufacturer, model series, model name, and optionally valuation for the vehicle.
 
 ### Retrieve payment data for vehicle
 
