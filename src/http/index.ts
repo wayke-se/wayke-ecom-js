@@ -12,7 +12,7 @@ const httpStatusCheck = (
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
-    // tslint:disable
+    /* eslint-disable */
     if (process.env.NODE_ENV === "development") {
         console.group(`Asynchronous request failed!`);
         console.log(`URL was ${response.url}`);
@@ -20,7 +20,7 @@ const httpStatusCheck = (
         console.log(`Request:`, request);
         console.groupEnd();
     }
-    // tslint:enable
+    /* eslint-enable */
     throw new Error(String(response.status));
 };
 
