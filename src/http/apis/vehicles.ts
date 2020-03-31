@@ -5,11 +5,14 @@ import {
 } from "../../vehicles/types";
 import * as http from "../index";
 
-const buildLookupRequest = (): RequestInit =>
+const buildLookupRequest = ({
+    requestForgeryToken,
+}: http.IHttpStateContext): RequestInit =>
     http
         .builder()
         .method("get")
         .accept("application/json")
+        .requestForgeryToken(requestForgeryToken)
         .build();
 
 const validateResponse = (
@@ -27,8 +30,12 @@ export const lookup = (
     config: IConfiguration
 ): Promise<IVehicleLookupResponseData> =>
     http
-        .json<IVehicleLookupResponseData>(
-            `${config.getApiAddress()}/tradein/${request.registrationNumber}`,
-            buildLookupRequest()
+        .captureStateContext(
+            http.json<IVehicleLookupResponseData>(
+                `${config.getApiAddress()}/v2/tradein/${
+                    request.registrationNumber
+                }?mileage=${request.mileage}&condition=${request.condition}`,
+                buildLookupRequest(http.context())
+            )
         )
         .then(validateResponse);

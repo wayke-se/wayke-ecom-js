@@ -14,7 +14,10 @@ const buildOptionsRequest = (): RequestInit =>
         .accept("application/json")
         .build();
 
-const buildCreateRequest = (request: IOrderCreateRequest): RequestInit => {
+const buildCreateRequest = (
+    request: IOrderCreateRequest,
+    { requestForgeryToken }: http.IHttpStateContext
+): RequestInit => {
     const content = {
         vehicleId: request.id,
         tradeIn: request.tradein,
@@ -41,6 +44,7 @@ const buildCreateRequest = (request: IOrderCreateRequest): RequestInit => {
         .builder()
         .method("post")
         .accept("application/json")
+        .requestForgeryToken(requestForgeryToken)
         .content(content)
         .build();
 };
@@ -70,9 +74,13 @@ export const init = (
     config: IConfiguration
 ): Promise<IOrderOptionsResponseData> =>
     http
-        .json<IOrderOptionsResponseData>(
-            `${config.getApiAddress()}/orders/new?vehicleId=${request.id}`,
-            buildOptionsRequest()
+        .captureStateContext(
+            http.json<IOrderOptionsResponseData>(
+                `${config.getApiAddress()}/v2/orders/new?vehicleId=${
+                    request.id
+                }`,
+                buildOptionsRequest()
+            )
         )
         .then(validateOptionsResponse);
 
@@ -81,8 +89,10 @@ export const create = (
     config: IConfiguration
 ): Promise<IOrderCreateResponseData> =>
     http
-        .json<IOrderCreateResponseData>(
-            `${config.getApiAddress()}/orders`,
-            buildCreateRequest(request)
+        .captureStateContext(
+            http.json<IOrderCreateResponseData>(
+                `${config.getApiAddress()}/v2/orders`,
+                buildCreateRequest(request, http.context())
+            )
         )
         .then(validateCreateResponse);

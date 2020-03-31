@@ -17,6 +17,7 @@ describe("API: Payments", () => {
             });
 
             const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
                     new Promise(resolve => {
@@ -44,6 +45,7 @@ describe("API: Payments", () => {
             });
 
             const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
                     new Promise(resolve => {
@@ -72,6 +74,7 @@ describe("API: Payments", () => {
             });
 
             const http = require("..");
+            http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
                     new Promise(resolve => {

@@ -20,6 +20,13 @@ class HttpRequestBuilder {
         return this;
     }
 
+    public requestForgeryToken(token: string | undefined) {
+        if (!token) throw new Error("Missing request forgery token");
+
+        this._headers["x-rf-token"] = token;
+        return this;
+    }
+
     public content(body: any, contentType: string | null = "application/json") {
         switch (contentType) {
             case "application/json":

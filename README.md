@@ -113,8 +113,16 @@ When a customer wants to submit a vehicle for trade-in with the order, we need t
 
     const response = await vehicles.lookupVehicle(request);
 
+To include a valuation for the vehicle in question, add a mileage and a VehicleCondition to the request:
+
+    const request = vehicles.newLookupRequest()
+        .withRegistrationNumber("REGISTRATION-NUMBER")
+        .withMileage(12345)
+        .withCondition(VehicleCondition.VeryGood)
+        .build();
+
 The returned `IVehicleLookupResponse` exposes only one method:
-- `.getVehicle()` returns a `IVehicle` object containing manufacturer, model series, and model name for the vehicle.
+- `.getVehicle()` returns a `IVehicle` object containing manufacturer, model series, model name, and optionally valuation for the vehicle.
 
 ### Retrieve payment data for vehicle
 

@@ -3,6 +3,7 @@ import HttpRequestBuilder from "./http-request-builder";
 export interface IApiResponse<T> {
     successful: boolean;
     response: T;
+    requestForgeryToken: string | undefined;
 }
 
 const httpStatusCheck = (
@@ -24,6 +25,22 @@ const httpStatusCheck = (
     throw new Error(String(response.status));
 };
 
+export interface IHttpStateContext {
+    requestForgeryToken: string | undefined;
+}
+
+const httpStateContext: IHttpStateContext = {
+    requestForgeryToken: undefined,
+};
+
+export const context = () => ({ ...httpStateContext });
+
+export const contextualize = (response: IApiResponse<any>) => {
+    httpStateContext.requestForgeryToken =
+        response.requestForgeryToken || httpStateContext.requestForgeryToken;
+    return response;
+};
+
 export const raw = (url: string, options: RequestInit): Promise<Response> =>
     fetch(url, options).then((response: Response) =>
         httpStatusCheck(response, options)
@@ -39,5 +56,9 @@ export const json = <T>(
 
         return response.json();
     });
+
+export const captureStateContext = <T>(
+    promise: Promise<IApiResponse<T>>
+): Promise<IApiResponse<T>> => promise.then(contextualize);
 
 export const builder = (): HttpRequestBuilder => new HttpRequestBuilder();
