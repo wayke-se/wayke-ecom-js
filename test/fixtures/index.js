@@ -6,12 +6,18 @@ factory.define("IApiResponse", [
     "requestForgeryToken",
 ]);
 
+factory.define("IDistance", [
+    "value".asNumber(),
+    "unit".pickFrom(["m", "km"]),
+]);
+
 const IAddress = [
     "city",
     "name",
     "postalCode",
     "street",
     "street2",
+    "distance".fromFixture("IDistance"),
 ];
 factory.define("IAddress", IAddress);
 
@@ -83,9 +89,13 @@ factory.define("IContactInformation", [
     "zip"
 ]);
 factory.define("IOrderDelivery", [
-    "deliveryTime",
-    "price",
     "type".pickFrom(["Pickup", "Delivery"]),
+    "deliveryTime",
+    "startupCost".asNumber(),
+    "unitPrice".asNumber(),
+    "unit".pickFrom(["km"]),
+    "minQuantity".asNumber(),
+    "maxQuantity".asNumber(),
 ]);
 factory.define("IOrderInsurance", [
     "description",

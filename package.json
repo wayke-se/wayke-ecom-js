@@ -1,6 +1,6 @@
 {
   "name": "@wayke-se/ecom",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A SDK to utilize Wayke e-commerce APIs",
   "main": "src/index.ts",
   "typings": "src/index.d.ts",
@@ -13,7 +13,7 @@
     "lint": "eslint -c .eslintrc.js --ext .ts 'src/**/*.ts'",
     "prettify": "prettier --write 'src/**/*.{ts,tsx}'",
     "prepare": "npm run prettify && npm run type-check && npm run lint && npm run test",
-    "test": "jest --coverage --verbose",
+    "test": "jest --coverage --collectCoverageFrom=src/**/*.ts --collectCoverageFrom=!src/index.ts --verbose",
     "pretest": "rimraf ./coverage",
     "type-check": "tsc --noEmit --skipLibCheck",
     "version": "npm run build"
