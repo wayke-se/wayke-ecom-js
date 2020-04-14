@@ -7,7 +7,7 @@ const fixture = (name: string, withData: any = undefined): any =>
     fixtures.create(name, withData);
 
 describe("API: Customers", () => {
-    describe("lookup()", () => {
+    describe("lookupAddress()", () => {
         it("calls the correct URL", async () => {
             const address = "https://www.example.com";
             const config = Configuration.bind({

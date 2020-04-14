@@ -47,6 +47,22 @@ describe("HttpRequestBuilder", () => {
         const headers: any = options.headers;
         expect(headers["Content-Type"]).toBeUndefined();
     });
+    it("adds a request forgery token header when provided", () => {
+        const token = "rf-token";
+        const builder = new HttpRequestBuilder();
+        const options: any = builder
+            .method("get")
+            .requestForgeryToken(token)
+            .build();
+        const headers: any = options.headers;
+        expect(headers["x-rf-token"]).toEqual(token);
+    });
+    it("throws when a non-existing token is provided for a request forgery token", () => {
+        expect(() => {
+            const builder = new HttpRequestBuilder();
+            builder.requestForgeryToken(undefined);
+        }).toThrowError();
+    });
     it("doesn't add a request body, when a body object is omitted", () => {
         const builder = new HttpRequestBuilder();
         const options: any = builder.method("put").build();

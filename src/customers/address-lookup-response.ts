@@ -18,6 +18,7 @@ export class AddressLookupResponse implements IAddressLookupResponse {
             postalCode: this.response.postalCode,
             street: this.response.street,
             street2: this.response.street2,
+            distance: this.response.distance,
         };
     }
 }

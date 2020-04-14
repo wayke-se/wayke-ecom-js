@@ -10,12 +10,18 @@ export interface IAddressLookupResponse {
     getAddress(): IAddress;
 }
 
+export interface IDistance {
+    value: number;
+    unit: string;
+}
+
 export interface IAddress {
     city: string;
     name: string;
     postalCode: string;
     street: string;
     street2: string;
+    distance?: IDistance | null;
 }
 
 export interface ICustomer {

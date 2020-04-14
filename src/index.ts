@@ -22,6 +22,7 @@ export {
     IAddressLookupRequest,
     IAddressLookupResponse,
     ICustomer,
+    IDistance,
 } from "./customers/types";
 export {
     IInsuranceAddon,
@@ -36,6 +37,7 @@ export {
 } from "./insurances/types";
 export {
     DeliveryType,
+    IDeliveryOption,
     IAvailableInsuranceOption,
     IOrderCreateRequest,
     IOrderCreateResponse,

@@ -69,13 +69,18 @@ export interface IOrderCustomer {
 }
 
 export enum DeliveryType {
+    None = "None",
     Pickup = "Pickup",
     Delivery = "Delivery",
 }
 export interface IDeliveryOption {
-    deliveryTime: string;
-    price: string;
     type: DeliveryType;
+    deliveryTime: string;
+    startupCost: number;
+    unitPrice?: number;
+    unit?: string;
+    minQuantity?: number;
+    maxQuantity?: number;
 }
 
 export interface IAvailableInsuranceOption {

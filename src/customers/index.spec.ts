@@ -78,6 +78,7 @@ describe("Customer Functions", () => {
             await customers.lookupAddress(request);
 
             expect(spy).toHaveBeenCalledWith(request);
+            Configuration.destroy();
         });
     });
 });

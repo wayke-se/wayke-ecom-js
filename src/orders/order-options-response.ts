@@ -42,9 +42,13 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
         }
 
         return this.response.delivery.map(delivery => ({
-            deliveryTime: delivery.deliveryTime,
-            price: delivery.price,
             type: delivery.type,
+            deliveryTime: delivery.deliveryTime,
+            startupCost: delivery.startupCost,
+            unitPrice: delivery.unitPrice,
+            unit: delivery.unit,
+            minQuantity: delivery.minQuantity,
+            maxQuantity: delivery.maxQuantity,
         }));
     }
 
