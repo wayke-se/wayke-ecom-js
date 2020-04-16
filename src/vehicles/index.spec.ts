@@ -69,12 +69,7 @@ describe("Vehicle Functions", () => {
                     })
             );
 
-            Configuration.bind({
-                api: {
-                    address: "https://www.example.com",
-                },
-            });
-
+            Configuration.bind(fixture("IConfiguration"));
             await vehicles.lookupVehicle(request);
 
             expect(spy).toHaveBeenCalledWith(request);

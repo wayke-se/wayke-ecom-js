@@ -103,6 +103,10 @@ describe("Order Functions", () => {
                 api: {
                     address: "https://www.example.com",
                 },
+                origin: {
+                    topic: "example.com",
+                    channel: "channel",
+                },
             });
 
             await orders.create(request);
@@ -139,12 +143,7 @@ describe("Order Functions", () => {
                     })
             );
 
-            Configuration.bind({
-                api: {
-                    address: "https://www.example.com",
-                },
-            });
-
+            Configuration.bind(fixture("IConfiguration"));
             await orders.getOptions(request);
 
             expect(spy).toHaveBeenCalledWith(request);

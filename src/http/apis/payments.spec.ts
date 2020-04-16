@@ -9,12 +9,8 @@ const fixture = (name: string, withValues: any = undefined): any =>
 describe("API: Payments", () => {
     describe("lookup()", () => {
         it("calls the correct URL", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const fake = fixture("IConfiguration");
+            const config = Configuration.bind(fake);
 
             const http = require("..");
             http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
@@ -32,17 +28,12 @@ describe("API: Payments", () => {
             const request = fixture("IPaymentLookupRequest");
             await lookup(request, config);
 
-            const expected = `${address}/payment/${request.id}`;
+            const expected = `${fake.api.address}/payment/${request.id}`;
             const args = http.json.mock.calls[0];
             expect(args[0]).toEqual(expected);
         });
         it("throws error if response was unsuccessful", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const config = Configuration.bind(fixture("IConfiguration"));
 
             const http = require("..");
             http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
@@ -66,12 +57,7 @@ describe("API: Payments", () => {
             expect(err).toBeInstanceOf(Error);
         });
         it("throws error if data validation fails", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const config = Configuration.bind(fixture("IConfiguration"));
 
             const http = require("..");
             http.context = jest.fn(() => ({ requestForgeryToken: "-" }));

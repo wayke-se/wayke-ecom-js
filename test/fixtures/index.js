@@ -1,5 +1,19 @@
 const factory = require("autofixture");
 
+factory.define("IApiConfiguration", [
+    "address",
+]);
+
+factory.define("IOriginConfiguration", [
+    "topic",
+    "channel",
+]);
+
+factory.define("IConfiguration", [
+    "api".fromFixture("IApiConfiguration"),
+    "origin".fromFixture("IOriginConfiguration"),
+]);
+
 factory.define("IApiResponse", [
     "successful".asBoolean(),
     "response",

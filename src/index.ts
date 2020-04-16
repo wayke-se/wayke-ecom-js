@@ -15,6 +15,7 @@ export { vehicles };
 export {
     IConfiguration,
     IApiConfiguration,
+    IOriginConfiguration,
     IConfigurationRoot,
 } from "./config/index";
 export {

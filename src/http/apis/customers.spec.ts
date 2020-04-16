@@ -9,12 +9,8 @@ const fixture = (name: string, withData: any = undefined): any =>
 describe("API: Customers", () => {
     describe("lookupAddress()", () => {
         it("calls the correct URL", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const fake = fixture("IConfiguration");
+            const config = Configuration.bind(fake);
 
             const http = require("..");
             http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
@@ -32,17 +28,12 @@ describe("API: Customers", () => {
             const request = fixture("IAddressLookupRequest");
             await lookupAddress(request, config);
 
-            const expected = `${address}/v2/address?SocialId=${request.personalNumber}`;
+            const expected = `${fake.api.address}/v2/address?SocialId=${request.personalNumber}`;
             const args = http.json.mock.calls[0];
             expect(args[0]).toEqual(expected);
         });
         it("uses request forgery token", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const config = Configuration.bind(fixture("IConfiguration"));
 
             const expected = "rf-token";
             const http = require("..");
@@ -66,12 +57,7 @@ describe("API: Customers", () => {
             expect(headers["x-rf-token"]).toEqual(expected);
         });
         it("sets request forgery token", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const config = Configuration.bind(fixture("IConfiguration"));
 
             const expected = "rf-token";
             const httpContext = { requestForgeryToken: undefined };
@@ -102,12 +88,7 @@ describe("API: Customers", () => {
             expect(httpContext.requestForgeryToken).toEqual(expected);
         });
         it("throws error if response was unsuccessful", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const config = Configuration.bind(fixture("IConfiguration"));
 
             const http = require("..");
             http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
@@ -131,12 +112,7 @@ describe("API: Customers", () => {
             expect(err).toBeInstanceOf(Error);
         });
         it("throws error if data validation fails", async () => {
-            const address = "https://www.example.com";
-            const config = Configuration.bind({
-                api: {
-                    address,
-                },
-            });
+            const config = Configuration.bind(fixture("IConfiguration"));
 
             const http = require("..");
             http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
