@@ -16,6 +16,7 @@ const buildOptionsRequest = (): RequestInit =>
 
 const buildCreateRequest = (
     request: IOrderCreateRequest,
+    config: IConfiguration,
     { requestForgeryToken }: http.IHttpStateContext
 ): RequestInit => {
     const content = {
@@ -38,6 +39,7 @@ const buildCreateRequest = (
             name: request.customer.name,
             address: request.customer.address,
         },
+        origin: config.getOrigin(),
     };
 
     return http
@@ -92,7 +94,7 @@ export const create = (
         .captureStateContext(
             http.json<IOrderCreateResponseData>(
                 `${config.getApiAddress()}/v2/orders`,
-                buildCreateRequest(request, http.context())
+                buildCreateRequest(request, config, http.context())
             )
         )
         .then(validateCreateResponse);

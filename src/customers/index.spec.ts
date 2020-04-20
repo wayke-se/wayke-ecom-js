@@ -69,12 +69,7 @@ describe("Customer Functions", () => {
                     })
             );
 
-            Configuration.bind({
-                api: {
-                    address: "https://www.example.com",
-                },
-            });
-
+            Configuration.bind(fixture("IConfiguration"));
             await customers.lookupAddress(request);
 
             expect(spy).toHaveBeenCalledWith(request);
