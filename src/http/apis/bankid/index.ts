@@ -1,10 +1,9 @@
-import Configuration from "../../config/index";
 import {
     IBankIdAuthRequest,
     IBankIdAuthApiResponse,
-    AuthMethod,
-} from "../../bankid/types";
-import * as http from "../index";
+} from "../../../bankid/types";
+import * as http from "../../index";
+import { getUrl } from "./utils";
 
 const validate = (
     response: http.IApiResponse<IBankIdAuthApiResponse>
@@ -30,24 +29,6 @@ const buildRequest = (requestOptions: IBankIdAuthRequest): RequestInit => {
         .requestForgeryToken(requestForgeryToken)
         .build();
     return request;
-};
-
-const getRoute = (method: AuthMethod) => {
-    switch (method) {
-        case AuthMethod.QrCode:
-            return "/qr-code";
-        case AuthMethod.SameDevice:
-            return "/same-device";
-        default:
-            throw new Error("BankId auth method not supported");
-    }
-};
-
-const getUrl = (requestOptions: IBankIdAuthRequest) => {
-    const route = getRoute(requestOptions.method);
-    const config = Configuration.current();
-    const url = `${config.getApiAddress}/bankid/auth${route}`;
-    return url;
 };
 
 export const auth = (
