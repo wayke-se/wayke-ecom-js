@@ -9,6 +9,7 @@ describe("BankId Functions", () => {
 
             expect(builder).toBeInstanceOf(BankIdAuthRequestBuilder);
         });
+        
         it("returns a new builder instance", () => {
             const b1 = bankid.newAuthRequest();
             const b2 = bankid.newAuthRequest();
