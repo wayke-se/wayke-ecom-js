@@ -222,4 +222,9 @@ factory.define("IVehicleLookupResponse", [
     "valuation".asNumber(),
 ]);
 
+factory.define("IBankIdAuthRequest", [
+    "ipAddress",
+    "method".pickFrom(["SameDevice", "QrCode"]),
+]);
+
 module.exports = factory;
