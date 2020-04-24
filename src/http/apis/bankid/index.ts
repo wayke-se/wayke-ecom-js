@@ -3,7 +3,9 @@ import {
     IBankIdAuthApiResponse,
 } from "../../../bankid/types";
 import * as http from "../../index";
+
 import { getUrl } from "./utils";
+import { buildRequest } from "./request-builder";
 
 const validate = (
     response: http.IApiResponse<IBankIdAuthApiResponse>
@@ -13,22 +15,6 @@ const validate = (
     }
 
     return response.response;
-};
-
-const buildRequest = (requestOptions: IBankIdAuthRequest): RequestInit => {
-    const requestForgeryToken = http.context().requestForgeryToken;
-    const content = {
-        ipAddress: requestOptions.ipAddress,
-    };
-
-    const request = http
-        .builder()
-        .method("post")
-        .content(content)
-        .accept("application/json")
-        .requestForgeryToken(requestForgeryToken)
-        .build();
-    return request;
 };
 
 export const auth = (
