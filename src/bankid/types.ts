@@ -1,6 +1,6 @@
 export enum AuthMethod {
-    SameDevice,
-    QrCode,
+    SameDevice = "SameDevice",
+    QrCode = "QrCode",
 }
 
 export interface IBankIdAuthRequest {
