@@ -14,6 +14,7 @@ export interface IBankIdAuthResponse {
     getOrderRef: () => string;
     getQrCode: () => string | undefined;
     getAutoStartUrl: () => string | undefined;
+    getMethod: () => AuthMethod;
 }
 
 export interface IBankIdAuthApiResponse {

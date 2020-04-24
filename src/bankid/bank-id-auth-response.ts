@@ -25,6 +25,10 @@ export class BankIdAuthResponse implements IBankIdAuthResponse {
         this.method = method;
     }
 
+    public getMethod() {
+        return this.method;
+    }
+
     public isQrCode() {
         return this.method === AuthMethod.QrCode;
     }
