@@ -10,6 +10,7 @@ import resolveMessage from "./message-resolver";
 export class BankIdCollectResponse implements IBankIdCollectRespone {
     private orderRef: string;
     private status: AuthStatus;
+    private hintCode: string | undefined;
     private message: string;
 
     public constructor(
@@ -22,6 +23,7 @@ export class BankIdCollectResponse implements IBankIdCollectRespone {
 
         this.orderRef = response.orderRef;
         this.status = (<any>AuthStatus)[response.status];
+        this.hintCode = response.hintCode;
         this.message = resolveMessage(response.hintCode, method);
     }
 
@@ -31,6 +33,10 @@ export class BankIdCollectResponse implements IBankIdCollectRespone {
 
     getStatus() {
         return this.status;
+    }
+
+    getHintCode() {
+        return this.hintCode;
     }
 
     hasMessage() {

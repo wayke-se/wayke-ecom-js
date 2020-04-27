@@ -32,6 +32,7 @@ export interface IBankIdCollectRequest {
 export interface IBankIdCollectRespone {
     getOrderRef: () => string;
     getStatus: () => AuthStatus;
+    getHintCode: () => string | undefined;
     hasMessage(): boolean;
     getMessage(): string;
 }
