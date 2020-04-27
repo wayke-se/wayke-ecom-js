@@ -42,21 +42,8 @@ describe("BankId Request Builder", () => {
     });
 
     describe(":buildCollectRequest()", () => {
-        let requestOptions: IBankIdCollectRequest;
-
-        beforeAll(() => {
-            requestOptions = fixture("IBankIdCollectRequest");
-        });
-
-        it("Should have body with order ref", () => {
-            const request = buildCollectRequest(requestOptions);
-
-            var parsedBody = JSON.parse(request.body as string);
-            expect(parsedBody).toEqual({ orderRef: requestOptions.orderRef });
-        });
-
         it("Should have request forgery token header", () => {
-            const request = buildCollectRequest(requestOptions);
+            const request = buildCollectRequest();
             expect(request.headers).toHaveProperty(
                 "x-rf-token",
                 requestForgeryToken

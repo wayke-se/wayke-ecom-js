@@ -62,8 +62,11 @@ describe("BankId Api Utils", () => {
         });
 
         it("Should be collect url", () => {
-            var url = getCollectUrl();
-            expect(url).toEqual(`${host}/bankid/collect`);
+            const orderRef = fixture("IBankIdCollectRequest").orderRef;
+            
+            var url = getCollectUrl(orderRef);
+
+            expect(url).toEqual(`${host}/bankid/collect/${orderRef}`);
         });
     });
 });

@@ -1,7 +1,4 @@
-import {
-    IBankIdAuthRequest,
-    IBankIdCollectRequest,
-} from "../../../bankid/types";
+import { IBankIdAuthRequest } from "../../../bankid/types";
 import * as http from "../../index";
 
 export const buildAuthRequest = (
@@ -22,18 +19,12 @@ export const buildAuthRequest = (
     return request;
 };
 
-export const buildCollectRequest = (
-    requestOptions: IBankIdCollectRequest
-): RequestInit => {
+export const buildCollectRequest = (): RequestInit => {
     const requestForgeryToken = http.context().requestForgeryToken;
-    const content = {
-        orderRef: requestOptions.orderRef,
-    };
 
     const request = http
         .builder()
         .method("post")
-        .content(content)
         .accept("application/json")
         .requestForgeryToken(requestForgeryToken)
         .build();

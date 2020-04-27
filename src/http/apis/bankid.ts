@@ -34,8 +34,8 @@ export const auth = (
 export const collect = (
     requestOptions: IBankIdCollectRequest
 ): Promise<IBankIdCollectApiResponse> => {
-    const url = getCollectUrl();
-    const request = buildCollectRequest(requestOptions);
+    const url = getCollectUrl(requestOptions.orderRef);
+    const request = buildCollectRequest();
 
     return http
         .captureStateContext(http.json<IBankIdCollectApiResponse>(url, request))
