@@ -2,7 +2,7 @@ const fixtures = require("../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
 import { IBankIdCollectApiResponse, IBankIdCollectRespone, IBankIdCollectRequest } from "./types";
-import { BankIdCollectResponse } from "./bank-id-collect-response";
+import { BankIdCollectResponse } from "./bankid-collect-response";
 
 describe("BankId Collect Response", () => {
     let request: IBankIdCollectRequest;

@@ -6,10 +6,6 @@ export class BankIdAuthRequestBuilder {
             throw new Error("Request can not be falsy");
         }
 
-        if (!request.ipAddress) {
-            throw new Error("Missing ip address");
-        }
-
         if (!request.method) {
             throw new Error("Missing auth method");
         }

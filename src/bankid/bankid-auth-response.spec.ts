@@ -6,7 +6,7 @@ import {
     IBankIdAuthResponse,
     IBankIdAuthApiResponse,
 } from "./types";
-import { BankIdAuthResponse } from "./bank-id-auth-response";
+import { BankIdAuthResponse } from "./bankid-auth-response";
 
 describe("BankId Auth Response", () => {
     describe("Given qr code method", () => {

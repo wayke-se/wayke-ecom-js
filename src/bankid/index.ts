@@ -2,7 +2,7 @@ import * as api from "../http/apis/bankid";
 
 import { BankIdAuthRequestBuilder } from "./bankid-auth-request-builder";
 import { IBankIdAuthRequest } from "./types";
-import { BankIdAuthResponse } from "./bank-id-auth-response";
+import { BankIdAuthResponse } from "./bankid-auth-response";
 
 export const newAuthRequest = () => new BankIdAuthRequestBuilder();
 

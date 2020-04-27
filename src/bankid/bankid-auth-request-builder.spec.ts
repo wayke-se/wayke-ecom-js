@@ -7,18 +7,10 @@ import { AuthMethod } from "./types";
 const BANK_ID_AUTH_REQUEST = "IBankIdAuthRequest";
 
 describe("BankIdAuthRequestBuilder", () => {
-    describe(".validateRequest()", () => {
+    describe(".validate()", () => {
         it("given null request, should throw", () => {
             expect(() => {
                 BankIdAuthRequestBuilder.validate(null as any);
-            }).toThrowError();
-        });
-
-        it("given missing ip address, should throw", () => {
-            expect(() => {
-                const request = fixture(BANK_ID_AUTH_REQUEST);
-                delete request.ipAddress;
-                BankIdAuthRequestBuilder.validate(request);
             }).toThrowError();
         });
 
