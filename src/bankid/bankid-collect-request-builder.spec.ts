@@ -2,7 +2,7 @@ const fixtures = require("../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
 import { BankIdCollectRequestBuilder } from "./bankid-collect-request-builder";
-import { IBankIdCollectRequest, AuthMethod } from "./types";
+import { AuthMethod } from "./types";
 
 const REQUEST_NAME = "IBankIdCollectRequest";
 

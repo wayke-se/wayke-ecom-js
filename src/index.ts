@@ -65,4 +65,9 @@ export {
     IVehicleLookupResponse,
     VehicleCondition,
 } from "./vehicles/types";
-export { IBankIdAuthResponse, AuthMethod } from "./bankid/types";
+export {
+    IBankIdAuthResponse,
+    AuthMethod,
+    IBankIdCollectResponse,
+    AuthStatus,
+} from "./bankid/types";

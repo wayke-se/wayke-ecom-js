@@ -1,5 +1,5 @@
 import {
-    IBankIdCollectRespone,
+    IBankIdCollectResponse,
     AuthStatus,
     IBankIdCollectApiResponse,
     AuthMethod,
@@ -7,7 +7,7 @@ import {
 
 import resolveMessage from "./message-resolver";
 
-export class BankIdCollectResponse implements IBankIdCollectRespone {
+export class BankIdCollectResponse implements IBankIdCollectResponse {
     private orderRef: string;
     private status: AuthStatus;
     private hintCode: string | undefined;

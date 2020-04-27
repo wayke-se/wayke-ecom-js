@@ -29,7 +29,7 @@ export interface IBankIdCollectRequest {
     method: AuthMethod;
 }
 
-export interface IBankIdCollectRespone {
+export interface IBankIdCollectResponse {
     getOrderRef: () => string;
     getStatus: () => AuthStatus;
     getHintCode: () => string | undefined;

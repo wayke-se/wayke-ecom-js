@@ -1,13 +1,13 @@
 const fixtures = require("../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
-import { IBankIdCollectApiResponse, IBankIdCollectRespone, IBankIdCollectRequest } from "./types";
+import { IBankIdCollectApiResponse, IBankIdCollectResponse, IBankIdCollectRequest } from "./types";
 import { BankIdCollectResponse } from "./bankid-collect-response";
 
 describe("BankId Collect Response", () => {
     let request: IBankIdCollectRequest;
     let apiResponse: IBankIdCollectApiResponse;
-    let response: IBankIdCollectRespone;
+    let response: IBankIdCollectResponse;
 
     beforeAll(() => {
         request = fixture("IBankIdCollectRequest");
