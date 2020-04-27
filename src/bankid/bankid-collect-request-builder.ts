@@ -19,6 +19,18 @@ export class BankIdCollectRequestBuilder {
         [key: string]: any;
     } = {};
 
+    public withMethod(method: AuthMethod) {
+        this.properties.method = method;
+
+        return this;
+    }
+
+    public withOrderRef(orderRef: string) {
+        this.properties.orderRef = orderRef;
+
+        return this;
+    }
+
     public build(): IBankIdCollectRequest {
         return this.properties as IBankIdCollectRequest;
     }
