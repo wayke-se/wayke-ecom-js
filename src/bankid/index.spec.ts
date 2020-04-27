@@ -2,8 +2,9 @@ const fixtures = require("../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
 import { BankIdAuthRequestBuilder } from "./bankid-auth-request-builder";
-import { IBankIdAuthRequest, AuthMethod } from "./types";
+import { IBankIdAuthRequest, AuthMethod, IBankIdCollectRequest } from "./types";
 import * as bankid from ".";
+import { BankIdCollectRequestBuilder } from "./bankid-collect-request-builder";
 
 const api = require("../http/apis/bankid");
 
@@ -18,6 +19,21 @@ describe("BankId Functions", () => {
         it("returns a new builder instance", () => {
             const b1 = bankid.newAuthRequest();
             const b2 = bankid.newAuthRequest();
+
+            expect(b1).not.toBe(b2);
+        });
+    });
+
+    describe(":newCollectRequest()", () => {
+        it("returns correct builder type", () => {
+            const builder = bankid.newCollectRequest();
+
+            expect(builder).toBeInstanceOf(BankIdCollectRequestBuilder);
+        });
+
+        it("returns a new builder instance", () => {
+            const b1 = bankid.newCollectRequest();
+            const b2 = bankid.newCollectRequest();
 
             expect(b1).not.toBe(b2);
         });
@@ -52,6 +68,33 @@ describe("BankId Functions", () => {
 
         afterAll(() => {
             api.auth.mockClear();
+        });
+    });
+
+    describe(":collect()", () => {
+        let request: IBankIdCollectRequest;
+
+        beforeAll(() => {
+            api.collect = jest.fn().mockImplementation(
+                () =>
+                    new Promise(resolve => {
+                        const response = fixture("IBankIdCollectApiResponse");
+                        resolve(response);
+                    })
+            );
+
+            request = fixture("IBankIdCollectRequest");
+        });
+
+        it("Should validate request", async () => {
+            const spy = jest.spyOn(BankIdCollectRequestBuilder, "validate");
+            await bankid.collect(request);
+
+            expect(spy).toHaveBeenCalledWith(request);
+        });
+
+        afterAll(() => {
+            api.collect.mockClear();
         });
     });
 });
