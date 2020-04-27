@@ -234,4 +234,8 @@ factory.define("IBankIdAuthApiResponse", [
     "autoStartUrl",
 ]);
 
+factory.define("IBankIdCollectRequest", [
+    "orderRef",
+]);
+
 module.exports = factory;

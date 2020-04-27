@@ -23,3 +23,7 @@ export interface IBankIdAuthApiResponse {
     autoStartUrl: string | undefined;
     method: AuthMethod;
 }
+
+export interface IBankIdCollectRequest {
+    orderRef: string;
+}

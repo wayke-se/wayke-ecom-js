@@ -2,7 +2,7 @@ import { IBankIdAuthRequest, IBankIdAuthApiResponse } from "../../bankid/types";
 import * as http from "../index";
 
 import { getUrl } from "./bankid/utils";
-import { buildRequest } from "./bankid/request-builder";
+import { auth as buildAuthRequest } from "./bankid/request-builder";
 
 const validate = (
     response: http.IApiResponse<IBankIdAuthApiResponse>
@@ -18,7 +18,7 @@ export const auth = (
     requestOptions: IBankIdAuthRequest,
 ): Promise<IBankIdAuthApiResponse> => {
     const url = getUrl(requestOptions);
-    const request = buildRequest(requestOptions);
+    const request = buildAuthRequest(requestOptions);
 
     return http
         .captureStateContext(http.json<IBankIdAuthApiResponse>(url, request))
