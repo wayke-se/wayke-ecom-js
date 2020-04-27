@@ -1,12 +1,12 @@
-const fixtures = require("../../../../test/fixtures");
+const fixtures = require("../../../test/fixtures");
 const fixture = (name: string, withValues: any = undefined): any =>
     fixtures.create(name, withValues);
 
-import { auth } from "./";
+import { auth } from "./bankid";
 
-const http = require("../..");
-const utils = require("./utils");
-const requestBuilder = require("./request-builder");
+const http = require("..");
+const utils = require("./bankid/utils");
+const requestBuilder = require("./bankid/request-builder");
 
 describe("API: BankId", () => {
     beforeAll(() => {

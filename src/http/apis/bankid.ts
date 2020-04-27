@@ -1,11 +1,8 @@
-import {
-    IBankIdAuthRequest,
-    IBankIdAuthApiResponse,
-} from "../../../bankid/types";
-import * as http from "../../index";
+import { IBankIdAuthRequest, IBankIdAuthApiResponse } from "../../bankid/types";
+import * as http from "../index";
 
-import { getUrl } from "./utils";
-import { buildRequest } from "./request-builder";
+import { getUrl } from "./bankid/utils";
+import { buildRequest } from "./bankid/request-builder";
 
 const validate = (
     response: http.IApiResponse<IBankIdAuthApiResponse>
