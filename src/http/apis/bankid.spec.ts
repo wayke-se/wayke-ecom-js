@@ -2,7 +2,7 @@ const fixtures = require("../../../test/fixtures");
 const fixture = (name: string, withValues: any = undefined): any =>
     fixtures.create(name, withValues);
 
-import { auth } from "./bankid";
+import { auth, collect } from "./bankid";
 
 const http = require("..");
 const utils = require("./bankid/utils");
@@ -12,24 +12,40 @@ describe("API: BankId", () => {
     beforeAll(() => {
         utils.getUrl = jest.fn();
         requestBuilder.buildRequest = jest.fn();
+
+        http.json = jest.fn(
+            () =>
+                new Promise(resolve => {
+                    const response = fixture("IApiResponse", {
+                        successful: false,
+                    });
+                    resolve(response);
+                })
+        );
     });
 
     describe(":auth()", () => {
         it("throws error if response was unsuccessful", async () => {
-            http.json = jest.fn(
-                () =>
-                    new Promise(resolve => {
-                        const response = fixture("IApiResponse", {
-                            successful: false,
-                        });
-                        resolve(response);
-                    })
-            );
             const request = fixture("IBankIdAuthRequest");
-            
+
             let err: any;
             try {
                 await auth(request);
+            } catch (e) {
+                err = e;
+            }
+
+            expect(err).toBeInstanceOf(Error);
+        });
+    });
+
+    describe(":collect()", () => {
+        it("throws error if response was unsuccessful", async () => {
+            const request = fixture("IBankIdCollectRequest");
+
+            let err: any;
+            try {
+                await collect(request);
             } catch (e) {
                 err = e;
             }

@@ -29,7 +29,7 @@ describe("BankIdAuthRequestBuilder", () => {
                 BankIdAuthRequestBuilder.validate(request);
             }).toThrowError();
         });
-        
+
         it("does not throw for valid requests", () => {
             expect(() => {
                 const request = fixture(BANK_ID_AUTH_REQUEST);
@@ -64,7 +64,7 @@ describe("BankIdAuthRequestBuilder", () => {
                 .withIpAddress(expected.ipAddress)
                 .build();
 
-                expect(actual).toEqual(expected);
+            expect(actual).toEqual(expected);
         });
     });
 });

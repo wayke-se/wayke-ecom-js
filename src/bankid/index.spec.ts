@@ -14,7 +14,7 @@ describe("BankId Functions", () => {
 
             expect(builder).toBeInstanceOf(BankIdAuthRequestBuilder);
         });
-        
+
         it("returns a new builder instance", () => {
             const b1 = bankid.newAuthRequest();
             const b2 = bankid.newAuthRequest();
@@ -39,10 +39,7 @@ describe("BankId Functions", () => {
         });
 
         it("Should validate request", async () => {
-            const spy = jest.spyOn(
-                BankIdAuthRequestBuilder,
-                "validate"
-            );
+            const spy = jest.spyOn(BankIdAuthRequestBuilder, "validate");
             await bankid.auth(request);
 
             expect(spy).toHaveBeenCalledWith(request);

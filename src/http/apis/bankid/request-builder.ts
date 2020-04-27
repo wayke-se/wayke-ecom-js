@@ -4,7 +4,9 @@ import {
 } from "../../../bankid/types";
 import * as http from "../../index";
 
-export const auth = (requestOptions: IBankIdAuthRequest): RequestInit => {
+export const buildAuthRequest = (
+    requestOptions: IBankIdAuthRequest
+): RequestInit => {
     const requestForgeryToken = http.context().requestForgeryToken;
     const content = {
         ipAddress: requestOptions.ipAddress,
@@ -20,7 +22,9 @@ export const auth = (requestOptions: IBankIdAuthRequest): RequestInit => {
     return request;
 };
 
-export const collect = (requestOptions: IBankIdCollectRequest): RequestInit => {
+export const buildCollectRequest = (
+    requestOptions: IBankIdCollectRequest
+): RequestInit => {
     const requestForgeryToken = http.context().requestForgeryToken;
     const content = {
         orderRef: requestOptions.orderRef,

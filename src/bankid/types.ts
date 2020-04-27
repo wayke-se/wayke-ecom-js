@@ -26,4 +26,30 @@ export interface IBankIdAuthApiResponse {
 
 export interface IBankIdCollectRequest {
     orderRef: string;
+    method: AuthMethod;
+}
+
+export interface IBankIdCollectRespone {
+    getOrderRef: () => string;
+    getStatus: () => AuthStatus;
+    hasMessage(): boolean;
+    getMessage(): string;
+}
+
+export enum AuthStatus {
+    Pending = "Pending",
+    Failed = "Failed",
+    Complete = "Complete",
+}
+
+export interface IBankIdCollectApiResponse {
+    orderRef: string;
+    status: string;
+    hintCode: string | undefined;
+    completionData: IBankIdCompletionData | undefined;
+}
+
+export interface IBankIdCompletionData {
+    signature: string;
+    ocspResponse: string;
 }

@@ -236,6 +236,29 @@ factory.define("IBankIdAuthApiResponse", [
 
 factory.define("IBankIdCollectRequest", [
     "orderRef",
+    "method".pickFrom(["SameDevice", "QrCode"]),
+]);
+
+factory.define("IBankIdCollectApiResponse", [
+    "orderRef",
+    "status".pickFrom(["Pending", "Failed", "Complete"]),
+    "hintCode".pickFrom([
+        "outstandingTransaction",
+        "noClient",
+        "started",
+        "userSign",
+        "expiredTransaction",
+        "certificateErr",
+        "userCancel",
+        "cancelled",
+        "startFailed",
+        ""
+    ]),
+    "completionData".fromFixture("IBankIdCompletionData"),
+]);
+factory.define("IBankIdCompletionData", [
+    "signature",
+    "ocspResponse",
 ]);
 
 module.exports = factory;

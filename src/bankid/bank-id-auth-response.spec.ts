@@ -1,13 +1,17 @@
 const fixtures = require("../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
-import { AuthMethod, IBankIdAuthResponse, IBankIdAuthApiResponse } from "./types";
+import {
+    AuthMethod,
+    IBankIdAuthResponse,
+    IBankIdAuthApiResponse,
+} from "./types";
 import { BankIdAuthResponse } from "./bank-id-auth-response";
 
 describe("BankId Auth Response", () => {
     describe("Given qr code method", () => {
-        let apiResponse: IBankIdAuthApiResponse
-        let response: IBankIdAuthResponse
+        let apiResponse: IBankIdAuthApiResponse;
+        let response: IBankIdAuthResponse;
 
         beforeAll(() => {
             apiResponse = fixture("IBankIdAuthApiResponse");
@@ -30,12 +34,15 @@ describe("BankId Auth Response", () => {
     });
 
     describe("Given same device method", () => {
-        let apiResponse: IBankIdAuthApiResponse
-        let response: IBankIdAuthResponse
+        let apiResponse: IBankIdAuthApiResponse;
+        let response: IBankIdAuthResponse;
 
         beforeAll(() => {
             apiResponse = fixture("IBankIdAuthApiResponse");
-            response = new BankIdAuthResponse(apiResponse, AuthMethod.SameDevice);
+            response = new BankIdAuthResponse(
+                apiResponse,
+                AuthMethod.SameDevice
+            );
         });
 
         it("Should be same device response", () => {
@@ -43,7 +50,9 @@ describe("BankId Auth Response", () => {
         });
 
         it("Should have auto start url", () => {
-            expect(response.getAutoStartUrl()).toEqual(apiResponse.autoStartUrl);
+            expect(response.getAutoStartUrl()).toEqual(
+                apiResponse.autoStartUrl
+            );
         });
 
         it(":getQrCode(), should throw", () => {

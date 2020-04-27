@@ -1,12 +1,18 @@
-import { IBankIdAuthRequest, IBankIdAuthApiResponse } from "../../bankid/types";
+import {
+    IBankIdAuthRequest,
+    IBankIdAuthApiResponse,
+    IBankIdCollectRequest,
+    IBankIdCollectApiResponse,
+} from "../../bankid/types";
 import * as http from "../index";
 
-import { getUrl } from "./bankid/utils";
-import { auth as buildAuthRequest } from "./bankid/request-builder";
+import { getAuthUrl, getCollectUrl } from "./bankid/utils";
+import {
+    buildAuthRequest,
+    buildCollectRequest,
+} from "./bankid/request-builder";
 
-const validate = (
-    response: http.IApiResponse<IBankIdAuthApiResponse>
-): IBankIdAuthApiResponse => {
+const validate = <T>(response: http.IApiResponse<T>): T => {
     if (!response || !response.successful || !response.response) {
         throw new Error("The request did not succeed");
     }
@@ -15,12 +21,23 @@ const validate = (
 };
 
 export const auth = (
-    requestOptions: IBankIdAuthRequest,
+    requestOptions: IBankIdAuthRequest
 ): Promise<IBankIdAuthApiResponse> => {
-    const url = getUrl(requestOptions);
+    const url = getAuthUrl(requestOptions);
     const request = buildAuthRequest(requestOptions);
 
     return http
         .captureStateContext(http.json<IBankIdAuthApiResponse>(url, request))
+        .then(validate);
+};
+
+export const collect = (
+    requestOptions: IBankIdCollectRequest
+): Promise<IBankIdCollectApiResponse> => {
+    const url = getCollectUrl();
+    const request = buildCollectRequest(requestOptions);
+
+    return http
+        .captureStateContext(http.json<IBankIdCollectApiResponse>(url, request))
         .then(validate);
 };

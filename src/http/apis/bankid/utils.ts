@@ -12,9 +12,15 @@ const getRoute = (method: AuthMethod) => {
     }
 };
 
-export const getUrl = (requestOptions: IBankIdAuthRequest) => {
+export const getAuthUrl = (requestOptions: IBankIdAuthRequest) => {
     const route = getRoute(requestOptions.method);
     const host = Configuration.current().getApiAddress();
     const url = `${host}/bankid/auth${route}`;
+    return url;
+};
+
+export const getCollectUrl = () => {
+    const host = Configuration.current().getApiAddress();
+    const url = `${host}/bankid/collect`;
     return url;
 };

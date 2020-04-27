@@ -1,8 +1,11 @@
 const fixtures = require("../../../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
-import { auth, collect } from "./request-builder";
-import { IBankIdAuthRequest, IBankIdCollectRequest } from "../../../bankid/types";
+import { buildAuthRequest, buildCollectRequest } from "./request-builder";
+import {
+    IBankIdAuthRequest,
+    IBankIdCollectRequest,
+} from "../../../bankid/types";
 
 const http = require("../../");
 
@@ -15,43 +18,49 @@ describe("BankId Request Builder", () => {
         requestForgeryToken = response.requestForgeryToken;
     });
 
-    describe(":buildRequest(IBankIdAuthRequest)", () => {
+    describe(":buildAuthRequest()", () => {
         let requestOptions: IBankIdAuthRequest;
-    
+
         beforeAll(() => {
             requestOptions = fixture("IBankIdAuthRequest");
         });
 
         it("Should have body with ip address", () => {
-            const request = auth(requestOptions);
+            const request = buildAuthRequest(requestOptions);
 
             var parsedBody = JSON.parse(request.body as string);
             expect(parsedBody).toEqual({ ipAddress: requestOptions.ipAddress });
         });
 
         it("Should have request forgery token header", () => {
-            const request = auth(requestOptions);
-            expect(request.headers).toHaveProperty("x-rf-token", requestForgeryToken);
+            const request = buildAuthRequest(requestOptions);
+            expect(request.headers).toHaveProperty(
+                "x-rf-token",
+                requestForgeryToken
+            );
         });
     });
 
-    describe(":buildRequest(IBankIdCollectRequest)", () => {
+    describe(":buildCollectRequest()", () => {
         let requestOptions: IBankIdCollectRequest;
-    
+
         beforeAll(() => {
             requestOptions = fixture("IBankIdCollectRequest");
         });
 
         it("Should have body with order ref", () => {
-            const request = collect(requestOptions);
+            const request = buildCollectRequest(requestOptions);
 
             var parsedBody = JSON.parse(request.body as string);
             expect(parsedBody).toEqual({ orderRef: requestOptions.orderRef });
         });
 
         it("Should have request forgery token header", () => {
-            const request = collect(requestOptions);
-            expect(request.headers).toHaveProperty("x-rf-token", requestForgeryToken);
+            const request = buildCollectRequest(requestOptions);
+            expect(request.headers).toHaveProperty(
+                "x-rf-token",
+                requestForgeryToken
+            );
         });
     });
 });
