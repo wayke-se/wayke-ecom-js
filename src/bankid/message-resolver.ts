@@ -27,7 +27,7 @@ const cancelled = () => "Åtgärden avbruten. Försök igen.";
 
 const startFailed = (method: AuthMethod) => {
     if (method === AuthMethod.QrCode) {
-        return "Misslyckades att läsa av QR koden. Starta BankID-appen och läs av QR koden. Om du inte har BankID-appen måste du installera den och hämta ett BankID hos din internetbank. Installera appenfrån din appbutik eller https://install.bankid.com.";
+        return "Starta BankID-appen.";
     }
     return "BankID-appenverkar inte finnas i din dator eller telefon. Installera denoch hämta ett BankID hos din internetbank. Installera appenfrån din appbutik eller https://install.bankid.com.";
 };

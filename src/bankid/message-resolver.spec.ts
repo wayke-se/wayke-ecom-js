@@ -69,7 +69,7 @@ describe("BankId Message Resolver", () => {
         {
             hintCode: "startFailed",
             method: AuthMethod.QrCode,
-            expected: "Misslyckades att läsa av QR koden. Starta BankID-appen och läs av QR koden. Om du inte har BankID-appen måste du installera den och hämta ett BankID hos din internetbank. Installera appenfrån din appbutik eller https://install.bankid.com."
+            expected: "Starta BankID-appen."
         },
     ];
 

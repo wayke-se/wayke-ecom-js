@@ -241,7 +241,7 @@ factory.define("IBankIdCollectRequest", [
 
 factory.define("IBankIdCollectApiResponse", [
     "orderRef",
-    "status".pickFrom(["Pending", "Failed", "Complete"]),
+    "status".pickFrom(["pending", "failed", "complete"]),
     "hintCode".pickFrom([
         "outstandingTransaction",
         "noClient",

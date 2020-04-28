@@ -32,15 +32,18 @@ export interface IBankIdCollectRequest {
 export interface IBankIdCollectResponse {
     getOrderRef: () => string;
     getStatus: () => AuthStatus;
+    isPending: () => boolean;
     getHintCode: () => string | undefined;
     hasMessage(): boolean;
     getMessage(): string;
+    shouldRenew(): boolean;
 }
 
 export enum AuthStatus {
-    Pending = "Pending",
-    Failed = "Failed",
-    Complete = "Complete",
+    Pending = "pending",
+    Failed = "failed",
+    Complete = "complete",
+    Unknown = "unknown",
 }
 
 export interface IBankIdCollectApiResponse {
