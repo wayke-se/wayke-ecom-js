@@ -65,10 +65,10 @@ describe("BankId Collect Response", () => {
             expect(response.getStatus()).toBe(AuthStatus.Complete);
         });
     
-        it("Should have user", () => {
-            var apiUser = apiResponse.completionData &&
-                apiResponse.completionData.user;
-            expect(response.getUser()).toEqual(apiUser);
+        it("Should have personal number", () => {
+            var apiPersonalNumber = apiResponse.completionData &&
+                apiResponse.completionData.personalNumber;
+            expect(response.getPersonalNumber()).toEqual(apiPersonalNumber);
         });
     
         it("Should have address", () => {

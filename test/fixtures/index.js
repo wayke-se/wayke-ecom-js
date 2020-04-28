@@ -259,14 +259,8 @@ factory.define("IBankIdCollectApiResponse", [
 factory.define("IBankIdCompletionData", [
     "signature",
     "ocspResponse",
-    "user".fromFixture("IBankIdUser"),
+    "personalNumber",
     "address".fromFixture("IAddress"),
-]);
-factory.define("IBankIdUser", [
-    "name",
-    "givenName",
-    "surname",
-    "personalIdentityNumber",
 ]);
 
 module.exports = factory;

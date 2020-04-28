@@ -39,7 +39,7 @@ export interface IBankIdCollectResponse {
     hasMessage(): boolean;
     getMessage(): string;
     shouldRenew(): boolean;
-    getUser(): IBankIdUser | undefined;
+    getPersonalNumber(): string | undefined;
     getAddress(): IAddress | undefined;
 }
 
@@ -60,13 +60,6 @@ export interface IBankIdCollectApiResponse {
 export interface IBankIdCompletionData {
     signature: string;
     ocspResponse: string;
-    user: IBankIdUser;
+    personalNumber: string;
     address: IAddress;
-}
-
-export interface IBankIdUser {
-    name: string;
-    givenName: string;
-    surname: string;
-    personalIdentityNumber: string;
 }

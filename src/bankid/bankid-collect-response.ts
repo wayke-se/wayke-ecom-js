@@ -3,7 +3,6 @@ import {
     AuthStatus,
     IBankIdCollectApiResponse,
     AuthMethod,
-    IBankIdUser,
 } from "./types";
 
 import resolveMessage from "./message-resolver";
@@ -17,7 +16,7 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
     private hintCode?: string;
     private message: string;
     private method: AuthMethod;
-    private user?: IBankIdUser;
+    private personalNumber?: string;
     private address?: IAddress;
 
     public constructor(
@@ -36,7 +35,7 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
 
         const isCompleted = this.status === AuthStatus.Complete;
         if (isCompleted && !!response.completionData) {
-            this.user = response.completionData.user;
+            this.personalNumber = response.completionData.personalNumber;
             this.address = response.completionData.address;
         }
     }
@@ -85,8 +84,8 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
         );
     }
 
-    getUser() {
-        return this.user;
+    getPersonalNumber() {
+        return this.personalNumber;
     }
 
     getAddress() {
