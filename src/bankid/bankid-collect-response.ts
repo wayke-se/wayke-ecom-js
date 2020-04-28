@@ -3,18 +3,22 @@ import {
     AuthStatus,
     IBankIdCollectApiResponse,
     AuthMethod,
+    IBankIdUser,
 } from "./types";
 
 import resolveMessage from "./message-resolver";
+import { IAddress } from "../customers/types";
 
 export class BankIdCollectResponse implements IBankIdCollectResponse {
     static START_FAILED_CODE = "startFailed";
 
     private orderRef: string;
     private status: AuthStatus;
-    private hintCode: string | undefined;
+    private hintCode?: string;
     private message: string;
     private method: AuthMethod;
+    private user?: IBankIdUser;
+    private address?: IAddress;
 
     public constructor(
         response: IBankIdCollectApiResponse,
@@ -29,6 +33,12 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
         this.hintCode = response.hintCode;
         this.message = resolveMessage(response.hintCode, method);
         this.method = method;
+
+        const isCompleted = this.status === AuthStatus.Complete;
+        if (isCompleted && !!response.completionData) {
+            this.user = response.completionData.user;
+            this.address = response.completionData.address;
+        }
     }
 
     private parseStatus(status: string) {
@@ -73,5 +83,13 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
             this.method === AuthMethod.QrCode &&
             this.hintCode === BankIdCollectResponse.START_FAILED_CODE
         );
+    }
+
+    getUser() {
+        return this.user;
+    }
+
+    getAddress() {
+        return this.address;
     }
 }

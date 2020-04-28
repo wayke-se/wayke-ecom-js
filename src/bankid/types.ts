@@ -1,3 +1,5 @@
+import { IAddress } from "../customers/types";
+
 export enum AuthMethod {
     SameDevice = "SameDevice",
     QrCode = "QrCode",
@@ -37,6 +39,8 @@ export interface IBankIdCollectResponse {
     hasMessage(): boolean;
     getMessage(): string;
     shouldRenew(): boolean;
+    getUser(): IBankIdUser | undefined;
+    getAddress(): IAddress | undefined;
 }
 
 export enum AuthStatus {
@@ -49,11 +53,20 @@ export enum AuthStatus {
 export interface IBankIdCollectApiResponse {
     orderRef: string;
     status: string;
-    hintCode: string | undefined;
-    completionData: IBankIdCompletionData | undefined;
+    hintCode?: string;
+    completionData?: IBankIdCompletionData;
 }
 
 export interface IBankIdCompletionData {
     signature: string;
     ocspResponse: string;
+    user: IBankIdUser;
+    address: IAddress;
+}
+
+export interface IBankIdUser {
+    name: string;
+    givenName: string;
+    surname: string;
+    personalIdentityNumber: string;
 }

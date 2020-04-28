@@ -5,7 +5,8 @@ import {
     IBankIdCollectApiResponse,
     IBankIdCollectResponse,
     IBankIdCollectRequest,
-    AuthMethod
+    AuthMethod,
+    AuthStatus
 } from "./types";
 import { BankIdCollectResponse } from "./bankid-collect-response";
 
@@ -32,18 +33,48 @@ describe("BankId Collect Response", () => {
         it("Should have hint code", () => {
             expect(response.getHintCode()).toEqual(apiResponse.hintCode);
         });
-    })
+    });
 
     describe("Given expired qr code", () => {
-        const request = fixture("IBankIdCollectRequest");
-        const apiResponse = fixtures.create("IBankIdCollectApiResponse", (res: IBankIdCollectApiResponse) => {
-            res.hintCode = BankIdCollectResponse.START_FAILED_CODE;
-            return res;
-        });
-        const response = new BankIdCollectResponse(apiResponse, AuthMethod.QrCode);
-    
         it("Should renew", () => {
+            const apiResponse = fixtures.create("IBankIdCollectApiResponse", (res: IBankIdCollectApiResponse) => {
+                res.hintCode = BankIdCollectResponse.START_FAILED_CODE;
+                return res;
+            });
+            const response = new BankIdCollectResponse(apiResponse, AuthMethod.QrCode);
+
             expect(response.shouldRenew()).toBeTruthy();
         });
-    })
+    });
+
+    describe("Given complete response", () => {
+        let request: IBankIdCollectRequest;
+        let apiResponse: IBankIdCollectApiResponse;
+        let response: IBankIdCollectResponse;
+    
+        beforeAll(() => {
+            request = fixture("IBankIdCollectRequest");
+            apiResponse = fixtures.create("IBankIdCollectApiResponse", (res: IBankIdCollectApiResponse) => {
+                res.status = "complete";
+                return res;
+            });
+            response = new BankIdCollectResponse(apiResponse, request.method);
+        });
+    
+        it("Should have completed status", () => {
+            expect(response.getStatus()).toBe(AuthStatus.Complete);
+        });
+    
+        it("Should have user", () => {
+            var apiUser = apiResponse.completionData &&
+                apiResponse.completionData.user;
+            expect(response.getUser()).toEqual(apiUser);
+        });
+    
+        it("Should have address", () => {
+            const apiAddress = apiResponse.completionData &&
+                apiResponse.completionData.address;
+            expect(response.getAddress()).toEqual(apiAddress);
+        });
+    });
 });
