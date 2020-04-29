@@ -5,6 +5,7 @@ import { BankIdAuthRequestBuilder } from "./bankid-auth-request-builder";
 import { IBankIdAuthRequest, AuthMethod, IBankIdCollectRequest } from "./types";
 import * as bankid from ".";
 import { BankIdCollectRequestBuilder } from "./bankid-collect-request-builder";
+import { BankIdCancelRequestBuilder } from "./bankid-cancel-request-builder";
 
 const api = require("../http/apis/bankid");
 
@@ -34,6 +35,21 @@ describe("BankId Functions", () => {
         it("returns a new builder instance", () => {
             const b1 = bankid.newCollectRequest();
             const b2 = bankid.newCollectRequest();
+
+            expect(b1).not.toBe(b2);
+        });
+    });
+
+    describe(":newCancelRequest()", () => {
+        it("returns correct builder type", () => {
+            const builder = bankid.newCancelRequest();
+
+            expect(builder).toBeInstanceOf(BankIdCancelRequestBuilder);
+        });
+
+        it("returns a new builder instance", () => {
+            const b1 = bankid.newCancelRequest();
+            const b2 = bankid.newCancelRequest();
 
             expect(b1).not.toBe(b2);
         });
@@ -72,8 +88,6 @@ describe("BankId Functions", () => {
     });
 
     describe(":collect()", () => {
-        let request: IBankIdCollectRequest;
-
         beforeAll(() => {
             api.collect = jest.fn().mockImplementation(
                 () =>
@@ -83,12 +97,34 @@ describe("BankId Functions", () => {
                     })
             );
 
-            request = fixture("IBankIdCollectRequest");
+        });
+        
+        it("Should validate request", async () => {
+            const request = fixture("IBankIdCollectRequest");
+            const spy = jest.spyOn(BankIdCollectRequestBuilder, "validate");
+            
+            await bankid.collect(request);
+
+            expect(spy).toHaveBeenCalledWith(request);
+        });
+
+        afterAll(() => {
+            api.collect.mockClear();
+        });
+    });
+
+    describe(":collect()", () => {
+        beforeAll(() => {
+            api.cancel = jest.fn().mockImplementation(
+                () => new Promise(resolve => resolve(true))
+            );
         });
 
         it("Should validate request", async () => {
-            const spy = jest.spyOn(BankIdCollectRequestBuilder, "validate");
-            await bankid.collect(request);
+            const request = fixture("IBankIdCancelRequest");
+            const spy = jest.spyOn(BankIdCancelRequestBuilder, "validate");
+            
+            await bankid.cancel(request);
 
             expect(spy).toHaveBeenCalledWith(request);
         });
