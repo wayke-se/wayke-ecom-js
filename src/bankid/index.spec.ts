@@ -96,13 +96,12 @@ describe("BankId Functions", () => {
                         resolve(response);
                     })
             );
-
         });
-        
+
         it("Should validate request", async () => {
             const request = fixture("IBankIdCollectRequest");
             const spy = jest.spyOn(BankIdCollectRequestBuilder, "validate");
-            
+
             await bankid.collect(request);
 
             expect(spy).toHaveBeenCalledWith(request);
@@ -113,17 +112,19 @@ describe("BankId Functions", () => {
         });
     });
 
-    describe(":collect()", () => {
+    describe(":cancel()", () => {
         beforeAll(() => {
-            api.cancel = jest.fn().mockImplementation(
-                () => new Promise(resolve => resolve(true))
-            );
+            api.cancel = jest
+                .fn()
+                .mockImplementation(
+                    () => new Promise(resolve => resolve(true))
+                );
         });
 
         it("Should validate request", async () => {
             const request = fixture("IBankIdCancelRequest");
             const spy = jest.spyOn(BankIdCancelRequestBuilder, "validate");
-            
+
             await bankid.cancel(request);
 
             expect(spy).toHaveBeenCalledWith(request);
