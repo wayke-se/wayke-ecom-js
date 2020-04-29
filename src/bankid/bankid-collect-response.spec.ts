@@ -61,8 +61,8 @@ describe("BankId Collect Response", () => {
             response = new BankIdCollectResponse(apiResponse, request.method);
         });
     
-        it("Should have completed status", () => {
-            expect(response.getStatus()).toBe(AuthStatus.Complete);
+        it("Should be completed", () => {
+            expect(response.isCompleted()).toBeTruthy();
         });
     
         it("Should have personal number", () => {

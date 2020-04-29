@@ -33,8 +33,7 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
         this.message = resolveMessage(response.hintCode, method);
         this.method = method;
 
-        const isCompleted = this.status === AuthStatus.Complete;
-        if (isCompleted && !!response.completionData) {
+        if (this.isCompleted() && !!response.completionData) {
             this.personalNumber = response.completionData.personalNumber;
             this.address = response.completionData.address;
         }
@@ -82,6 +81,10 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
             this.method === AuthMethod.QrCode &&
             this.hintCode === BankIdCollectResponse.START_FAILED_CODE
         );
+    }
+
+    isCompleted() {
+        return this.status === AuthStatus.Complete;
     }
 
     getPersonalNumber() {

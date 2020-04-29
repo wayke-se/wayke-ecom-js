@@ -7,7 +7,7 @@ import {
 export class BankIdAuthResponse implements IBankIdAuthResponse {
     private orderRef: string;
     private qrCodeAsBase64: string | undefined;
-    private autoStartUrl: string | undefined;
+    private autoLaunchUrl: string | undefined;
     private method: AuthMethod;
 
     public constructor(response: IBankIdAuthApiResponse, method: AuthMethod) {
@@ -21,7 +21,7 @@ export class BankIdAuthResponse implements IBankIdAuthResponse {
 
         this.orderRef = response.orderRef;
         this.qrCodeAsBase64 = response.qrCodeAsBase64;
-        this.autoStartUrl = response.autoStartUrl;
+        this.autoLaunchUrl = response.autoLaunchUrl;
         this.method = method;
     }
 
@@ -49,11 +49,11 @@ export class BankIdAuthResponse implements IBankIdAuthResponse {
         return this.qrCodeAsBase64;
     }
 
-    public getAutoStartUrl() {
+    public getAutoLaunchUrl() {
         if (!this.isSameDevice()) {
             throw new Error("Not same device response");
         }
 
-        return this.autoStartUrl;
+        return this.autoLaunchUrl;
     }
 }

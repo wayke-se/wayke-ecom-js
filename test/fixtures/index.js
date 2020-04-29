@@ -231,7 +231,7 @@ factory.define("IBankIdAuthApiResponse", [
     "orderRef",
     "method".pickFrom(["SameDevice", "QrCode"]),
     "qrCodeAsBase64",
-    "autoStartUrl",
+    "autoLaunchUrl",
 ]);
 
 factory.define("IBankIdCollectRequest", [

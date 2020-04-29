@@ -15,14 +15,14 @@ export interface IBankIdAuthResponse {
     isSameDevice: () => boolean;
     getOrderRef: () => string;
     getQrCode: () => string | undefined;
-    getAutoStartUrl: () => string | undefined;
+    getAutoLaunchUrl: () => string | undefined;
     getMethod: () => AuthMethod;
 }
 
 export interface IBankIdAuthApiResponse {
     orderRef: string;
-    qrCodeAsBase64: string | undefined;
-    autoStartUrl: string | undefined;
+    qrCodeAsBase64?: string;
+    autoLaunchUrl?: string;
     method: AuthMethod;
 }
 
@@ -39,6 +39,7 @@ export interface IBankIdCollectResponse {
     hasMessage(): boolean;
     getMessage(): string;
     shouldRenew(): boolean;
+    isCompleted(): boolean;
     getPersonalNumber(): string | undefined;
     getAddress(): IAddress | undefined;
 }

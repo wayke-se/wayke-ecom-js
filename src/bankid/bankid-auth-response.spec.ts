@@ -28,7 +28,7 @@ describe("BankId Auth Response", () => {
 
         it(":getAutoStartUrl(), should throw", () => {
             expect(() => {
-                response.getAutoStartUrl();
+                response.getAutoLaunchUrl();
             }).toThrowError();
         });
     });
@@ -49,9 +49,9 @@ describe("BankId Auth Response", () => {
             expect(response.isSameDevice).toBeTruthy();
         });
 
-        it("Should have auto start url", () => {
-            expect(response.getAutoStartUrl()).toEqual(
-                apiResponse.autoStartUrl
+        it("Should have auto launch url", () => {
+            expect(response.getAutoLaunchUrl()).toEqual(
+                apiResponse.autoLaunchUrl
             );
         });
 
