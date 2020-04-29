@@ -1,5 +1,5 @@
 import Configuration from "../../../config/index";
-import { IBankIdAuthRequest, AuthMethod, IBankIdCollectRequest } from "../../../bankid/types";
+import { IBankIdAuthRequest, AuthMethod } from "../../../bankid/types";
 
 const getRoute = (method: AuthMethod) => {
     switch (method) {
@@ -22,5 +22,11 @@ export const getAuthUrl = (requestOptions: IBankIdAuthRequest) => {
 export const getCollectUrl = (orderRef: string) => {
     const host = Configuration.current().getApiAddress();
     const url = `${host}/bankid/collect/${orderRef}`;
+    return url;
+};
+
+export const getCancelUrl = (orderRef: string) => {
+    const host = Configuration.current().getApiAddress();
+    const url = `${host}/bankid/cancel/${orderRef}`;
     return url;
 };

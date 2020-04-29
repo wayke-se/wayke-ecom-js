@@ -263,4 +263,8 @@ factory.define("IBankIdCompletionData", [
     "address".fromFixture("IAddress"),
 ]);
 
+factory.define("IBankIdCancelRequest", [
+    "orderRef",
+]);
+
 module.exports = factory;

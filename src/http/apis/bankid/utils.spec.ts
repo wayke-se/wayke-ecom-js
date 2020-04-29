@@ -1,13 +1,13 @@
 const fixtures = require("../../../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
-import { getAuthUrl, getCollectUrl } from "./utils";
+import { getAuthUrl, getCollectUrl, getCancelUrl } from "./utils";
 import Configuration from "../../../config";
 import { BankIdAuthRequestBuilder } from "../../../bankid/bankid-auth-request-builder";
 import { AuthMethod, IBankIdAuthRequest } from "../../../bankid/types";
 
 describe("BankId Api Utils", () => {
-    describe(":getAuthUrl(), with bound configuration", () => {
+    describe("Given bound configuration", () => {
         let host: string;
 
         beforeAll(() => {
@@ -16,57 +16,73 @@ describe("BankId Api Utils", () => {
             host = config.getApiAddress();
         });
 
-        it("Given same device request, should have same device route", () => {
-            var request = new BankIdAuthRequestBuilder()
-                .withMethod(AuthMethod.SameDevice)
-                .build();
-
-            var url = getAuthUrl(request);
-
-            expect(url).toEqual(`${host}/bankid/auth/same-device`);
-        });
-
-        it("Given qr code request, should have qr code route", () => {
-            var request = new BankIdAuthRequestBuilder()
-                .withMethod(AuthMethod.QrCode)
-                .build();
-
-            var url = getAuthUrl(request);
-
-            expect(url).toEqual(`${host}/bankid/auth/qr-code`);
-        });
-    });
-
-    describe(":getAuthUrl(), with no bound configuration", () => {
-        beforeAll(() => {
-            Configuration.destroy();
-        });
-
-        it("Should throw", () => {
-            expect(() => {
+        describe(":getAuthUrl(), with bound configuration", () => {
+            it("Given same device request, should have same device route", () => {
+                var request = new BankIdAuthRequestBuilder()
+                    .withMethod(AuthMethod.SameDevice)
+                    .build();
+    
+                var url = getAuthUrl(request);
+    
+                expect(url).toEqual(`${host}/bankid/auth/same-device`);
+            });
+    
+            it("Given qr code request, should have qr code route", () => {
                 var request = new BankIdAuthRequestBuilder()
                     .withMethod(AuthMethod.QrCode)
                     .build();
-                getAuthUrl(request);
-            }).toThrowError();
+    
+                var url = getAuthUrl(request);
+    
+                expect(url).toEqual(`${host}/bankid/auth/qr-code`);
+            });
+        });
+
+        describe(":getCollectUrl()", () => {
+            it("Should be collect url", () => {
+                const orderRef = fixture("IBankIdCollectRequest").orderRef;
+    
+                var url = getCollectUrl(orderRef);
+    
+                expect(url).toEqual(`${host}/bankid/collect/${orderRef}`);
+            });
+        });
+    
+        describe(":getCancelUrl()", () => {
+            it("Should be cancel url", () => {
+                const orderRef = fixture("IBankIdCancelRequest").orderRef;
+    
+                var url = getCancelUrl(orderRef);
+    
+                expect(url).toEqual(`${host}/bankid/cancel/${orderRef}`);
+            });
         });
     });
 
-    describe(":getCollectUrl()", () => {
-        let host: string;
-
+    describe("Given no bound configuration", () => {
         beforeAll(() => {
-            const fake = fixture("IConfiguration");
-            const config = Configuration.bind(fake);
-            host = config.getApiAddress();
+            Configuration.destroy();
         });
-
-        it("Should be collect url", () => {
-            const orderRef = fixture("IBankIdCollectRequest").orderRef;
-            
-            var url = getCollectUrl(orderRef);
-
-            expect(url).toEqual(`${host}/bankid/collect/${orderRef}`);
+        
+        it(":getAuthUrl(), should throw", () => {
+            expect(() => {
+                var request = fixture("IBankIdAuthRequest");
+                getAuthUrl(request);
+            }).toThrowError();
+        });
+        
+        it(":getCollectUrl(), should throw", () => {
+            expect(() => {
+                var request = fixture("IBankIdCollectRequest");
+                getCollectUrl(request);
+            }).toThrowError();
+        });
+        
+        it(":getCancelUrl(), should throw", () => {
+            expect(() => {
+                var request = fixture("IBankIdCancelRequest");
+                getCancelUrl(request);
+            }).toThrowError();
         });
     });
 });

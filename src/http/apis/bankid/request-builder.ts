@@ -1,32 +1,34 @@
 import { IBankIdAuthRequest } from "../../../bankid/types";
 import * as http from "../../index";
 
+const buildRequest = (content: any = null) => {
+    const requestForgeryToken = http.context().requestForgeryToken;
+    let request = http
+        .builder()
+        .method("post")
+        .accept("application/json")
+        .requestForgeryToken(requestForgeryToken);
+
+    if (!!content) {
+        request = request.content(content);
+    }
+
+    return request.build();
+};
+
 export const buildAuthRequest = (
     requestOptions: IBankIdAuthRequest
 ): RequestInit => {
-    const requestForgeryToken = http.context().requestForgeryToken;
     const content = {
         ipAddress: requestOptions.ipAddress,
     };
-
-    const request = http
-        .builder()
-        .method("post")
-        .content(content)
-        .accept("application/json")
-        .requestForgeryToken(requestForgeryToken)
-        .build();
-    return request;
+    return buildRequest(content);
 };
 
 export const buildCollectRequest = (): RequestInit => {
-    const requestForgeryToken = http.context().requestForgeryToken;
+    return buildRequest();
+};
 
-    const request = http
-        .builder()
-        .method("post")
-        .accept("application/json")
-        .requestForgeryToken(requestForgeryToken)
-        .build();
-    return request;
+export const buildCancelRequest = (): RequestInit => {
+    return buildRequest();
 };

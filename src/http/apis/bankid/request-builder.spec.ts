@@ -50,4 +50,14 @@ describe("BankId Request Builder", () => {
             );
         });
     });
+
+    describe(":buildCancelRequest()", () => {
+        it("Should have request forgery token header", () => {
+            const request = buildCollectRequest();
+            expect(request.headers).toHaveProperty(
+                "x-rf-token",
+                requestForgeryToken
+            );
+        });
+    });
 });

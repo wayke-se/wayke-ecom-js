@@ -64,3 +64,7 @@ export interface IBankIdCompletionData {
     personalNumber: string;
     address: IAddress;
 }
+
+export interface IBankIdCancelRequest {
+    orderRef: string;
+}
