@@ -2,7 +2,7 @@ const fixtures = require("../../../test/fixtures");
 const fixture = (name: string, withValues: any = undefined): any =>
     fixtures.create(name, withValues);
 
-import { auth, collect } from "./bankid";
+import { auth, collect, cancel } from "./bankid";
 
 const http = require("..");
 const utils = require("./bankid/utils");
@@ -46,6 +46,21 @@ describe("API: BankId", () => {
             let err: any;
             try {
                 await collect(request);
+            } catch (e) {
+                err = e;
+            }
+
+            expect(err).toBeInstanceOf(Error);
+        });
+    });
+
+    describe(":cancel()", () => {
+        it("throws error if response was unsuccessful", async () => {
+            const request = fixture("IBankIdCancelRequest");
+
+            let err: any;
+            try {
+                await cancel(request);
             } catch (e) {
                 err = e;
             }

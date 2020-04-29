@@ -1,7 +1,7 @@
 const fixtures = require("../../../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
-import { buildAuthRequest, buildCollectRequest } from "./request-builder";
+import { buildAuthRequest, buildCollectRequest, buildCancelRequest } from "./request-builder";
 import {
     IBankIdAuthRequest,
     IBankIdCollectRequest,
@@ -52,11 +52,10 @@ describe("BankId Request Builder", () => {
     });
 
     describe(":buildCancelRequest()", () => {
-        it("Should have request forgery token header", () => {
-            const request = buildCollectRequest();
-            expect(request.headers).toHaveProperty(
-                "x-rf-token",
-                requestForgeryToken
+        it("Should not have request forgery token header", () => {
+            const request = buildCancelRequest();
+            expect(request.headers).not.toHaveProperty(
+                "x-rf-token"
             );
         });
     });
