@@ -31,10 +31,12 @@ export const buildCollectRequest = (): RequestInit => {
 };
 
 export const buildCancelRequest = (): RequestInit => {
+    const requestForgeryToken = http.context().requestForgeryToken;
     const request = http
         .builder()
         .method("post")
         .accept("application/json")
+        .requestForgeryToken(requestForgeryToken)
         .build();
     return request;
 };
