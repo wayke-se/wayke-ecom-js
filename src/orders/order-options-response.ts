@@ -83,4 +83,8 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
     public allowsTradeIn(): boolean {
         return this.response.tradeIn;
     }
+
+    public useBankId(): boolean {
+        return this.response.useBankId;
+    }
 }

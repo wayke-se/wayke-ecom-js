@@ -34,6 +34,7 @@ export interface IOrderOptionsResponse {
     getConditionsPdfUri(): string | null | undefined;
     getContactInformation(): IContactInformation | undefined;
     allowsTradeIn(): boolean;
+    useBankId(): boolean;
 }
 
 export interface IOrderInsuranceRequest {
@@ -58,6 +59,7 @@ export interface IOrderOptionsResponseData {
     insurance: IAvailableInsuranceOption | undefined;
     payment: IPaymentOptionResponseData[];
     tradeIn: boolean;
+    useBankId: boolean;
 }
 
 export interface IOrderCustomer {
