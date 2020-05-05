@@ -30,7 +30,7 @@ export const collect = (request: IBankIdCollectRequest) => {
 
     return api
         .collect(request)
-        .then(response => new BankIdCollectResponse(response, request.method));
+        .then(response => new BankIdCollectResponse(response));
 };
 
 export const cancel = (request: IBankIdCancelRequest) => {

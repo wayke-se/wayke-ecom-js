@@ -5,8 +5,6 @@ import {
     IBankIdCollectApiResponse,
     IBankIdCollectResponse,
     IBankIdCollectRequest,
-    AuthMethod,
-    AuthStatus,
 } from "./types";
 import { BankIdCollectResponse } from "./bankid-collect-response";
 
@@ -19,7 +17,7 @@ describe("BankId Collect Response", () => {
         beforeAll(() => {
             request = fixture("IBankIdCollectRequest");
             apiResponse = fixture("IBankIdCollectApiResponse");
-            response = new BankIdCollectResponse(apiResponse, request.method);
+            response = new BankIdCollectResponse(apiResponse);
         });
 
         it("Should have order ref", () => {
@@ -34,7 +32,7 @@ describe("BankId Collect Response", () => {
             expect(response.getHintCode()).toEqual(apiResponse.hintCode);
         });
 
-        it("Should renew", () => {
+        it("Should renew if failed start", () => {
             const apiResponse = fixtures.create(
                 "IBankIdCollectApiResponse",
                 (res: IBankIdCollectApiResponse) => {
@@ -42,10 +40,20 @@ describe("BankId Collect Response", () => {
                     return res;
                 }
             );
-            const response = new BankIdCollectResponse(
-                apiResponse,
-                request.method
+            const response = new BankIdCollectResponse(apiResponse);
+
+            expect(response.shouldRenew()).toBeTruthy();
+        });
+
+        it("Should renew if user cancelled", () => {
+            const apiResponse = fixtures.create(
+                "IBankIdCollectApiResponse",
+                (res: IBankIdCollectApiResponse) => {
+                    res.hintCode = BankIdCollectResponse.USER_CANCEL_CODE;
+                    return res;
+                }
             );
+            const response = new BankIdCollectResponse(apiResponse);
 
             expect(response.shouldRenew()).toBeTruthy();
         });
@@ -65,7 +73,7 @@ describe("BankId Collect Response", () => {
                     return res;
                 }
             );
-            response = new BankIdCollectResponse(apiResponse, request.method);
+            response = new BankIdCollectResponse(apiResponse);
         });
 
         it("Should be completed", () => {

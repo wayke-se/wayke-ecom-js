@@ -4,7 +4,6 @@ const fixtures = require("../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
 import resolve from "./message-resolver";
-import { AuthMethod } from "./types";
 
 const getRandomMethod = () => fixture("IBankIdCollectRequest").method;
 

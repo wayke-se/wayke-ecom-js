@@ -2,7 +2,6 @@ import {
     IBankIdCollectResponse,
     AuthStatus,
     IBankIdCollectApiResponse,
-    AuthMethod,
 } from "./types";
 
 import resolveMessage from "./message-resolver";
@@ -10,19 +9,16 @@ import { IAddress } from "../customers/types";
 
 export class BankIdCollectResponse implements IBankIdCollectResponse {
     static START_FAILED_CODE = "startFailed";
+    static USER_CANCEL_CODE = "userCancel";
 
     private orderRef: string;
     private status: AuthStatus;
     private hintCode?: string;
     private message: string;
-    private method: AuthMethod;
     private personalNumber?: string;
     private address?: IAddress;
 
-    public constructor(
-        response: IBankIdCollectApiResponse,
-        method: AuthMethod
-    ) {
+    public constructor(response: IBankIdCollectApiResponse) {
         if (!response) {
             throw new Error("Response can not be falsy");
         }
@@ -31,7 +27,6 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
         this.status = this.parseStatus(response.status);
         this.hintCode = response.hintCode;
         this.message = resolveMessage(response.hintCode);
-        this.method = method;
 
         if (this.isCompleted() && !!response.completionData) {
             this.personalNumber = response.completionData.personalNumber;
@@ -77,7 +72,10 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
     }
 
     shouldRenew() {
-        return this.hintCode === BankIdCollectResponse.START_FAILED_CODE;
+        return (
+            this.hintCode === BankIdCollectResponse.START_FAILED_CODE ||
+            this.hintCode === BankIdCollectResponse.USER_CANCEL_CODE
+        );
     }
 
     isCompleted() {

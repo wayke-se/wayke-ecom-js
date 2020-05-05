@@ -1,5 +1,3 @@
-import { AuthMethod } from "./types";
-
 const outstandingTransaction = () => "Starta BankID-appen.";
 
 const noClient = () => "Starta BankID-appen.";
