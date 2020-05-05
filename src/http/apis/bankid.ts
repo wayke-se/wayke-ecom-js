@@ -7,11 +7,11 @@ import {
 } from "../../bankid/types";
 import * as http from "../index";
 
-import { getAuthUrl, getCollectUrl, getCancelUrl } from "./bankid/utils";
+import { getAuthUrl, getCollectUrl } from "./bankid/utils";
+import { cancel as doCancelRequest } from "./bankid/cancel";
 import {
     buildAuthRequest,
     buildCollectRequest,
-    buildCancelRequest,
 } from "./bankid/request-builder";
 
 const validate = <T>(response: http.IApiResponse<T>): T => {
@@ -46,9 +46,4 @@ export const collect = (
 
 export const cancel = (
     requestOptions: IBankIdCancelRequest
-): Promise<boolean> => {
-    const url = getCancelUrl(requestOptions.orderRef);
-    const request = buildCancelRequest();
-
-    return http.raw(url, request).then(() => true);
-};
+): Promise<boolean> => doCancelRequest(requestOptions).then(() => true);
