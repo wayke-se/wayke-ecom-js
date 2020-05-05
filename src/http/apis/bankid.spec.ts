@@ -2,16 +2,19 @@ const fixtures = require("../../../test/fixtures");
 const fixture = (name: string, withValues: any = undefined): any =>
     fixtures.create(name, withValues);
 
-import { auth, collect, cancel } from "./bankid";
-
 const http = require("..");
-const utils = require("./bankid/utils");
-const requestBuilder = require("./bankid/request-builder");
+const auth = require("./bankid/auth");
+const collect = require("./bankid/collect");
+const cancel = require("./bankid/cancel");
 
 describe("API: BankId", () => {
     beforeAll(() => {
-        utils.getUrl = jest.fn();
-        requestBuilder.buildRequest = jest.fn();
+        auth.getUrl = jest.fn();
+        auth.buildRequest = jest.fn();
+        collect.getUrl = jest.fn();
+        collect.buildRequest = jest.fn();
+        cancel.getUrl = jest.fn();
+        cancel.buildRequest = jest.fn();
 
         http.json = jest.fn(
             () =>

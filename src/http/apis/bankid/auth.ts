@@ -1,7 +1,10 @@
-import { IBankIdAuthRequest, AuthMethod, IBankIdAuthApiResponse } from "../../../bankid/types";
+import {
+    IBankIdAuthRequest,
+    AuthMethod,
+    IBankIdAuthApiResponse,
+} from "../../../bankid/types";
 import * as http from "../../index";
 import Configuration from "../../../config/index";
-import { IApiResponse } from "../../index";
 
 export const buildRequest = (
     requestOptions: IBankIdAuthRequest
@@ -41,7 +44,7 @@ export const getUrl = (requestOptions: IBankIdAuthRequest) => {
 
 export const auth = (
     requestOptions: IBankIdAuthRequest
-): Promise<IApiResponse<IBankIdAuthApiResponse>> => {
+): Promise<http.IApiResponse<IBankIdAuthApiResponse>> => {
     const url = getUrl(requestOptions);
     const request = buildRequest(requestOptions);
 
