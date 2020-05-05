@@ -21,21 +21,8 @@ describe("BankId Auth", () => {
     });
 
     describe(":buildRequest()", () => {
-        let requestOptions: IBankIdAuthRequest;
-
-        beforeAll(() => {
-            requestOptions = fixture("IBankIdAuthRequest");
-        });
-
-        it("Should have body with ip address", () => {
-            const request = buildRequest(requestOptions);
-
-            var parsedBody = JSON.parse(request.body as string);
-            expect(parsedBody).toEqual({ ipAddress: requestOptions.ipAddress });
-        });
-
         it("Should have request forgery token header", () => {
-            const request = buildRequest(requestOptions);
+            const request = buildRequest();
             expect(request.headers).toHaveProperty(
                 "x-rf-token",
                 requestForgeryToken

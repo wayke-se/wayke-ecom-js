@@ -1,13 +1,9 @@
-import { IBankIdCollectRequest, AuthMethod } from "./types";
+import { IBankIdCollectRequest } from "./types";
 
 export class BankIdCollectRequestBuilder {
     public static validate(request: IBankIdCollectRequest) {
         if (!request) {
             throw new Error("Request can not be falsy");
-        }
-
-        if (!request.method) {
-            throw new Error("Missing method");
         }
 
         if (!request.orderRef) {
@@ -18,12 +14,6 @@ export class BankIdCollectRequestBuilder {
     private properties: {
         [key: string]: any;
     } = {};
-
-    public withMethod(method: AuthMethod) {
-        this.properties.method = method;
-
-        return this;
-    }
 
     public withOrderRef(orderRef: string) {
         this.properties.orderRef = orderRef;

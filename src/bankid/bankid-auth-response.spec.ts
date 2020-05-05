@@ -9,6 +9,35 @@ import {
 import { BankIdAuthResponse } from "./bankid-auth-response";
 
 describe("BankId Auth Response", () => {
+    it("Should have order ref", () => {
+        const apiResponse: IBankIdAuthApiResponse = fixture(
+            "IBankIdAuthApiResponse"
+        );
+
+        const response = new BankIdAuthResponse(apiResponse, AuthMethod.QrCode);
+
+        expect(response.getOrderRef()).toBe(apiResponse.orderRef);
+    });
+
+    describe("Given falsy response", () => {
+        it("should throw", () => {
+            expect(() => {
+                new BankIdAuthResponse(null as any, AuthMethod.SameDevice);
+            }).toThrowError();
+        });
+    });
+
+    describe("Given falsy method", () => {
+        it("should throw", () => {
+            const apiResponse: IBankIdAuthApiResponse = fixture(
+                "IBankIdAuthApiResponse"
+            );
+            expect(() => {
+                new BankIdAuthResponse(apiResponse, null as any);
+            }).toThrowError();
+        });
+    });
+
     describe("Given qr code method", () => {
         let apiResponse: IBankIdAuthApiResponse;
         let response: IBankIdAuthResponse;

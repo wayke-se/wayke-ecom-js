@@ -5,6 +5,7 @@ import {
     IBankIdCollectApiResponse,
     IBankIdCollectResponse,
     IBankIdCollectRequest,
+    AuthStatus,
 } from "./types";
 import { BankIdCollectResponse } from "./bankid-collect-response";
 
@@ -37,19 +38,6 @@ describe("BankId Collect Response", () => {
                 "IBankIdCollectApiResponse",
                 (res: IBankIdCollectApiResponse) => {
                     res.hintCode = BankIdCollectResponse.START_FAILED_CODE;
-                    return res;
-                }
-            );
-            const response = new BankIdCollectResponse(apiResponse);
-
-            expect(response.shouldRenew()).toBeTruthy();
-        });
-
-        it("Should renew if user cancelled", () => {
-            const apiResponse = fixtures.create(
-                "IBankIdCollectApiResponse",
-                (res: IBankIdCollectApiResponse) => {
-                    res.hintCode = BankIdCollectResponse.USER_CANCEL_CODE;
                     return res;
                 }
             );
@@ -92,6 +80,57 @@ describe("BankId Collect Response", () => {
                 apiResponse.completionData &&
                 apiResponse.completionData.address;
             expect(response.getAddress()).toEqual(apiAddress);
+        });
+    });
+
+    describe("Given user cancel hint code", () => {
+        let response: IBankIdCollectResponse;
+
+        beforeAll(() => {
+            const apiResponse = fixtures.create(
+                "IBankIdCollectApiResponse",
+                (res: IBankIdCollectApiResponse) => {
+                    res.hintCode = BankIdCollectResponse.USER_CANCEL_CODE;
+                    return res;
+                }
+            );
+            response = new BankIdCollectResponse(apiResponse);
+        });
+
+        it("should have true has message flag", () => {
+            expect(response.hasMessage()).toBeTruthy();
+        });
+
+        it("should have message", () => {
+            expect(response.getMessage()).toBeTruthy();
+        });
+
+        it("Should renew", () => {
+            expect(response.shouldRenew()).toBeTruthy();
+        });
+    });
+
+    describe("Given pending status", () => {
+        it("should be pending", () => {
+            const apiResponse = fixtures.create(
+                "IBankIdCollectApiResponse",
+                (res: IBankIdCollectApiResponse) => {
+                    res.status = AuthStatus.Pending;
+                    return res;
+                }
+            );
+
+            const response = new BankIdCollectResponse(apiResponse);
+
+            expect(response.isPending()).toBe(true);
+        });
+    });
+
+    describe("Given falsy response", () => {
+        it("should throw", () => {
+            expect(() => {
+                new BankIdCollectResponse(null as any);
+            }).toThrowError();
         });
     });
 });

@@ -11,12 +11,13 @@ This project aims to provide a simple, yet powerful, way to integrate Waykes e-c
 
 ## Using
 
-The SDK exposes five namespaces, each containing functionality for a specific set of functionality. The namespaces are:
+The SDK exposes several namespaces, each containing functionality for a specific set of use cases. The namespaces are:
 - `config`
 - `customers`
 - `insurances`
 - `orders`
 - `vehicles`
+- `bankid`
 
 ## Configuring
 
@@ -210,3 +211,81 @@ To create a valid order we should use appropriate builders, and specify our data
     const response = await orders.create(request);
 
 As one can see, splitting up the builders over multiple frontend components/views is easy (and encouraged!) to do.
+
+### Authenticating using Swedish BankId
+
+Bank id authentication is performed using three methods: `auth`, `collect` and `cancel`. In short, `auth` starts a authentication process, `collect` retrieves status information about the process and `cancel` aborts a process. [More information about this can be found here.](https://www.bankid.com/bankid-i-dina-tjanster/rp-info).
+
+#### Starting a BankId authentication process
+
+```
+    const request = bankid
+        .newAuthRequest()
+        .withIpAddress("130.242.197.92")
+        .withMethod(AuthMethod.QrCode)
+        .build();
+
+    try {
+        await bankid.auth(request);
+        // Do something with response.
+    } catch (e) {
+        // Handle errors.
+    }
+```
+
+The response of auth contains an order ref. This id is used to track an authentication process and must be included in collect and cancel request.
+
+```
+interface IBankIdAuthResponse {
+    isQrCode: () => boolean;
+    isSameDevice: () => boolean;
+    getOrderRef: () => string;
+    getQrCode: () => string | undefined;
+    getAutoLaunchUrl: () => string | undefined;
+    getMethod: () => AuthMethod;
+}
+```
+
+The qr code from `getQrCode()` is base64 encoded. It can be rendered in an img tag:
+
+```
+    const qrCode = authResponse.getQrCode();
+    <img src="data:image/png;base64, {qrCode}" />;
+```
+
+#### Collecting status information from a BankId process
+
+Once a authentication process is started, _a collect request should be made approximatelly every 2 seconds._
+
+```
+    const request = bankid
+        .newCollectRequest()
+        .withOrderRef(data.orderRef)
+        .build();
+        
+    try {
+        await bankid.collect(request);
+        // Do something with response.
+    } catch (e) {
+        // Handle errors.
+    }
+```
+
+A collect response have a function `isPedning()`. While this returns true, additional collect requests should be performed. Additionally, if `shouldRenew()` returns true a new auth request should be performed (For example because of an expired qr code).
+
+`isComplete`: When this is true, the authentication is succesful and `getPersonalNumber()` and `getAddress()` should return personal data.
+
+```
+interface IBankIdCollectResponse {
+    getOrderRef: () => string;
+    getStatus: () => AuthStatus;
+    isPending: () => boolean;
+    getHintCode: () => string | undefined;
+    hasMessage(): boolean;
+    getMessage(): string;
+    shouldRenew(): boolean;
+    isCompleted(): boolean;
+    getPersonalNumber(): string | undefined;
+    getAddress(): IAddress | undefined;
+}
+```

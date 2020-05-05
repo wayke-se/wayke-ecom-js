@@ -14,14 +14,6 @@ describe("BankIdCollectRequestBuilder", () => {
             }).toThrowError();
         });
 
-        it("Should thow given missing method", () => {
-            expect(() => {
-                const request = fixture(REQUEST_NAME);
-                delete request.method;
-                BankIdCollectRequestBuilder.validate(request);
-            }).toThrowError();
-        });
-
         it("Should throw given missing order ref", () => {
             expect(() => {
                 const request = fixture(REQUEST_NAME);
@@ -38,15 +30,6 @@ describe("BankIdCollectRequestBuilder", () => {
         });
     });
 
-    describe(":withMethod()", () => {
-        it("returns the builder instance", () => {
-            const builder = new BankIdCollectRequestBuilder();
-            const instance = builder.withMethod(AuthMethod.QrCode);
-
-            expect(instance).toBe(builder);
-        });
-    });
-
     describe(":withOrderRef()", () => {
         it("returns the builder instance", () => {
             const builder = new BankIdCollectRequestBuilder();
@@ -60,7 +43,6 @@ describe("BankIdCollectRequestBuilder", () => {
         it("returns request with specified properties", () => {
             const expected = fixture(REQUEST_NAME);
             const actual = new BankIdCollectRequestBuilder()
-                .withMethod(expected.method)
                 .withOrderRef(expected.orderRef)
                 .build();
 

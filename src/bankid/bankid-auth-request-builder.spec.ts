@@ -39,21 +39,11 @@ describe("BankIdAuthRequestBuilder", () => {
         });
     });
 
-    describe(":withIpAddress()", () => {
-        it("returns the builder instance", () => {
-            const builder = new BankIdAuthRequestBuilder();
-            const instance = builder.withIpAddress("130.242.197.92");
-
-            expect(instance).toBe(builder);
-        });
-    });
-
     describe(":build()", () => {
         it("returns a IBankIdAuthRequest for the specified builder properties", () => {
             const expected = fixture(BANK_ID_AUTH_REQUEST);
             const actual = new BankIdAuthRequestBuilder()
                 .withMethod(expected.method)
-                .withIpAddress(expected.ipAddress)
                 .build();
 
             expect(actual).toEqual(expected);

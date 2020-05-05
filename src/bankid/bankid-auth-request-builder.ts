@@ -21,12 +21,6 @@ export class BankIdAuthRequestBuilder {
         return this;
     }
 
-    public withIpAddress(ipAddress: string): BankIdAuthRequestBuilder {
-        this.properties.ipAddress = ipAddress;
-
-        return this;
-    }
-
     public build(): IBankIdAuthRequest {
         return this.properties as IBankIdAuthRequest;
     }

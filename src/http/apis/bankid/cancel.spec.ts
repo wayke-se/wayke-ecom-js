@@ -1,7 +1,7 @@
 const fixtures = require("../../../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
-import { buildRequest, getUrl } from "./cancel";
+import { buildRequest, getUrl, cancel } from "./cancel";
 import Configuration from "../../../config";
 const http = require("../../");
 
@@ -37,5 +37,28 @@ describe("BankId Cancel", () => {
 
             expect(url).toEqual(`${host}/bankid/cancel/${orderRef}`);
         });
+    });
+
+    describe(":cancel()", () => {
+        beforeAll(() => {
+            http.raw = jest.fn();
+        });
+
+        it("Should call http.raw with defined parameters", () => {
+            const request = fixture("IBankIdCancelRequest");
+
+            cancel(request);
+
+            expect(http.raw.mock.calls[0][0]).toBeTruthy();
+            expect(http.raw.mock.calls[0][1]).toBeTruthy();
+        });
+
+        afterAll(() => {
+            http.raw.mockRestore();
+        });
+    });
+
+    afterAll(() => {
+        http.context.mockRestore();
     });
 });
