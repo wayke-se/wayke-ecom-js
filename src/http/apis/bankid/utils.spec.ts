@@ -17,7 +17,7 @@ describe("BankId Api Utils", () => {
         });
 
         describe(":getAuthUrl(), with bound configuration", () => {
-            it("Given same device request, should have same device route", () => {
+            it("Should be same device route, given same device request", () => {
                 var request = new BankIdAuthRequestBuilder()
                     .withMethod(AuthMethod.SameDevice)
                     .build();
@@ -27,7 +27,7 @@ describe("BankId Api Utils", () => {
                 expect(url).toEqual(`${host}/bankid/auth/same-device`);
             });
 
-            it("Given qr code request, should have qr code route", () => {
+            it("Should be qr code route, given qr code request", () => {
                 var request = new BankIdAuthRequestBuilder()
                     .withMethod(AuthMethod.QrCode)
                     .build();

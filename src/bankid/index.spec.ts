@@ -77,7 +77,7 @@ describe("BankId Functions", () => {
             expect(spy).toHaveBeenCalledWith(request);
         });
 
-        it("Response should have same method as request", async () => {
+        it("should be same method in response as request", async () => {
             const response = await bankid.auth(request);
             expect(response.getMethod()).toEqual(request.method);
         });

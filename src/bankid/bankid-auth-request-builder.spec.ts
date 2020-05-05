@@ -8,13 +8,13 @@ const BANK_ID_AUTH_REQUEST = "IBankIdAuthRequest";
 
 describe("BankIdAuthRequestBuilder", () => {
     describe(".validate()", () => {
-        it("given null request, should throw", () => {
+        it("should throw given null request", () => {
             expect(() => {
                 BankIdAuthRequestBuilder.validate(null as any);
             }).toThrowError();
         });
 
-        it("given missing auth method, should throw", () => {
+        it("should throw given missing auth method", () => {
             expect(() => {
                 const request = fixture(BANK_ID_AUTH_REQUEST);
                 delete request.method;

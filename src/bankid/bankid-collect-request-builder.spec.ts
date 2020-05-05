@@ -8,13 +8,13 @@ const REQUEST_NAME = "IBankIdCollectRequest";
 
 describe("BankIdCollectRequestBuilder", () => {
     describe(".validate()", () => {
-        it("given null request, should throw", () => {
+        it("Should throw given null request", () => {
             expect(() => {
                 BankIdCollectRequestBuilder.validate(null as any);
             }).toThrowError();
         });
 
-        it("given missing method, should throw", () => {
+        it("Should thow given missing method", () => {
             expect(() => {
                 const request = fixture(REQUEST_NAME);
                 delete request.method;
@@ -22,7 +22,7 @@ describe("BankIdCollectRequestBuilder", () => {
             }).toThrowError();
         });
 
-        it("given missing order ref, should throw", () => {
+        it("Should throw given missing order ref", () => {
             expect(() => {
                 const request = fixture(REQUEST_NAME);
                 delete request.orderRef;

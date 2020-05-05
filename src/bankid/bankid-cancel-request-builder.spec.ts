@@ -7,13 +7,13 @@ const REQUEST_NAME = "IBankIdCancelRequest";
 
 describe("BankIdCancelRequestBuilder", () => {
     describe(".validate()", () => {
-        it("given null request, should throw", () => {
+        it("should throw given null request", () => {
             expect(() => {
                 BankIdCancelRequestBuilder.validate(null as any);
             }).toThrowError();
         });
 
-        it("given missing order ref, should throw", () => {
+        it("should throw given missing order ref", () => {
             expect(() => {
                 const request = fixture(REQUEST_NAME);
                 delete request.orderRef;
