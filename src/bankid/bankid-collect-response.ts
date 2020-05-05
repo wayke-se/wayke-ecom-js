@@ -30,7 +30,7 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
         this.orderRef = response.orderRef;
         this.status = this.parseStatus(response.status);
         this.hintCode = response.hintCode;
-        this.message = resolveMessage(response.hintCode, method);
+        this.message = resolveMessage(response.hintCode);
         this.method = method;
 
         if (this.isCompleted() && !!response.completionData) {
@@ -77,10 +77,7 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
     }
 
     shouldRenew() {
-        return (
-            this.method === AuthMethod.QrCode &&
-            this.hintCode === BankIdCollectResponse.START_FAILED_CODE
-        );
+        return this.hintCode === BankIdCollectResponse.START_FAILED_CODE;
     }
 
     isCompleted() {

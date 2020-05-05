@@ -33,9 +33,7 @@ describe("BankId Collect Response", () => {
         it("Should have hint code", () => {
             expect(response.getHintCode()).toEqual(apiResponse.hintCode);
         });
-    });
 
-    describe("Given expired qr code", () => {
         it("Should renew", () => {
             const apiResponse = fixtures.create(
                 "IBankIdCollectApiResponse",
@@ -46,7 +44,7 @@ describe("BankId Collect Response", () => {
             );
             const response = new BankIdCollectResponse(
                 apiResponse,
-                AuthMethod.QrCode
+                request.method
             );
 
             expect(response.shouldRenew()).toBeTruthy();

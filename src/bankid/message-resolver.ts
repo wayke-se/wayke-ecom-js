@@ -1,11 +1,6 @@
 import { AuthMethod } from "./types";
 
-const outstandingTransaction = (method: AuthMethod) => {
-    if (method === AuthMethod.SameDevice) {
-        return "Försöker starta BankID-appen.";
-    }
-    return "Starta BankID-appen.";
-};
+const outstandingTransaction = () => "Starta BankID-appen.";
 
 const noClient = () => "Starta BankID-appen.";
 
@@ -25,15 +20,10 @@ const userCancel = () => "Åtgärden avbruten.";
 
 const cancelled = () => "Åtgärden avbruten. Försök igen.";
 
-const startFailed = (method: AuthMethod) => {
-    if (method === AuthMethod.QrCode) {
-        return "Starta BankID-appen.";
-    }
-    return "BankID-appenverkar inte finnas i din dator eller telefon. Installera denoch hämta ett BankID hos din internetbank. Installera appenfrån din appbutik eller https://install.bankid.com.";
-};
+const startFailed = () => "Starta BankID-appen.";
 
 interface IMessageResolvers {
-    [name: string]: (method: AuthMethod) => string;
+    [name: string]: () => string;
 }
 
 const resolvers: IMessageResolvers = {};
@@ -47,7 +37,7 @@ resolvers["userCancel"] = userCancel;
 resolvers["cancelled"] = cancelled;
 resolvers["startFailed"] = startFailed;
 
-export default (hintCode: string | undefined, method: AuthMethod) => {
+export default (hintCode?: string) => {
     if (!hintCode) {
         return "";
     }
@@ -57,6 +47,6 @@ export default (hintCode: string | undefined, method: AuthMethod) => {
         return "";
     }
 
-    const message = resolve(method);
+    const message = resolve();
     return message;
 };
