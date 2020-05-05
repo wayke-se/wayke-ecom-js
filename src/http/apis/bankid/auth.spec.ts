@@ -1,9 +1,9 @@
 const fixtures = require("../../../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
-import { buildRequest, getUrl } from './auth';
+import { buildRequest, getUrl } from "./auth";
 import Configuration from "../../../config";
-import { IBankIdAuthRequest, AuthMethod } from '../../../bankid/types';
+import { IBankIdAuthRequest, AuthMethod } from "../../../bankid/types";
 const http = require("../../");
 
 describe("BankId Auth", () => {
@@ -45,11 +45,12 @@ describe("BankId Auth", () => {
 
     describe(":getUrl()", () => {
         it("Should be same device route, given same device method", () => {
-            const request = fixtures.create("IBankIdAuthRequest",
+            const request = fixtures.create(
+                "IBankIdAuthRequest",
                 (r: IBankIdAuthRequest) => {
                     r.method = AuthMethod.SameDevice;
                     return r;
-                },
+                }
             );
 
             var url = getUrl(request);
@@ -58,11 +59,12 @@ describe("BankId Auth", () => {
         });
 
         it("Should be qr code route, given qr code method", () => {
-            const request = fixtures.create("IBankIdAuthRequest",
+            const request = fixtures.create(
+                "IBankIdAuthRequest",
                 (r: IBankIdAuthRequest) => {
                     r.method = AuthMethod.QrCode;
                     return r;
-                },
+                }
             );
 
             var url = getUrl(request);

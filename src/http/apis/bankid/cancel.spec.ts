@@ -1,7 +1,7 @@
 const fixtures = require("../../../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
-import { buildRequest, getUrl } from './cancel';
+import { buildRequest, getUrl } from "./cancel";
 import Configuration from "../../../config";
 const http = require("../../");
 
