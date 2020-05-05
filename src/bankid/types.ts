@@ -28,7 +28,6 @@ export interface IBankIdAuthApiResponse {
 
 export interface IBankIdCollectRequest {
     orderRef: string;
-    method: AuthMethod;
 }
 
 export interface IBankIdCollectResponse {

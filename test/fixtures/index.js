@@ -236,7 +236,6 @@ factory.define("IBankIdAuthApiResponse", [
 
 factory.define("IBankIdCollectRequest", [
     "orderRef",
-    "method".pickFrom(["SameDevice", "QrCode"]),
 ]);
 
 factory.define("IBankIdCollectApiResponse", [
