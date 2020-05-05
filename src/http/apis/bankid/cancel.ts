@@ -1,6 +1,6 @@
 import * as http from "../../index";
 import Configuration from "../../../config/index";
-import { IBankIdCancelRequest } from "../../..";
+import { IBankIdCancelRequest } from "../../../bankid/types";
 
 export const buildRequest = (): RequestInit => {
     const requestForgeryToken = http.context().requestForgeryToken;

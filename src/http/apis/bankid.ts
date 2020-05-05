@@ -7,12 +7,10 @@ import {
 } from "../../bankid/types";
 import * as http from "../index";
 
-import { getAuthUrl, getCollectUrl } from "./bankid/utils";
+import { getCollectUrl } from "./bankid/utils";
 import { cancel as doCancelRequest } from "./bankid/cancel";
-import {
-    buildAuthRequest,
-    buildCollectRequest,
-} from "./bankid/request-builder";
+import { auth as doAuthRequest } from "./bankid/auth";
+import { buildCollectRequest } from "./bankid/request-builder";
 
 const validate = <T>(response: http.IApiResponse<T>): T => {
     if (!response || !response.successful || !response.response) {
@@ -24,14 +22,8 @@ const validate = <T>(response: http.IApiResponse<T>): T => {
 
 export const auth = (
     requestOptions: IBankIdAuthRequest
-): Promise<IBankIdAuthApiResponse> => {
-    const url = getAuthUrl(requestOptions);
-    const request = buildAuthRequest(requestOptions);
-
-    return http
-        .captureStateContext(http.json<IBankIdAuthApiResponse>(url, request))
-        .then(validate);
-};
+): Promise<IBankIdAuthApiResponse> =>
+    doAuthRequest(requestOptions).then(validate);
 
 export const collect = (
     requestOptions: IBankIdCollectRequest
