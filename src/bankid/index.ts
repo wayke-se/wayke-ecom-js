@@ -36,5 +36,5 @@ export const collect = (request: IBankIdCollectRequest) => {
 export const cancel = (request: IBankIdCancelRequest) => {
     BankIdCancelRequestBuilder.validate(request);
 
-    return api.cancel(request).then(response => response);
+    return api.cancel(request);
 };

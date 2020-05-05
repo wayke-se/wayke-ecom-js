@@ -43,7 +43,7 @@ describe("BankId Message Resolver", () => {
         },
         {
             hintCode: "userCancel",
-            expected: "Åtgärden avbruten.",
+            expected: "Åtgärden avbruten.",
         },
         {
             hintCode: "cancelled",

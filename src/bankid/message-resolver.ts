@@ -14,7 +14,7 @@ const expiredTransaction = () =>
 const certificateErr = () =>
     "Det BankID du försöker använda är för gammalt eller spärrat. Använd ett annat BankID eller hämta ett nytt hos din internetbank.";
 
-const userCancel = () => "Åtgärden avbruten.";
+const userCancel = () => "Åtgärden avbruten.";
 
 const cancelled = () => "Åtgärden avbruten. Försök igen.";
 

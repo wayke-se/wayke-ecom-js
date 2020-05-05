@@ -66,8 +66,11 @@ export {
     VehicleCondition,
 } from "./vehicles/types";
 export {
+    IBankIdAuthRequest,
     IBankIdAuthResponse,
     AuthMethod,
+    IBankIdCollectRequest,
     IBankIdCollectResponse,
     AuthStatus,
+    IBankIdCancelRequest,
 } from "./bankid/types";
