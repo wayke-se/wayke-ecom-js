@@ -156,14 +156,4 @@ describe("OrderOptionsResponse", () => {
             expect(actual).toEqual(expected);
         });
     });
-
-    describe(":useBankId()", () => {
-        it("returns the use bank id flag from the response object", () => {
-            const response = fixture("IOrderOptionsResponse");
-            const expected = response.useBankId;
-            const actual = new OrderOptionsResponse(response).useBankId();
-
-            expect(actual).toEqual(expected);
-        });
-    });
 });
