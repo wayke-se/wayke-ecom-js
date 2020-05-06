@@ -223,7 +223,6 @@ factory.define("IVehicleLookupResponse", [
 ]);
 
 factory.define("IBankIdAuthRequest", [
-    "ipAddress",
     "method".pickFrom(["SameDevice", "QrCode"]),
 ]);
 

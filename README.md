@@ -11,7 +11,7 @@ This project aims to provide a simple, yet powerful, way to integrate Waykes e-c
 
 ## Using
 
-The SDK exposes several namespaces, each containing functionality for a specific set of functionality. The namespaces are:
+The SDK exposes several namespaces, each containing functionality for a specific set of use cases. The namespaces are:
 - `config`
 - `customers`
 - `insurances`
@@ -254,6 +254,7 @@ The qr code from `getQrCode()` is base64 encoded. It can be rendered in an img t
     const qrCode = authResponse.getQrCode();
     <img src="data:image/png;base64, {qrCode}" />;
 ```
+
 #### Collecting status information from a BankId process
 
 Once a authentication process is started, _a collect request should be made approximatelly every 2 seconds._

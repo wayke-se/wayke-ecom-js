@@ -6,7 +6,6 @@ export enum AuthMethod {
 }
 
 export interface IBankIdAuthRequest {
-    ipAddress: string;
     method: AuthMethod;
 }
 

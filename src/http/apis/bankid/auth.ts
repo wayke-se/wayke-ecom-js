@@ -6,20 +6,13 @@ import {
 import * as http from "../../index";
 import Configuration from "../../../config/index";
 
-export const buildRequest = (
-    requestOptions: IBankIdAuthRequest
-): RequestInit => {
+export const buildRequest = (): RequestInit => {
     const requestForgeryToken = http.context().requestForgeryToken;
-    const content = {
-        ipAddress: requestOptions.ipAddress,
-    };
-
     const request = http
         .builder()
         .method("post")
         .accept("application/json")
         .requestForgeryToken(requestForgeryToken)
-        .content(content)
         .build();
     return request;
 };
@@ -46,7 +39,7 @@ export const auth = (
     requestOptions: IBankIdAuthRequest
 ): Promise<http.IApiResponse<IBankIdAuthApiResponse>> => {
     const url = getUrl(requestOptions);
-    const request = buildRequest(requestOptions);
+    const request = buildRequest();
 
     return http.captureStateContext(
         http.json<IBankIdAuthApiResponse>(url, request)
