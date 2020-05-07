@@ -225,14 +225,12 @@ Bank id authentication is performed using three methods: `auth`, `collect` and `
         .withMethod(AuthMethod.QrCode)
         .build();
 
-    bankid
-        .auth(request)
-        .then((response: IBankIdAuthResponse) => {
-            // Do something with response.
-        })
-        .catch(() => {
-            // Handle errors.
-        });
+    try {
+        await bankid.auth(request);
+        // Do something with response.
+    } catch (e) {
+        // Handle errors.
+    }
 ```
 
 The response of auth contains an order ref. This id is used to track an authentication process and must be included in collect and cancel request.
@@ -264,15 +262,13 @@ Once a authentication process is started, _a collect request should be made appr
         .newCollectRequest()
         .withOrderRef(data.orderRef)
         .build();
-
-    bankid
-        .collect(request)
-        .then((response: IBankIdCollectResponse) => {
-            // Do something with response.
-        })
-        .catch(() => {
-            // Handle errors.
-        });
+        
+    try {
+        await bankid.collect(request);
+        // Do something with response.
+    } catch (e) {
+        // Handle errors.
+    }
 ```
 
 A collect response have a function `isPedning()`. While this returns true, additional collect requests should be performed. Additionally, if `shouldRenew()` returns true a new auth request should be performed (For example because of an expired qr code).
