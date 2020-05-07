@@ -10,7 +10,9 @@ import { BankIdAuthResponse } from "./bankid-auth-response";
 
 describe("BankId Auth Response", () => {
     it("Should have order ref", () => {
-        const apiResponse: IBankIdAuthApiResponse = fixture("IBankIdAuthApiResponse");
+        const apiResponse: IBankIdAuthApiResponse = fixture(
+            "IBankIdAuthApiResponse"
+        );
 
         const response = new BankIdAuthResponse(apiResponse, AuthMethod.QrCode);
 
@@ -27,7 +29,9 @@ describe("BankId Auth Response", () => {
 
     describe("Given falsy method", () => {
         it("should throw", () => {
-            const apiResponse: IBankIdAuthApiResponse = fixture("IBankIdAuthApiResponse");
+            const apiResponse: IBankIdAuthApiResponse = fixture(
+                "IBankIdAuthApiResponse"
+            );
             expect(() => {
                 new BankIdAuthResponse(apiResponse, null as any);
             }).toThrowError();

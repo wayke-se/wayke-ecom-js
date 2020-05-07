@@ -121,7 +121,7 @@ describe("BankId Collect Response", () => {
             );
 
             const response = new BankIdCollectResponse(apiResponse);
-            
+
             expect(response.isPending()).toBe(true);
         });
     });

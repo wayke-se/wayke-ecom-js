@@ -7,7 +7,10 @@ const authApi = require("./bankid/auth");
 const collectApi = require("./bankid/collect");
 const cancelApi = require("./bankid/cancel");
 
-import { IBankIdAuthApiResponse, IBankIdCollectApiResponse } from "../../bankid/types";
+import {
+    IBankIdAuthApiResponse,
+    IBankIdCollectApiResponse,
+} from "../../bankid/types";
 import { auth, collect, cancel } from "./bankid";
 
 describe("API: BankId", () => {
@@ -30,54 +33,52 @@ describe("API: BankId", () => {
                         resolve(response);
                     })
             );
-            http.raw = jest.fn(
-                () => {
-                    throw new Error();
-                }
-            );
+            http.raw = jest.fn(() => {
+                throw new Error();
+            });
         });
 
         describe(":auth()", () => {
             it("throws error", async () => {
                 const request = fixture("IBankIdAuthRequest");
-    
+
                 let err: any;
                 try {
                     await auth(request);
                 } catch (e) {
                     err = e;
                 }
-    
+
                 expect(err).toBeInstanceOf(Error);
             });
         });
-    
+
         describe(":collect()", () => {
             it("throws error", async () => {
                 const request = fixture("IBankIdCollectRequest");
-    
+
                 let err: any;
                 try {
                     await collect(request);
                 } catch (e) {
                     err = e;
                 }
-    
+
                 expect(err).toBeInstanceOf(Error);
             });
         });
-    
+
         describe(":cancel()", () => {
             it("throws error", async () => {
                 const request = fixture("IBankIdCollectRequest");
-    
+
                 let err: any;
                 try {
                     await collect(request);
                 } catch (e) {
                     err = e;
                 }
-    
+
                 expect(err).toBeInstanceOf(Error);
             });
         });
@@ -108,7 +109,7 @@ describe("API: BankId", () => {
 
             it("return auth response", async () => {
                 const request = fixture("IBankIdAuthRequest");
-    
+
                 const response = await auth(request);
 
                 expect(response).toEqual(expectedRespones);
@@ -118,7 +119,7 @@ describe("API: BankId", () => {
                 http.json.mockRestore();
             });
         });
-        
+
         describe(":collect()", () => {
             let expectedRespones: IBankIdCollectApiResponse;
 
@@ -138,7 +139,7 @@ describe("API: BankId", () => {
 
             it("return collect response", async () => {
                 const request = fixture("IBankIdAuthRequest");
-    
+
                 const response = await collect(request);
 
                 expect(response).toEqual(expectedRespones);
