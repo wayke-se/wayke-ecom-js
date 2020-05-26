@@ -4,6 +4,7 @@ import * as insurances from "./insurances/index";
 import * as orders from "./orders/index";
 import * as payments from "./payments/index";
 import * as vehicles from "./vehicles/index";
+import * as bankid from "./bankid/index";
 
 export { config };
 export { customers };
@@ -11,6 +12,7 @@ export { insurances };
 export { orders };
 export { payments };
 export { vehicles };
+export { bankid };
 
 export {
     IConfiguration,
@@ -63,3 +65,12 @@ export {
     IVehicleLookupResponse,
     VehicleCondition,
 } from "./vehicles/types";
+export {
+    IBankIdAuthRequest,
+    IBankIdAuthResponse,
+    AuthMethod,
+    IBankIdCollectRequest,
+    IBankIdCollectResponse,
+    AuthStatus,
+    IBankIdCancelRequest,
+} from "./bankid/types";

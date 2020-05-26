@@ -222,4 +222,47 @@ factory.define("IVehicleLookupResponse", [
     "valuation".asNumber(),
 ]);
 
+factory.define("IBankIdAuthRequest", [
+    "method".pickFrom(["SameDevice", "QrCode"]),
+]);
+
+factory.define("IBankIdAuthApiResponse", [
+    "orderRef",
+    "method".pickFrom(["SameDevice", "QrCode"]),
+    "qrCodeAsBase64",
+    "autoLaunchUrl",
+]);
+
+factory.define("IBankIdCollectRequest", [
+    "orderRef",
+]);
+
+factory.define("IBankIdCollectApiResponse", [
+    "orderRef",
+    "status".pickFrom(["pending", "failed", "complete"]),
+    "hintCode".pickFrom([
+        "outstandingTransaction",
+        "noClient",
+        "started",
+        "userSign",
+        "expiredTransaction",
+        "certificateErr",
+        "userCancel",
+        "cancelled",
+        "startFailed",
+        ""
+    ]),
+    "completionData".fromFixture("IBankIdCompletionData"),
+]);
+factory.define("IBankIdCompletionData", [
+    "signature",
+    "ocspResponse",
+    "personalNumber",
+    "address".fromFixture("IAddress"),
+]);
+
+factory.define("IBankIdCancelRequest", [
+    "orderRef",
+]);
+
 module.exports = factory;
