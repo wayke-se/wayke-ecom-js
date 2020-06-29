@@ -53,10 +53,15 @@ To manually set these values, to enable a more granular control over the order o
             topic: "[Dealer Specific Topic]",
             channel: "[Ecom Channel Name]",
         },
+        bankIdThumbprint: "[Dealer Specific BankId Certificate Thumbprint]"
     };
     config.bind(newConfig);
 
 As an example, orders originating from https://www.wayke.se will have a topic `Wayke` and a channel `wayke.se`. For orders originating from the Wayke iOS app, the topic will be `Wayke` and the channel `iOS-app`. For Android, the channel will be `Android-app`.
+
+### Swedish BankId Thumbprint 
+
+By default Wayke's BankId certificate is used to verify customer identity. There is an optional configuration property `bankIdThumbprint` which allows for dealers to use their own BankId certificate. If the certificate's thumbprint is set that certificate will be used instead, given that it is correctly setup in the Dealer back-office.
 
 ## Using
 
