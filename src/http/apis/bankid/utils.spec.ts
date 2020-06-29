@@ -11,12 +11,12 @@ describe(":createRequest()", () => {
     describe("Given bank id thumbprint configured", () => {
         let requestForgeryToken: string;
         let configSpecification: IConfigurationRoot;
-    
+
         beforeAll(() => {
             const response = fixture("IApiResponse");
             http.context = jest.fn(() => ({ requestForgeryToken }));
             requestForgeryToken = response.requestForgeryToken;
-    
+
             configSpecification = fixture("IConfiguration");
             Configuration.bind(configSpecification);
         });
@@ -60,7 +60,9 @@ describe(":createRequest()", () => {
 
         it("Should not have bank id thumbprint header", () => {
             const request = createRequest();
-            expect(request.headers).not.toHaveProperty(BANK_ID_THUMBPRINT_HEADER);
+            expect(request.headers).not.toHaveProperty(
+                BANK_ID_THUMBPRINT_HEADER
+            );
         });
     });
 });

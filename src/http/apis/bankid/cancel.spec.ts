@@ -10,7 +10,9 @@ describe("BankId Cancel", () => {
 
     beforeAll(() => {
         const response = fixture("IApiResponse");
-        http.context = jest.fn(() => ({ requestForgeryToken: response.requestForgeryToken }));
+        http.context = jest.fn(() => ({
+            requestForgeryToken: response.requestForgeryToken,
+        }));
 
         const fake = fixture("IConfiguration");
         const config = Configuration.bind(fake);

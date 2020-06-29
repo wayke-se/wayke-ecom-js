@@ -140,8 +140,10 @@ describe("Configuration", () => {
             expect(config.useBankIdThumbprint()).toBe(false);
         });
         it("returns false if thumbrint is empty", () => {
-            const fake = fixtures.create("IConfiguration",
-                (c: IConfigurationRoot) => c.bankIdThumbprint = "");
+            const fake = fixtures.create(
+                "IConfiguration",
+                (c: IConfigurationRoot) => (c.bankIdThumbprint = "")
+            );
 
             const config = Configuration.bind(fake);
 

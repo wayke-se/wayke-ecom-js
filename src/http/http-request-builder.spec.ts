@@ -1,4 +1,6 @@
-import HttpRequestBuilder, { BANK_ID_THUMBPRINT_HEADER } from "./http-request-builder";
+import HttpRequestBuilder, {
+    BANK_ID_THUMBPRINT_HEADER,
+} from "./http-request-builder";
 
 describe("HttpRequestBuilder", () => {
     it("adds the specified HTTP method to the RequestInit", () => {
