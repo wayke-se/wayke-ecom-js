@@ -8,12 +8,18 @@ import Configuration from "../../../config/index";
 
 export const buildRequest = (): RequestInit => {
     const requestForgeryToken = http.context().requestForgeryToken;
-    const request = http
+    const builder = http
         .builder()
         .method("post")
         .accept("application/json")
-        .requestForgeryToken(requestForgeryToken)
-        .build();
+        .requestForgeryToken(requestForgeryToken);
+
+    if (Configuration.current().useBankIdThumbprint()) {
+        const thumbprint = Configuration.current().getBankIdThumbprint();
+        builder.bankIdThumbprint(thumbprint);
+    }
+
+    const request = builder.build();
     return request;
 };
 

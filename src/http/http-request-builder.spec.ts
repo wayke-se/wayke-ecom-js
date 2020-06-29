@@ -1,4 +1,4 @@
-import HttpRequestBuilder from "./http-request-builder";
+import HttpRequestBuilder, { BANK_ID_THUMBPRINT_HEADER } from "./http-request-builder";
 
 describe("HttpRequestBuilder", () => {
     it("adds the specified HTTP method to the RequestInit", () => {
@@ -75,5 +75,21 @@ describe("HttpRequestBuilder", () => {
             .content({ id: "1" })
             .build();
         expect(options.body).toEqual('{"id":"1"}');
+    });
+    it("adds a bank id thumbprint header when provided", () => {
+        const thumbprint = "thumbprint";
+        const builder = new HttpRequestBuilder();
+        const options: any = builder
+            .method("get")
+            .bankIdThumbprint(thumbprint)
+            .build();
+        const headers: any = options.headers;
+        expect(headers[BANK_ID_THUMBPRINT_HEADER]).toEqual(thumbprint);
+    });
+    it("throws when a falsy thumbprint is provided", () => {
+        expect(() => {
+            const builder = new HttpRequestBuilder();
+            builder.bankIdThumbprint(undefined);
+        }).toThrowError();
     });
 });
