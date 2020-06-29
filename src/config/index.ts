@@ -10,11 +10,14 @@ export interface IApiConfiguration {
 export interface IConfigurationRoot {
     api: IApiConfiguration;
     origin?: IOriginConfiguration;
+    bankIdThumbprint?: string;
 }
 
 export interface IConfiguration {
     getApiAddress(): string;
     getOrigin(): IOriginConfiguration | undefined;
+    useBankIdThumbprint(): boolean;
+    getBankIdThumbprint(): string | undefined;
 }
 
 const createDefaultOrigin = (): IOriginConfiguration | undefined => {
@@ -69,6 +72,7 @@ class Configuration implements IConfiguration {
                       channel: newConfig.origin.channel,
                   }
                 : createDefaultOrigin(),
+            bankIdThumbprint: newConfig.bankIdThumbprint,
         };
 
         return Configuration.instance;
@@ -99,6 +103,22 @@ class Configuration implements IConfiguration {
         }
 
         return this.config.origin;
+    }
+
+    public useBankIdThumbprint(): boolean {
+        if (!this.config) {
+            throw Configuration.notBoundError;
+        }
+
+        return !!this.config.bankIdThumbprint;
+    }
+
+    public getBankIdThumbprint(): string | undefined {
+        if (!this.config) {
+            throw Configuration.notBoundError;
+        }
+
+        return this.config.bankIdThumbprint;
     }
 }
 
