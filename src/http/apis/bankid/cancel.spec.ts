@@ -1,32 +1,20 @@
 const fixtures = require("../../../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
-import { buildRequest, getUrl, cancel } from "./cancel";
+import { getUrl, cancel } from "./cancel";
 import Configuration from "../../../config";
 const http = require("../../");
 
 describe("BankId Cancel", () => {
-    let requestForgeryToken: string;
     let host: string;
 
     beforeAll(() => {
         const response = fixture("IApiResponse");
-        http.context = jest.fn(() => ({ requestForgeryToken }));
-        requestForgeryToken = response.requestForgeryToken;
+        http.context = jest.fn(() => ({ requestForgeryToken: response.requestForgeryToken }));
 
         const fake = fixture("IConfiguration");
         const config = Configuration.bind(fake);
         host = config.getApiAddress();
-    });
-
-    describe(":buildRequest()", () => {
-        it("Should have request forgery token header", () => {
-            const request = buildRequest();
-            expect(request.headers).toHaveProperty(
-                "x-rf-token",
-                requestForgeryToken
-            );
-        });
     });
 
     describe(":getUrl()", () => {

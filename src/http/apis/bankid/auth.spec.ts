@@ -6,7 +6,6 @@ import Configuration from "../../../config";
 import { IBankIdAuthRequest, AuthMethod } from "../../../bankid/types";
 
 describe("BankId Auth", () => {
-    let requestForgeryToken: string;
     let host: string;
 
     beforeAll(() => {

@@ -16,10 +16,9 @@ import { auth, collect, cancel } from "./bankid";
 
 describe("API: BankId", () => {
     beforeAll(() => {
-        authApi.getUrl = jest.fn();
         bankidApiUtils.createRequest = jest.fn();
+        authApi.getUrl = jest.fn();
         collectApi.getUrl = jest.fn();
-        collectApi.buildRequest = jest.fn();
         cancelApi.getUrl = jest.fn();
     });
 
