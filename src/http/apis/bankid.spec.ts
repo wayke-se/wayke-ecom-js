@@ -6,6 +6,7 @@ const http = require("..");
 const authApi = require("./bankid/auth");
 const collectApi = require("./bankid/collect");
 const cancelApi = require("./bankid/cancel");
+const bankidApiUtils = require("./bankid/utils");
 
 import {
     IBankIdAuthApiResponse,
@@ -16,7 +17,7 @@ import { auth, collect, cancel } from "./bankid";
 describe("API: BankId", () => {
     beforeAll(() => {
         authApi.getUrl = jest.fn();
-        authApi.buildRequest = jest.fn();
+        bankidApiUtils.createRequest = jest.fn();
         collectApi.getUrl = jest.fn();
         collectApi.buildRequest = jest.fn();
         cancelApi.getUrl = jest.fn();
