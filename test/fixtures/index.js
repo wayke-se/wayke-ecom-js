@@ -12,6 +12,7 @@ factory.define("IOriginConfiguration", [
 factory.define("IConfiguration", [
     "api".fromFixture("IApiConfiguration"),
     "origin".fromFixture("IOriginConfiguration"),
+    "bankIdThumbprint",
 ]);
 
 factory.define("IApiResponse", [

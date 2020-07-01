@@ -1,5 +1,7 @@
 type ValidHttpMethod = "get" | "post" | "put" | "delete" | "patch";
 
+export const BANK_ID_THUMBPRINT_HEADER = "x-certificate-thumbprint";
+
 class HttpRequestBuilder {
     private _method: ValidHttpMethod = "get";
     private _headers: { [key: string]: string } = {};
@@ -39,6 +41,13 @@ class HttpRequestBuilder {
 
         if (contentType) this._headers["Content-Type"] = contentType;
 
+        return this;
+    }
+
+    public bankIdThumbprint(thumbprint: string | undefined) {
+        if (!thumbprint) throw new Error("Bank id thumbprint can not be falsy");
+
+        this._headers[BANK_ID_THUMBPRINT_HEADER] = thumbprint;
         return this;
     }
 

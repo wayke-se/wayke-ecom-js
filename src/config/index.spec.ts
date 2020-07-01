@@ -1,6 +1,6 @@
 const fixtures = require("../../test/fixtures");
 
-import Configuration, { IOriginConfiguration } from ".";
+import Configuration, { IOriginConfiguration, IConfigurationRoot } from ".";
 
 const fixture = (id: string): any => fixtures.create(id);
 
@@ -123,6 +123,52 @@ describe("Configuration", () => {
             const config = new Configuration();
             const origin = config.getOrigin() as IOriginConfiguration;
             expect(origin.channel).toEqual(expected);
+        });
+    });
+
+    describe("useBankIdThumbprint()", () => {
+        it("throws if not bound", () => {
+            const config = new Configuration();
+            expect(() => config.useBankIdThumbprint()).toThrowError();
+        });
+        it("returns false if no thumbprint is set", () => {
+            const fake = fixtures.create("IConfiguration");
+            delete fake.bankIdThumbprint;
+
+            const config = Configuration.bind(fake);
+
+            expect(config.useBankIdThumbprint()).toBe(false);
+        });
+        it("returns false if thumbrint is empty", () => {
+            const fake = fixtures.create(
+                "IConfiguration",
+                (c: IConfigurationRoot) => (c.bankIdThumbprint = "")
+            );
+
+            const config = Configuration.bind(fake);
+
+            expect(config.useBankIdThumbprint()).toBe(false);
+        });
+        it("returns true if thumbrint is set", () => {
+            const fake = fixtures.create("IConfiguration");
+
+            const config = Configuration.bind(fake);
+
+            expect(config.useBankIdThumbprint()).toBe(true);
+        });
+    });
+
+    describe("getBankIdThumbprint()", () => {
+        it("throws if not bound", () => {
+            const config = new Configuration();
+            expect(() => config.getBankIdThumbprint()).toThrowError();
+        });
+        it("returns bound thumbprint", () => {
+            const fake = fixtures.create("IConfiguration");
+
+            const config = Configuration.bind(fake);
+
+            expect(config.getBankIdThumbprint()).toBe(fake.bankIdThumbprint);
         });
     });
 });

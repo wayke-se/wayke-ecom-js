@@ -5,17 +5,7 @@ import {
 } from "../../../bankid/types";
 import * as http from "../../index";
 import Configuration from "../../../config/index";
-
-export const buildRequest = (): RequestInit => {
-    const requestForgeryToken = http.context().requestForgeryToken;
-    const request = http
-        .builder()
-        .method("post")
-        .accept("application/json")
-        .requestForgeryToken(requestForgeryToken)
-        .build();
-    return request;
-};
+import { createRequest } from "./utils";
 
 const getRoute = (method: AuthMethod) => {
     switch (method) {
@@ -39,7 +29,7 @@ export const auth = (
     requestOptions: IBankIdAuthRequest
 ): Promise<http.IApiResponse<IBankIdAuthApiResponse>> => {
     const url = getUrl(requestOptions);
-    const request = buildRequest();
+    const request = createRequest();
 
     return http.captureStateContext(
         http.json<IBankIdAuthApiResponse>(url, request)
