@@ -49,8 +49,8 @@ describe("OrderOptionsResponse", () => {
 
             const actual = new OrderOptionsResponse(response)
                 .getPaymentOptions()
-                .map(x => x.loanDetails)
-                .filter(x => !!x);
+                .map((x) => x.loanDetails)
+                .filter((x) => !!x);
 
             expect(actual.length).toBe(0);
         });

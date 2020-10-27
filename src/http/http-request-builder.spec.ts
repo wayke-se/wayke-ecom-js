@@ -72,10 +72,7 @@ describe("HttpRequestBuilder", () => {
     });
     it("stringifies the request body, given a provided body object", () => {
         const builder = new HttpRequestBuilder();
-        const options: any = builder
-            .method("put")
-            .content({ id: "1" })
-            .build();
+        const options: any = builder.method("put").content({ id: "1" }).build();
         expect(options.body).toEqual('{"id":"1"}');
     });
     it("adds a bank id thumbprint header when provided", () => {

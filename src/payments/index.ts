@@ -14,5 +14,5 @@ export const lookupPayment = (
 
     return api
         .lookup(request, Configuration.current())
-        .then(response => new PaymentLookupResponse(response));
+        .then((response) => new PaymentLookupResponse(response));
 };

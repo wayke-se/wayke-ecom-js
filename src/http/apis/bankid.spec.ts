@@ -26,7 +26,7 @@ describe("API: BankId", () => {
         beforeAll(() => {
             http.json = jest.fn(
                 () =>
-                    new Promise(resolve => {
+                    new Promise((resolve) => {
                         const response = fixture("IApiResponse", {
                             successful: false,
                         });
@@ -97,7 +97,7 @@ describe("API: BankId", () => {
                 expectedRespones = fixture("IBankIdAuthApiResponse");
                 http.json = jest.fn(
                     () =>
-                        new Promise(resolve => {
+                        new Promise((resolve) => {
                             const apiResponse = fixture("IApiResponse", {
                                 successful: true,
                                 response: expectedRespones,
@@ -127,7 +127,7 @@ describe("API: BankId", () => {
                 expectedRespones = fixture("IBankIdCollectApiResponse");
                 http.json = jest.fn(
                     () =>
-                        new Promise(resolve => {
+                        new Promise((resolve) => {
                             const apiResponse = fixture("IApiResponse", {
                                 successful: true,
                                 response: expectedRespones,

@@ -93,7 +93,7 @@ describe("Order Functions", () => {
 
             (api.create as any).mockImplementation(
                 () =>
-                    new Promise(resolve => {
+                    new Promise((resolve) => {
                         const response = fixture("IOrderCreateResponse");
                         resolve(response);
                     })
@@ -137,7 +137,7 @@ describe("Order Functions", () => {
 
             (api.init as any).mockImplementation(
                 () =>
-                    new Promise(resolve => {
+                    new Promise((resolve) => {
                         const response = fixture("IOrderOptionsResponse");
                         resolve(response);
                     })
