@@ -25,9 +25,11 @@ describe("Configuration", () => {
             const fake = fixture("IConfiguration");
             delete fake.origin;
 
-            const copy = { ...window.location };
-            delete window.location;
-            window.location = { ...copy, host: "www.example.com" };
+            const w = window as any;
+
+            const copy = { ...w.location };
+            delete w.location;
+            w.location = { ...copy, host: "www.example.com" };
 
             const config = Configuration.bind(fake);
             const expected = {
@@ -41,7 +43,8 @@ describe("Configuration", () => {
             const fake = fixture("IConfiguration");
             delete fake.origin;
 
-            delete window.location;
+            const w = window as any;
+            delete w.location;
 
             const config = Configuration.bind(fake);
             const origin = config.getOrigin();
@@ -93,7 +96,8 @@ describe("Configuration", () => {
             const address = "https://www.example.com";
             process.env.WAYKE_ECOM_API_ADDRESS = address;
 
-            delete window.location;
+            const w = window as any;
+            delete w.location;
 
             const config = new Configuration();
             expect(config.getOrigin()).toBeUndefined();
@@ -102,9 +106,11 @@ describe("Configuration", () => {
             const address = "https://www.example.com";
             process.env.WAYKE_ECOM_API_ADDRESS = address;
 
-            const copy = { ...window.location };
-            delete window.location;
-            window.location = { ...copy, host: address };
+            const w = window as any;
+
+            const copy = { ...w.location };
+            delete w.location;
+            w.location = { ...copy, host: address };
 
             const expected = address.replace("www.", "");
             const config = new Configuration();
@@ -115,9 +121,11 @@ describe("Configuration", () => {
             const address = "https://www.example.com";
             process.env.WAYKE_ECOM_API_ADDRESS = address;
 
-            const copy = { ...window.location };
-            delete window.location;
-            window.location = { ...copy, host: "www.example.com" };
+            const w = window as any;
+
+            const copy = { ...w.location };
+            delete w.location;
+            w.location = { ...copy, host: "www.example.com" };
 
             const expected = "Web";
             const config = new Configuration();

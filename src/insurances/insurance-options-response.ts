@@ -35,7 +35,7 @@ const insuranceConditionsFromResponse = (
 const insuranceAddonsFromResponse = (
     response: IInsuranceOptionsResponseData
 ): IInsuranceAddon[] =>
-    response.details.addOns.map(addon => ({
+    response.details.addOns.map((addon) => ({
         title: addon.title,
         name: addon.name,
         description: addon.description,
@@ -46,7 +46,7 @@ const insuranceAddonsFromResponse = (
 const insuranceItemsFromResponse = (
     response: IInsuranceOptionsResponseData
 ): IInsuranceItem[] =>
-    response.details.insuranceItems.map(item => ({
+    response.details.insuranceItems.map((item) => ({
         name: item.name,
         description: item.description,
     }));

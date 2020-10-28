@@ -18,7 +18,7 @@ export const lookupVehicle = (
     return api
         .lookup(request, Configuration.current())
         .then(
-            response =>
+            (response) =>
                 new VehicleLookupResponse(response, request.registrationNumber)
         );
 };

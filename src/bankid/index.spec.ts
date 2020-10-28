@@ -61,7 +61,7 @@ describe("BankId Functions", () => {
         beforeAll(() => {
             api.auth = jest.fn().mockImplementation(
                 () =>
-                    new Promise(resolve => {
+                    new Promise((resolve) => {
                         const response = fixture("IBankIdAuthApiResponse");
                         resolve(response);
                     })
@@ -91,7 +91,7 @@ describe("BankId Functions", () => {
         beforeAll(() => {
             api.collect = jest.fn().mockImplementation(
                 () =>
-                    new Promise(resolve => {
+                    new Promise((resolve) => {
                         const response = fixture("IBankIdCollectApiResponse");
                         resolve(response);
                     })
@@ -117,7 +117,7 @@ describe("BankId Functions", () => {
             api.cancel = jest
                 .fn()
                 .mockImplementation(
-                    () => new Promise(resolve => resolve(true))
+                    () => new Promise((resolve) => resolve(true))
                 );
         });
 

@@ -22,7 +22,7 @@ export const auth = (request: IBankIdAuthRequest) => {
 
     return api
         .auth(request)
-        .then(response => new BankIdAuthResponse(response, request.method));
+        .then((response) => new BankIdAuthResponse(response, request.method));
 };
 
 export const collect = (request: IBankIdCollectRequest) => {
@@ -30,7 +30,7 @@ export const collect = (request: IBankIdCollectRequest) => {
 
     return api
         .collect(request)
-        .then(response => new BankIdCollectResponse(response));
+        .then((response) => new BankIdCollectResponse(response));
 };
 
 export const cancel = (request: IBankIdCancelRequest) => {
