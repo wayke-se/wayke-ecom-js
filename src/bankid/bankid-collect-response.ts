@@ -99,6 +99,6 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
     }
 
     getSurname() {
-        return this.givenName;
+        return this.surname;
     }
 }
