@@ -15,6 +15,8 @@ describe("CustomerBuilder", () => {
                 .withEmail(expected.email)
                 .withPersonalNumber(expected.personalNumber)
                 .withPhoneNumber(expected.phoneNumber)
+                .withGivenName(expected.givenName)
+                .withSurname(expected.surname)
                 .build();
 
             expect(actual).toEqual(expected);

@@ -27,6 +27,18 @@ export class CustomerBuilder {
         return this;
     }
 
+    public withGivenName(givenName: string): CustomerBuilder {
+        this.properties.givenName = givenName;
+
+        return this;
+    }
+
+    public withSurname(surname: string): CustomerBuilder {
+        this.properties.surname = surname;
+
+        return this;
+    }
+
     public build(): ICustomer {
         return this.properties as ICustomer;
     }
