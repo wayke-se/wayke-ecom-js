@@ -23,7 +23,7 @@ export const getOptions = (
 
     return api
         .init(request, Configuration.current())
-        .then((response) => new OrderOptionsResponse(response));
+        .then(response => new OrderOptionsResponse(response));
 };
 
 export const create = (
@@ -33,5 +33,5 @@ export const create = (
 
     return api
         .create(request, Configuration.current())
-        .then((response) => new OrderCreateResponse(response));
+        .then(response => new OrderCreateResponse(response));
 };

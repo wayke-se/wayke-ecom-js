@@ -16,7 +16,7 @@ describe("API: Insurances", () => {
             http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
-                    new Promise((resolve) => {
+                    new Promise(resolve => {
                         const data = fixture("IInsuranceOptionsResponse");
                         const response = fixture("IApiResponse", {
                             response: data,
@@ -39,7 +39,7 @@ describe("API: Insurances", () => {
             http.context = jest.fn(() => ({ requestForgeryToken: expected }));
             http.json = jest.fn(
                 () =>
-                    new Promise((resolve) => {
+                    new Promise(resolve => {
                         const data = fixture("IInsuranceOptionsResponse");
                         const response = fixture("IApiResponse", {
                             response: data,
@@ -61,7 +61,7 @@ describe("API: Insurances", () => {
             const httpContext = { requestForgeryToken: undefined };
 
             const http = require("..");
-            http.captureStateContext = jest.fn((promise) => {
+            http.captureStateContext = jest.fn(promise => {
                 return promise.then((response: any) => {
                     httpContext.requestForgeryToken =
                         response.requestForgeryToken;
@@ -70,7 +70,7 @@ describe("API: Insurances", () => {
             });
             http.json = jest.fn(
                 () =>
-                    new Promise((resolve) => {
+                    new Promise(resolve => {
                         const data = fixture("IInsuranceOptionsResponse");
                         const response = fixture("IApiResponse", {
                             response: data,
@@ -91,7 +91,7 @@ describe("API: Insurances", () => {
             http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
-                    new Promise((resolve) => {
+                    new Promise(resolve => {
                         const response = fixture("IApiResponse", {
                             successful: false,
                         });
@@ -115,7 +115,7 @@ describe("API: Insurances", () => {
             http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
-                    new Promise((resolve) => {
+                    new Promise(resolve => {
                         const response = fixture("IApiResponse", {
                             response: null,
                             successful: true,

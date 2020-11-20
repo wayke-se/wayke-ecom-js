@@ -58,7 +58,7 @@ describe("BankId Message Resolver", () => {
     theoretically(
         "Given '{hintCode}', should be '{expected}'",
         theories,
-        (theory) => {
+        theory => {
             const message = resolve(theory.hintCode);
             expect(message).toBe(theory.expected);
         }

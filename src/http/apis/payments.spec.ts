@@ -16,7 +16,7 @@ describe("API: Payments", () => {
             http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
-                    new Promise((resolve) => {
+                    new Promise(resolve => {
                         const data = fixture("IPaymentLookupResponse");
                         const response = fixture("IApiResponse", {
                             response: data,
@@ -39,7 +39,7 @@ describe("API: Payments", () => {
             http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
-                    new Promise((resolve) => {
+                    new Promise(resolve => {
                         const response = fixture("IApiResponse", {
                             successful: false,
                         });
@@ -63,7 +63,7 @@ describe("API: Payments", () => {
             http.context = jest.fn(() => ({ requestForgeryToken: "-" }));
             http.json = jest.fn(
                 () =>
-                    new Promise((resolve) => {
+                    new Promise(resolve => {
                         const response = fixture("IApiResponse", {
                             response: null,
                             successful: true,

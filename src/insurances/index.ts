@@ -15,5 +15,5 @@ export const getOptions = (
 
     return api
         .find(request, Configuration.current())
-        .then((response) => new InsuranceOptionsResponse(response));
+        .then(response => new InsuranceOptionsResponse(response));
 };

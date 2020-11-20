@@ -48,7 +48,7 @@ describe("Insurance Functions", () => {
 
             (api.find as any).mockImplementation(
                 () =>
-                    new Promise((resolve) => {
+                    new Promise(resolve => {
                         const response = fixture("IInsuranceOptionsResponse");
                         resolve(response);
                     })

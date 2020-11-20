@@ -8,7 +8,11 @@ import {
 import * as http from "../index";
 
 const buildOptionsRequest = (): RequestInit =>
-    http.builder().method("get").accept("application/json").build();
+    http
+        .builder()
+        .method("get")
+        .accept("application/json")
+        .build();
 
 const buildCreateRequest = (
     request: IOrderCreateRequest,

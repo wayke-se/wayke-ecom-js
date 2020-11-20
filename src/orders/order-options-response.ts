@@ -24,7 +24,7 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
             return [];
         }
 
-        return this.response.payment.map((payment) => ({
+        return this.response.payment.map(payment => ({
             loanDetails: payment.loanDetails
                 ? new PaymentLookupResponse(payment.loanDetails)
                 : undefined,
@@ -41,7 +41,7 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
             return [];
         }
 
-        return this.response.delivery.map((delivery) => ({
+        return this.response.delivery.map(delivery => ({
             type: delivery.type,
             deliveryTime: delivery.deliveryTime,
             startupCost: delivery.startupCost,
