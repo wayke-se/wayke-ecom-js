@@ -81,6 +81,20 @@ describe("BankId Collect Response", () => {
                 apiResponse.completionData.address;
             expect(response.getAddress()).toEqual(apiAddress);
         });
+
+        it("Should have given name", () => {
+            const givenname =
+                apiResponse.completionData &&
+                apiResponse.completionData.givenName;
+            expect(response.getGivenName()).toEqual(givenname);
+        });
+
+        it("Should have surname", () => {
+            const givenname =
+                apiResponse.completionData &&
+                apiResponse.completionData.surname;
+            expect(response.getSurname()).toEqual(givenname);
+        });
     });
 
     describe("Given user cancel hint code", () => {

@@ -27,6 +27,8 @@ export interface IAddress {
 export interface ICustomer {
     name: string;
     personalNumber: string;
+    givenName?: string;
+    surname?: string;
     email: string;
     phoneNumber: string;
     address: IAddress;

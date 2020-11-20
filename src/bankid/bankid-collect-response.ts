@@ -16,6 +16,8 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
     private hintCode?: string;
     private message: string;
     private personalNumber?: string;
+    private givenName?: string;
+    private surname?: string;
     private address?: IAddress;
 
     public constructor(response: IBankIdCollectApiResponse) {
@@ -30,6 +32,8 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
 
         if (this.isCompleted() && !!response.completionData) {
             this.personalNumber = response.completionData.personalNumber;
+            this.givenName = response.completionData.givenName;
+            this.surname = response.completionData.surname;
             this.address = response.completionData.address;
         }
     }
@@ -88,5 +92,13 @@ export class BankIdCollectResponse implements IBankIdCollectResponse {
 
     getAddress() {
         return this.address;
+    }
+
+    getGivenName() {
+        return this.givenName;
+    }
+
+    getSurname() {
+        return this.givenName;
     }
 }
