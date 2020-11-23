@@ -5,6 +5,8 @@ export class CustomerBuilder {
     public withAddress(address: IAddress): CustomerBuilder {
         this.properties.address = address;
         this.properties.name = address.name;
+        this.properties.givenName = address.givenName;
+        this.properties.surname = address.surname;
 
         return this;
     }

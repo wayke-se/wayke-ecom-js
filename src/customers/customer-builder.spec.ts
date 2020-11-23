@@ -1,6 +1,7 @@
 const fixtures = require("../../test/fixtures");
 
 import { CustomerBuilder } from "./customer-builder";
+import { IAddress, ICustomer } from "./types";
 
 const fixture = (id: string, withData: any = undefined): any =>
     fixtures.create(id, withData);
@@ -20,6 +21,34 @@ describe("CustomerBuilder", () => {
                 .build();
 
             expect(actual).toEqual(expected);
+        });
+    });
+
+    describe(":withAddress()", () => {
+        let expected: IAddress;
+        let actual: ICustomer;
+
+        beforeAll(() => {
+            expected = fixture("IAddress");
+            actual = new CustomerBuilder()
+                .withAddress(expected)
+                .build();
+        });
+
+        it("sets given name", () => {
+            expect(actual.givenName).toBe(expected.givenName);
+        });
+
+        it("sets surname", () => {
+            expect(actual.surname).toBe(expected.surname);
+        });
+
+        it("sets name", () => {
+            expect(actual.name).toBe(expected.name);
+        });
+
+        it("sets address", () => {
+            expect(actual.address).toBe(expected);
         });
     });
 });

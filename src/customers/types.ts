@@ -18,6 +18,8 @@ export interface IDistance {
 export interface IAddress {
     city: string;
     name: string;
+    givenName: string;
+    surname: string;
     postalCode: string;
     street: string;
     street2: string;

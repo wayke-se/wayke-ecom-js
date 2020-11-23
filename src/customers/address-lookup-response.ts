@@ -15,6 +15,8 @@ export class AddressLookupResponse implements IAddressLookupResponse {
         return {
             city: this.response.city,
             name: this.response.name,
+            givenName: this.response.givenName,
+            surname: this.response.surname,
             postalCode: this.response.postalCode,
             street: this.response.street,
             street2: this.response.street2,
