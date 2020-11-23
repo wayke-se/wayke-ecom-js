@@ -30,9 +30,7 @@ describe("CustomerBuilder", () => {
 
         beforeAll(() => {
             expected = fixture("IAddress");
-            actual = new CustomerBuilder()
-                .withAddress(expected)
-                .build();
+            actual = new CustomerBuilder().withAddress(expected).build();
         });
 
         it("sets given name", () => {

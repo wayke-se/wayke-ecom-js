@@ -40,8 +40,6 @@ export interface IBankIdCollectResponse {
     isCompleted(): boolean;
     getPersonalNumber(): string | undefined;
     getAddress(): IAddress | undefined;
-    getGivenName(): string | undefined;
-    getSurname(): string | undefined;
 }
 
 export enum AuthStatus {
@@ -63,8 +61,6 @@ export interface IBankIdCompletionData {
     ocspResponse: string;
     personalNumber: string;
     address: IAddress;
-    givenName?: string;
-    surname?: string;
 }
 
 export interface IBankIdCancelRequest {
