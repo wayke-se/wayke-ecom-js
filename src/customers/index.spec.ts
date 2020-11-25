@@ -63,7 +63,7 @@ describe("Customer Functions", () => {
 
             (api.lookupAddress as any).mockImplementation(
                 () =>
-                    new Promise(resolve => {
+                    new Promise((resolve) => {
                         const response = fixture("IAddress");
                         resolve(response);
                     })

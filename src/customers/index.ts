@@ -17,5 +17,5 @@ export const lookupAddress = (
 
     return api
         .lookupAddress(request, Configuration.current())
-        .then(response => new AddressLookupResponse(response));
+        .then((response) => new AddressLookupResponse(response));
 };

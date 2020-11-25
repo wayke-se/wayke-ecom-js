@@ -63,7 +63,7 @@ describe("Vehicle Functions", () => {
 
             (api.lookup as any).mockImplementation(
                 () =>
-                    new Promise(resolve => {
+                    new Promise((resolve) => {
                         const response = fixture("IVehicleLookupResponse");
                         resolve(response);
                     })
