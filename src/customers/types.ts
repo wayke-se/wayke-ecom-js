@@ -17,7 +17,9 @@ export interface IDistance {
 
 export interface IAddress {
     city: string;
-    name: string;
+    name?: string;
+    givenName: string;
+    surname: string;
     postalCode: string;
     street: string;
     street2: string;
@@ -25,8 +27,10 @@ export interface IAddress {
 }
 
 export interface ICustomer {
-    name: string;
+    name?: string;
     personalNumber: string;
+    givenName: string;
+    surname: string;
     email: string;
     phoneNumber: string;
     address: IAddress;

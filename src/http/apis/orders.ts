@@ -34,6 +34,8 @@ const buildCreateRequest = (
             phone: request.customer.phoneNumber,
             name: request.customer.name,
             address: request.customer.address,
+            givenName: request.customer.givenName,
+            surname: request.customer.surname,
         },
         origin: config.getOrigin(),
     };

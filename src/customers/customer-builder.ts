@@ -5,6 +5,8 @@ export class CustomerBuilder {
     public withAddress(address: IAddress): CustomerBuilder {
         this.properties.address = address;
         this.properties.name = address.name;
+        this.properties.givenName = address.givenName;
+        this.properties.surname = address.surname;
 
         return this;
     }
@@ -23,6 +25,18 @@ export class CustomerBuilder {
 
     public withPhoneNumber(phoneNumber: string): CustomerBuilder {
         this.properties.phoneNumber = phoneNumber;
+
+        return this;
+    }
+
+    public withGivenName(givenName: string): CustomerBuilder {
+        this.properties.givenName = givenName;
+
+        return this;
+    }
+
+    public withSurname(surname: string): CustomerBuilder {
+        this.properties.surname = surname;
 
         return this;
     }
