@@ -266,4 +266,48 @@ factory.define("IBankIdCancelRequest", [
     "orderRef",
 ]);
 
+factory.define("ICreditAssessmentCustomer", [
+    "socialId",
+    "email",
+    "phone",
+    "signerIp",
+]);
+
+factory.define("ICreditAssessmentLoan", [
+    "financialProductId",
+    "price".asNumber(),
+    "downPayment".asNumber(),
+    "credit".asNumber(),
+    "interestRate".asNumber(),
+    "monthlyCost".asNumber(),
+    "term",
+]);
+
+factory.define("ICreditAssessmentHouseholdEconomy", [
+    "maritalStatus".pickFrom([
+        "married",
+        "single",
+    ]),
+    "income".asNumber(),
+    "employment".pickFrom([
+        "other",
+        "retired",
+        "fullTimeEmployed",
+        "student",
+        "temporarilyEmployed",
+        "selfEmployed",
+    ]),
+    "householdChildren".asNumber(),
+    "householdIncome".asNumber(),
+    "householdHousingCost".asNumber(),
+    "householdDebt".asNumber(),
+]);
+
+factory.define("ICreditAssessmentInquiry", [
+    "externalId",
+    "customer".fromFixture("ICreditAssessmentCustomer"),
+    "loan".fromFixture("ICreditAssessmentLoan"),
+    "householdEconomy".fromFixture("ICreditAssessmentHouseholdEconomy"),
+]);
+
 module.exports = factory;
