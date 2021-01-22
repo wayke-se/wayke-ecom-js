@@ -49,3 +49,11 @@ export interface ICreditAssessmentInquiry {
 export interface ICreditAssessmentCase {
     caseId: string;
 }
+
+export interface ICreditAssessmentStatus {
+    status: string;
+    bankIdHintCode?: string;
+    vfsScoreCaseId?: string;
+    recommendation?: string;
+    decision?: string;
+}

@@ -1,8 +1,10 @@
 import {
     ICreditAssessmentCase,
     ICreditAssessmentInquiry,
+    ICreditAssessmentStatus,
 } from "../../credit-assessment/types";
 import * as http from "../index";
+import { requestCaseStatus } from "./credit-assessment/get-status";
 import { requestNewCase } from "./credit-assessment/new-case";
 
 const validate = <T>(response: http.IApiResponse<T>): T => {
@@ -16,3 +18,6 @@ const validate = <T>(response: http.IApiResponse<T>): T => {
 export const newCase = (
     inquiry: ICreditAssessmentInquiry
 ): Promise<ICreditAssessmentCase> => requestNewCase(inquiry).then(validate);
+
+export const getStatus = (caseId: string): Promise<ICreditAssessmentStatus> =>
+    requestCaseStatus(caseId).then(validate);
