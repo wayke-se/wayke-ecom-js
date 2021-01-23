@@ -10,6 +10,7 @@ const buildLookupRequest = (
     lookupRequest: IPaymentLookupRequest
 ): RequestInit => {
     const content = {
+        branchId: lookupRequest.branchId,
         duration: lookupRequest.duration,
         downPayment: lookupRequest.downPayment,
         residual: lookupRequest.residual,
