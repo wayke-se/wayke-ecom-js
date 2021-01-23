@@ -160,8 +160,10 @@ factory.define("IOrderCreateResponse", [
 
 factory.define("IOrderOptionsRequest", [
     "id",
+    "branchId",
 ]);
 factory.define("IOrderOptionsResponse", [
+    "dealers".asListOfFixtures("IDealerOption", 2),
     "conditions",
     "returnConditions",
     "conditionsPdfUri",
@@ -170,6 +172,19 @@ factory.define("IOrderOptionsResponse", [
     "insurance".fromFixture("IOrderInsurance"),
     "payment".asListOfFixtures("IOrderPayment", 2),
     "tradeIn".asBoolean(),
+]);
+
+factory.define("IDealerOption", [
+    "id",
+    "name",
+    "location".fromFixture("ILocation"),
+]);
+
+factory.define("ILocation", [
+    "address",
+    "city",
+    "latitude".asNumber(),
+    "longitude".asNumber(),
 ]);
 
 factory.define("IPaymentCosts", [
@@ -193,6 +208,7 @@ factory.define("IPaymentRangeSpec", [
 ]);
 factory.define("IPaymentLookupRequest", [
     "id",
+    "branchId",
     "duration".asNumber(),
     "downPayment".asNumber(),
 ]);

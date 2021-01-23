@@ -8,7 +8,31 @@ const fixture = (name: string, withValues: any = undefined): any =>
 
 describe("API: Orders", () => {
     describe("init()", () => {
-        it("calls the correct URL", async () => {
+        it("calls the correct URL without branch ID", async () => {
+            const fake = fixture("IConfiguration");
+            const config = Configuration.bind(fake);
+
+            const http = require("..");
+            http.json = jest.fn(
+                () =>
+                    new Promise((resolve) => {
+                        const data = fixture("IOrderOptionsResponse");
+                        const response = fixture("IApiResponse", {
+                            response: data,
+                            successful: true,
+                        });
+                        resolve(response);
+                    })
+            );
+            const request = fixture("IOrderOptionsRequest");
+            request.branchId = undefined;
+            await init(request, config);
+
+            const expected = `${fake.api.address}/v2/orders/new?vehicleId=${request.id}`;
+            const args = http.json.mock.calls[0];
+            expect(args[0]).toEqual(expected);
+        });
+        it("calls the correct URL with branch ID", async () => {
             const fake = fixture("IConfiguration");
             const config = Configuration.bind(fake);
 
@@ -27,7 +51,7 @@ describe("API: Orders", () => {
             const request = fixture("IOrderOptionsRequest");
             await init(request, config);
 
-            const expected = `${fake.api.address}/v2/orders/new?vehicleId=${request.id}`;
+            const expected = `${fake.api.address}/v2/orders/new?vehicleId=${request.id}&branchId=${request.branchId}`;
             const args = http.json.mock.calls[0];
             expect(args[0]).toEqual(expected);
         });

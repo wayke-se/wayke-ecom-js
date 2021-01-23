@@ -36,12 +36,22 @@ describe("OrderOptionsRequestBuilder", () => {
         });
     });
 
+    describe(":forDealer()", () => {
+        it("returns the OrderOptionsRequestBuilder instance", () => {
+            const builder = new OrderOptionsRequestBuilder();
+            const instance = builder.forDealer("dealer-id");
+
+            expect(instance).toBe(builder);
+        });
+    });
+
     describe(":build()", () => {
         it("returns a IOrderOptionsRequest for the specified builder properties", () => {
             const expected = fixture("IOrderOptionsRequest");
 
             const actual = new OrderOptionsRequestBuilder()
                 .forVehicle(expected.id)
+                .forDealer(expected.branchId)
                 .build();
 
             expect(actual).toEqual(expected);
