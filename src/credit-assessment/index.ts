@@ -13,15 +13,18 @@ export const newCase = (request: ICreditAssessmentInquiry) => {
     return api.newCase(request);
 };
 
-export const getStatus = (caseId: string) => {
-    return api.getStatus(caseId);
-};
+export const getStatus = (caseId: string) => api.getStatus(caseId);
 
-export const signCase = (request: ICreditAssessmentSignRequest) => {
-    return api
+export const signCase = (request: ICreditAssessmentSignRequest) =>
+    api
         .signCase(request)
         .then(
             (response) =>
                 new CreditAssessmentSignResponse(response, request.method)
         );
-};
+
+export const cancelSigning = (caseId: string) => api.cancelSigning(caseId);
+
+export const accept = (caseId: string) => api.accept(caseId);
+
+export const decline = (caseId: string) => api.decline(caseId);
