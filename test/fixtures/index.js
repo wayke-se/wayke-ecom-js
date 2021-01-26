@@ -310,6 +310,10 @@ factory.define("ICreditAssessmentInquiry", [
     "householdEconomy".fromFixture("ICreditAssessmentHouseholdEconomy"),
 ]);
 
+factory.define("ICreditAssessmentCase", [
+    "caseId",
+]);
+
 factory.define("ICreditAssessmentSignRequest", [
     "method".pickFrom(["SameDevice", "QrCode"]),
     "caseId",
