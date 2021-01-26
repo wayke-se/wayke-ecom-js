@@ -314,6 +314,14 @@ factory.define("ICreditAssessmentCase", [
     "caseId",
 ]);
 
+factory.define("ICreditAssessmentStatus", [
+    "status",
+    "bankIdHintCode",
+    "vfsScoreCaseId",
+    "recommendation",
+    "decision",
+]);
+
 factory.define("ICreditAssessmentSignRequest", [
     "method".pickFrom(["SameDevice", "QrCode"]),
     "caseId",

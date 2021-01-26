@@ -2,6 +2,7 @@ const fixtures = require("../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
 import { newCase } from "./index";
+import { ICreditAssessmentStatus } from "./types";
 
 const validator = require("./validator");
 const api = require("../http/apis/credit-assessment");
@@ -67,6 +68,32 @@ describe("Credit assessment functions", () => {
 
         afterAll(() => {
             api.newCase.mockClear();
+        });
+    });
+
+    describe("Get status", () => {
+        describe("Given status from api", () => {
+            let expectedStatus: ICreditAssessmentStatus;
+
+            beforeAll(() => {
+                expectedStatus = fixture("ICreditAssessmentStatus");
+                
+                api.getStatus = jest.fn()
+                .mockImplementation(
+                    () => new Promise((resolve) => {
+                        resolve(expectedStatus);
+                    })
+                );
+            });
+    
+            it("Should return status", async () => {
+                const status = await api.getStatus("caseId");
+                expect(status).toBe(expectedStatus);
+            });
+    
+            afterAll(() => {
+                api.newCase.mockClear();
+            });
         });
     });
 });

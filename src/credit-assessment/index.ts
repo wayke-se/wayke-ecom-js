@@ -10,11 +10,11 @@ import { validateInquiry } from "./validator";
 export const newCase = (request: ICreditAssessmentInquiry) => {
     validateInquiry(request);
 
-    return api.newCase(request).then((response) => response);
+    return api.newCase(request);
 };
 
 export const getStatus = (caseId: string) => {
-    return api.getStatus(caseId).then((response) => response);
+    return api.getStatus(caseId);
 };
 
 export const signCase = (request: ICreditAssessmentSignRequest) => {
