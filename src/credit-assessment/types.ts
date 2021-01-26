@@ -14,14 +14,14 @@ export enum Employment {
     SelfEmployed = "selfEmployed",
 }
 
-interface ICustomer {
+export interface ICreditAssessmentCustomer {
     socialId: string;
     email: string;
     phone: string;
     signerIp?: string;
 }
 
-interface ILoan {
+export interface ICreditAssessmentLoan {
     financialProductId: string;
     price: number;
     downPayment: number;
@@ -31,7 +31,7 @@ interface ILoan {
     term?: string;
 }
 
-interface IHouseholdEconomy {
+export interface ICreditAssessmentHouseholdEconomy {
     maritalStatus: MaritalStatus;
     income: number;
     employment: Employment;
@@ -43,9 +43,9 @@ interface IHouseholdEconomy {
 
 export interface ICreditAssessmentInquiry {
     externalId: string;
-    customer: ICustomer;
-    loan: ILoan;
-    householdEconomy: IHouseholdEconomy;
+    customer: ICreditAssessmentCustomer;
+    loan: ICreditAssessmentLoan;
+    householdEconomy: ICreditAssessmentHouseholdEconomy;
 }
 
 export interface ICreditAssessmentCase {
