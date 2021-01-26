@@ -4,7 +4,7 @@ const fixture = (name: string, withValues: any = undefined): any =>
 
 const http = require("..");
 
-import { cancelSigning, getStatus, newCase, signCase } from "./credit-assessment";
+import { accept, cancelSigning, decline, getStatus, newCase, signCase } from "./credit-assessment";
 
 describe("API: Credit Assessment", () => {
     describe("Given unsuccessful request", () => {
@@ -71,6 +71,32 @@ describe("API: Credit Assessment", () => {
                 let err: any;
                 try {
                     await cancelSigning("test-case-id");
+                } catch (e) {
+                    err = e;
+                }
+
+                expect(err).toBeInstanceOf(Error);
+            });
+        });
+
+        describe("decline()", () => {
+            it("Throws error", async () => {
+                let err: any;
+                try {
+                    await decline("test-case-id");
+                } catch (e) {
+                    err = e;
+                }
+
+                expect(err).toBeInstanceOf(Error);
+            });
+        });
+
+        describe("accept()", () => {
+            it("Throws error", async () => {
+                let err: any;
+                try {
+                    await accept("test-case-id");
                 } catch (e) {
                     err = e;
                 }

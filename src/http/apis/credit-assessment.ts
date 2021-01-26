@@ -8,8 +8,10 @@ import {
 import * as http from "../index";
 import { requestCaseStatus } from "./credit-assessment/get-status";
 import { requestNewCase } from "./credit-assessment/new-case";
-import { requestSigning } from "./credit-assessment/sign";
-import { requestCancelSigning } from "./credit-assessment/cancel-sign";
+import { requestSignCase } from "./credit-assessment/sign";
+import { requestCancelSignCase } from "./credit-assessment/cancel-sign";
+import { requestDeclineCase } from "./credit-assessment/decline";
+import { requestAcceptCase } from "./credit-assessment/accept";
 
 const validate = <T>(response: http.IApiResponse<T>): T => {
     if (!response || !response.successful || !response.response) {
@@ -29,7 +31,13 @@ export const getStatus = (caseId: string): Promise<ICreditAssessmentStatus> =>
 export const signCase = (
     request: ICreditAssessmentSignRequest
 ): Promise<ICreditAssessmentSignApiResponse> =>
-    requestSigning(request).then(validate);
+    requestSignCase(request).then(validate);
 
 export const cancelSigning = (caseId: string): Promise<boolean> =>
-    requestCancelSigning(caseId).then(() => true);
+    requestCancelSignCase(caseId).then(() => true);
+
+export const decline = (caseId: string): Promise<boolean> =>
+    requestDeclineCase(caseId).then(() => true);
+
+export const accept = (caseId: string): Promise<boolean> =>
+    requestAcceptCase(caseId).then(() => true);

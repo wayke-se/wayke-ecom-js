@@ -24,7 +24,7 @@ export const getUrl = (requestOptions: ICreditAssessmentSignRequest) => {
     return url;
 };
 
-export const requestSigning = (
+export const requestSignCase = (
     requestOptions: ICreditAssessmentSignRequest
 ): Promise<http.IApiResponse<ICreditAssessmentSignApiResponse>> => {
     const url = getUrl(requestOptions);
