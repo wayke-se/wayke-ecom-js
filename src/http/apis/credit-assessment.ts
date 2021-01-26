@@ -1,11 +1,14 @@
 import {
     ICreditAssessmentCase,
     ICreditAssessmentInquiry,
+    ICreditAssessmentSignApiResponse,
+    ICreditAssessmentSignRequest,
     ICreditAssessmentStatus,
 } from "../../credit-assessment/types";
 import * as http from "../index";
 import { requestCaseStatus } from "./credit-assessment/get-status";
 import { requestNewCase } from "./credit-assessment/new-case";
+import { sign } from "./credit-assessment/sign";
 
 const validate = <T>(response: http.IApiResponse<T>): T => {
     if (!response || !response.successful || !response.response) {
@@ -21,3 +24,7 @@ export const newCase = (
 
 export const getStatus = (caseId: string): Promise<ICreditAssessmentStatus> =>
     requestCaseStatus(caseId).then(validate);
+
+export const signCase = (
+    request: ICreditAssessmentSignRequest
+): Promise<ICreditAssessmentSignApiResponse> => sign(request).then(validate);

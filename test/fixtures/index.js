@@ -310,4 +310,9 @@ factory.define("ICreditAssessmentInquiry", [
     "householdEconomy".fromFixture("ICreditAssessmentHouseholdEconomy"),
 ]);
 
+factory.define("ICreditAssessmentSignRequest", [
+    "method".pickFrom(["SameDevice", "QrCode"]),
+    "caseId",
+]);
+
 module.exports = factory;

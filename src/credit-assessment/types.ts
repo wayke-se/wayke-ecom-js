@@ -1,3 +1,5 @@
+import { AuthMethod } from "../bankid/types";
+
 export enum MaritalStatus {
     Married = "married",
     Single = "single",
@@ -56,4 +58,14 @@ export interface ICreditAssessmentStatus {
     vfsScoreCaseId?: string;
     recommendation?: string;
     decision?: string;
+}
+
+export interface ICreditAssessmentSignRequest {
+    caseId: string;
+    method: AuthMethod;
+}
+
+export interface ICreditAssessmentSignApiResponse {
+    qrCodeAsBase64?: string;
+    autoLaunchUrl?: string;
 }
