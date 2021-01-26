@@ -4,7 +4,7 @@ const fixture = (name: string, withValues: any = undefined): any =>
 
 const http = require("..");
 
-import { getStatus, newCase, signCase } from "./credit-assessment";
+import { cancelSigning, getStatus, newCase, signCase } from "./credit-assessment";
 
 describe("API: Credit Assessment", () => {
     describe("Given unsuccessful request", () => {
@@ -18,6 +18,9 @@ describe("API: Credit Assessment", () => {
                         resolve(response);
                     })
             );
+            http.raw = jest.fn(() => {
+                throw new Error();
+            });
         });
 
         describe("newCase()", () => {
@@ -61,6 +64,24 @@ describe("API: Credit Assessment", () => {
 
                 expect(err).toBeInstanceOf(Error);
             });
+        });
+
+        describe("cancelSigning()", () => {
+            it("Throws error", async () => {
+                let err: any;
+                try {
+                    await cancelSigning("test-case-id");
+                } catch (e) {
+                    err = e;
+                }
+
+                expect(err).toBeInstanceOf(Error);
+            });
+        });
+
+        afterAll(() => {
+            http.json.mockRestore();
+            http.raw.mockRestore();
         });
     });
 });
