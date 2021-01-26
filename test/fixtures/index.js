@@ -319,4 +319,9 @@ factory.define("ICreditAssessmentSignRequest", [
     "caseId",
 ]);
 
+factory.define("ICreditAssessmentSignApiResponse", [
+    "qrCodeAsBase64",
+    "autoLaunchUrl",
+]);
+
 module.exports = factory;

@@ -48,9 +48,16 @@ describe("Credit assessment functions", () => {
                     );
             });
     
-            it("Should throw", () => {
+            it("Should throw", async () => {
+                expect.assertions(1);
+
                 const inquiry = fixture("ICreditAssessmentInquiry");
-                expect(() => newCase(inquiry)).toThrowError();
+
+                try {
+                    await newCase(inquiry);
+                } catch (e) {
+                    expect(e).toBeTruthy();
+                }
             });
 
             afterAll(() => {

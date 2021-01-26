@@ -69,3 +69,11 @@ export interface ICreditAssessmentSignApiResponse {
     qrCodeAsBase64?: string;
     autoLaunchUrl?: string;
 }
+
+export interface ICreditAssessmentSignResponse {
+    isQrCode: () => boolean;
+    isSameDevice: () => boolean;
+    getQrCode: () => string | undefined;
+    getAutoLaunchUrl: () => string | undefined;
+    getMethod: () => AuthMethod;
+}
