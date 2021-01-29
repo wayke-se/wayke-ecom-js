@@ -104,6 +104,7 @@ export interface IPaymentOptionResponseData {
     price: number | undefined;
     type: PaymentType;
     unit: string | undefined;
+    externalId: string | undefined;
 }
 
 export interface IPaymentOption {
@@ -113,6 +114,7 @@ export interface IPaymentOption {
     price: number | undefined;
     type: PaymentType;
     unit: string | undefined;
+    externalId: string | undefined;
 }
 
 export interface IContactInformation {

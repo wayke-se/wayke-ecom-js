@@ -28,7 +28,9 @@ describe("BankId Auth", () => {
 
                 var url = getUrl(request);
 
-                expect(url).toBe(`${host}/credit-assessment/sign/${request.caseId}/same-device`);
+                expect(url).toBe(
+                    `${host}/credit-assessment/sign/${request.caseId}/same-device`
+                );
             });
         });
 
@@ -44,7 +46,9 @@ describe("BankId Auth", () => {
 
                 var url = getUrl(request);
 
-                expect(url).toEqual(`${host}/credit-assessment/sign/${request.caseId}/qr-code`);
+                expect(url).toEqual(
+                    `${host}/credit-assessment/sign/${request.caseId}/qr-code`
+                );
             });
         });
     });

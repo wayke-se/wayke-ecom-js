@@ -4,7 +4,14 @@ const fixture = (name: string, withValues: any = undefined): any =>
 
 const http = require("..");
 
-import { accept, cancelSigning, decline, getStatus, newCase, signCase } from "./credit-assessment";
+import {
+    accept,
+    cancelSigning,
+    decline,
+    getStatus,
+    newCase,
+    signCase,
+} from "./credit-assessment";
 
 describe("API: Credit Assessment", () => {
     describe("Given unsuccessful request", () => {

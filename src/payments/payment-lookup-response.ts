@@ -58,4 +58,12 @@ export class PaymentLookupResponse implements IPaymentLookupResponse {
     public getPublicURL(): string | undefined {
         return this.response.link;
     }
+
+    public shouldUseCreditScoring() {
+        return this.response.useCreditScoring;
+    }
+
+    public getFinancialProductCode() {
+        return this.response.financialProductCode;
+    }
 }

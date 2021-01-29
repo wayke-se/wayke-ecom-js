@@ -10,12 +10,12 @@ const api = require("../http/apis/credit-assessment");
 describe("Credit assessment functions", () => {
     describe(":newCase()", () => {
         beforeAll(() => {
-            api.newCase = jest.fn()
-            .mockImplementation(
-                () => new Promise((resolve) => {
-                    const assessmentCase = fixture("ICreditAssessmentCase");
-                    resolve(assessmentCase);
-                })
+            api.newCase = jest.fn().mockImplementation(
+                () =>
+                    new Promise((resolve) => {
+                        const assessmentCase = fixture("ICreditAssessmentCase");
+                        resolve(assessmentCase);
+                    })
             );
         });
 
@@ -23,13 +23,13 @@ describe("Credit assessment functions", () => {
             beforeAll(() => {
                 validator.validateInquiry = jest.fn();
             });
-    
+
             it("Should validate inquiry", async () => {
                 const inquiry = fixture("ICreditAssessmentInquiry");
                 const spy = jest.spyOn(validator, "validateInquiry");
-    
+
                 await newCase(inquiry);
-    
+
                 expect(spy).toHaveBeenCalledWith(inquiry);
             });
 
@@ -40,15 +40,11 @@ describe("Credit assessment functions", () => {
 
         describe("Given invalid inquiry", () => {
             beforeAll(() => {
-                validator.validateInquiry = jest
-                    .fn()
-                    .mockImplementation(
-                        () => {
-                            throw new TypeError("Invalid inquiry");
-                        }
-                    );
+                validator.validateInquiry = jest.fn().mockImplementation(() => {
+                    throw new TypeError("Invalid inquiry");
+                });
             });
-    
+
             it("Should throw", async () => {
                 expect.assertions(1);
 
@@ -77,20 +73,20 @@ describe("Credit assessment functions", () => {
 
             beforeAll(() => {
                 expectedStatus = fixture("ICreditAssessmentStatus");
-                
-                api.getStatus = jest.fn()
-                .mockImplementation(
-                    () => new Promise((resolve) => {
-                        resolve(expectedStatus);
-                    })
+
+                api.getStatus = jest.fn().mockImplementation(
+                    () =>
+                        new Promise((resolve) => {
+                            resolve(expectedStatus);
+                        })
                 );
             });
-    
+
             it("Should return status", async () => {
                 const status = await api.getStatus("caseId");
                 expect(status).toBe(expectedStatus);
             });
-    
+
             afterAll(() => {
                 api.newCase.mockClear();
             });

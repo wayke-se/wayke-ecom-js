@@ -127,6 +127,7 @@ factory.define("IOrderPayment", [
     "price".asNumber(),
     "type".pickFrom(["Cash", "Lease", "Loan"]),
     "unit",
+    "externalId",
 ]);
 
 factory.define("IVehicleTrade", [
@@ -208,6 +209,8 @@ factory.define("IPaymentLookupResponse", [
     "downPayment".fromFixture("IPaymentRangeSpec"),
     "totalResidualValue".asNumber(),
     "link",
+    "useCreditScoring".asBoolean(),
+    "financialProductCode",
 ]);
 
 factory.define("IVehicleLookupRequest", [

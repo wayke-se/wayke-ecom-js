@@ -1,6 +1,7 @@
 const fixtures = require("../../test/fixtures");
 
 import { PaymentLookupResponse } from "./payment-lookup-response";
+import { IPaymentLookupResponseData } from "./types";
 
 const fixture = (name: string, withData: any = undefined) =>
     fixtures.create(name, withData);
@@ -109,6 +110,34 @@ describe("PaymentLookupResponse", () => {
             const actual = new PaymentLookupResponse(response).getPublicURL();
 
             expect(actual).toEqual(expected);
+        });
+    });
+
+    describe(":shouldUseCreditScoring()", () => {
+        it("returns the specified response", () => {
+            const response: IPaymentLookupResponseData = fixture(
+                "IPaymentLookupResponse"
+            );
+
+            const actual = new PaymentLookupResponse(
+                response
+            ).shouldUseCreditScoring();
+
+            expect(actual).toEqual(response.useCreditScoring);
+        });
+    });
+
+    describe(":getFinacialProductCode()", () => {
+        it("returns the specified response", () => {
+            const response: IPaymentLookupResponseData = fixture(
+                "IPaymentLookupResponse"
+            );
+
+            const actual = new PaymentLookupResponse(
+                response
+            ).getFinancialProductCode();
+
+            expect(actual).toEqual(response.financialProductCode);
         });
     });
 });

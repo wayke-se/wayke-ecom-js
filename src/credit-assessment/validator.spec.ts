@@ -2,8 +2,18 @@ const fixtures = require("../../test/fixtures");
 const fixture = (name: string, withValues: any = undefined): any =>
     fixtures.create(name, withValues);
 
-import { ICreditAssessmentCustomer, ICreditAssessmentHouseholdEconomy, ICreditAssessmentInquiry, ICreditAssessmentLoan } from "./types";
-import { validateCustomer, validateHouseholdEconomy, validateInquiry, validateLoan } from "./validator";
+import {
+    ICreditAssessmentCustomer,
+    ICreditAssessmentHouseholdEconomy,
+    ICreditAssessmentInquiry,
+    ICreditAssessmentLoan,
+} from "./types";
+import {
+    validateCustomer,
+    validateHouseholdEconomy,
+    validateInquiry,
+    validateLoan,
+} from "./validator";
 
 describe("Validate credit assessment inquiry", () => {
     describe("Given complete inquiry", () => {
@@ -21,10 +31,13 @@ describe("Validate credit assessment inquiry", () => {
 
     describe("Given null external id", () => {
         it("Should throw", () => {
-            const inquiry = fixture("ICreditAssessmentInquiry", (data: ICreditAssessmentInquiry) => {
-                data.externalId = null as any;
-                return data;
-            });
+            const inquiry = fixture(
+                "ICreditAssessmentInquiry",
+                (data: ICreditAssessmentInquiry) => {
+                    data.externalId = null as any;
+                    return data;
+                }
+            );
             expect(() => validateInquiry(inquiry)).toThrowError();
         });
     });
@@ -46,20 +59,26 @@ describe("Validate customer for credit assessment", () => {
 
     describe("Given null social id", () => {
         it("Should throw", () => {
-            const customer = fixture("ICreditAssessmentCustomer", (data: ICreditAssessmentCustomer) => {
-                data.socialId = null as any;
-                return data;
-            });
+            const customer = fixture(
+                "ICreditAssessmentCustomer",
+                (data: ICreditAssessmentCustomer) => {
+                    data.socialId = null as any;
+                    return data;
+                }
+            );
             expect(() => validateCustomer(customer)).toThrowError();
         });
     });
 
     describe("Given null signer ip", () => {
         it("Should not throw", () => {
-            const customer = fixture("ICreditAssessmentCustomer", (data: ICreditAssessmentCustomer) => {
-                data.signerIp = null as any;
-                return data;
-            });
+            const customer = fixture(
+                "ICreditAssessmentCustomer",
+                (data: ICreditAssessmentCustomer) => {
+                    data.signerIp = null as any;
+                    return data;
+                }
+            );
             expect(() => validateCustomer(customer)).not.toThrowError();
         });
     });
@@ -81,41 +100,53 @@ describe("Validate loan for credit assessment", () => {
 
     describe("Given null down payment", () => {
         it("Should throw", () => {
-            const loan = fixture("ICreditAssessmentLoan", (data: ICreditAssessmentLoan) => {
-                data.downPayment = null as any;
-                return data;
-            });
+            const loan = fixture(
+                "ICreditAssessmentLoan",
+                (data: ICreditAssessmentLoan) => {
+                    data.downPayment = null as any;
+                    return data;
+                }
+            );
             expect(() => validateLoan(loan)).toThrowError();
         });
     });
 
     describe("Given no down payment", () => {
         it("Should not throw", () => {
-            const loan = fixture("ICreditAssessmentLoan", (data: ICreditAssessmentLoan) => {
-                data.downPayment = 0;
-                return data;
-            });
+            const loan = fixture(
+                "ICreditAssessmentLoan",
+                (data: ICreditAssessmentLoan) => {
+                    data.downPayment = 0;
+                    return data;
+                }
+            );
             expect(() => validateLoan(loan)).not.toThrowError();
         });
     });
 
     describe("Given undefined term", () => {
         it("Should not throw", () => {
-            const loan = fixture("ICreditAssessmentLoan", (data: ICreditAssessmentLoan) => {
-                data.term = undefined;
-                return data;
-            });
+            const loan = fixture(
+                "ICreditAssessmentLoan",
+                (data: ICreditAssessmentLoan) => {
+                    data.term = undefined;
+                    return data;
+                }
+            );
             expect(() => validateLoan(loan)).not.toThrowError();
         });
     });
 });
 
-
 describe("Validate household economy for credit assessment", () => {
     describe("Given complete household economy", () => {
         it("Should not throw", () => {
-            const householdEconomy = fixture("ICreditAssessmentHouseholdEconomy");
-            expect(() => validateHouseholdEconomy(householdEconomy)).not.toThrowError();
+            const householdEconomy = fixture(
+                "ICreditAssessmentHouseholdEconomy"
+            );
+            expect(() =>
+                validateHouseholdEconomy(householdEconomy)
+            ).not.toThrowError();
         });
     });
 
@@ -127,32 +158,46 @@ describe("Validate household economy for credit assessment", () => {
 
     describe("Given undefined marital status", () => {
         it("Should throw", () => {
-            const householdEconomy = fixture("ICreditAssessmentHouseholdEconomy", (data: ICreditAssessmentHouseholdEconomy) => {
-                data.maritalStatus = null as any;
-                return data;
-            });
-            expect(() => validateHouseholdEconomy(householdEconomy)).toThrowError();
+            const householdEconomy = fixture(
+                "ICreditAssessmentHouseholdEconomy",
+                (data: ICreditAssessmentHouseholdEconomy) => {
+                    data.maritalStatus = null as any;
+                    return data;
+                }
+            );
+            expect(() =>
+                validateHouseholdEconomy(householdEconomy)
+            ).toThrowError();
         });
     });
 
     describe("Given null income", () => {
         it("Should throw", () => {
-            const householdEconomy = fixture("ICreditAssessmentHouseholdEconomy", (data: ICreditAssessmentHouseholdEconomy) => {
-                data.income = null as any;
-                return data;
-            });
-            expect(() => validateHouseholdEconomy(householdEconomy)).toThrowError();
+            const householdEconomy = fixture(
+                "ICreditAssessmentHouseholdEconomy",
+                (data: ICreditAssessmentHouseholdEconomy) => {
+                    data.income = null as any;
+                    return data;
+                }
+            );
+            expect(() =>
+                validateHouseholdEconomy(householdEconomy)
+            ).toThrowError();
         });
     });
 
     describe("Given no income", () => {
         it("Should not throw", () => {
-            const householdEconomy = fixture("ICreditAssessmentHouseholdEconomy", (data: ICreditAssessmentHouseholdEconomy) => {
-                data.income = 0;
-                return data;
-            });
-            expect(() => validateHouseholdEconomy(householdEconomy)).not.toThrowError();
+            const householdEconomy = fixture(
+                "ICreditAssessmentHouseholdEconomy",
+                (data: ICreditAssessmentHouseholdEconomy) => {
+                    data.income = 0;
+                    return data;
+                }
+            );
+            expect(() =>
+                validateHouseholdEconomy(householdEconomy)
+            ).not.toThrowError();
         });
     });
 });
-
