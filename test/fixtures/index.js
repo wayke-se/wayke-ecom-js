@@ -209,6 +209,8 @@ factory.define("IPaymentLookupResponse", [
     "downPayment".fromFixture("IPaymentRangeSpec"),
     "totalResidualValue".asNumber(),
     "link",
+    "vehiclePrice".asNumber(),
+    "loanAmount".asNumber(),
     "useCreditScoring".asBoolean(),
     "financialProductCode",
 ]);

@@ -66,4 +66,12 @@ export class PaymentLookupResponse implements IPaymentLookupResponse {
     public getFinancialProductCode() {
         return this.response.financialProductCode;
     }
+
+    public getPrice() {
+        return this.response.vehiclePrice;
+    }
+
+    public getCreditAmount() {
+        return this.response.loanAmount;
+    }
 }

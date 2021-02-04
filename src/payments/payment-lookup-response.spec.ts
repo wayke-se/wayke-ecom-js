@@ -140,4 +140,32 @@ describe("PaymentLookupResponse", () => {
             expect(actual).toEqual(response.financialProductCode);
         });
     });
+
+    describe(":getPrice()", () => {
+        it("returns the specified response", () => {
+            const response: IPaymentLookupResponseData = fixture(
+                "IPaymentLookupResponse"
+            );
+
+            const actual = new PaymentLookupResponse(
+                response
+            ).getPrice();
+
+            expect(actual).toEqual(response.vehiclePrice);
+        });
+    });
+
+    describe(":getCreditAmount()", () => {
+        it("returns the specified response", () => {
+            const response: IPaymentLookupResponseData = fixture(
+                "IPaymentLookupResponse"
+            );
+
+            const actual = new PaymentLookupResponse(
+                response
+            ).getCreditAmount();
+
+            expect(actual).toEqual(response.loanAmount);
+        });
+    });
 });

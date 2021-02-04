@@ -51,6 +51,8 @@ export interface IPaymentLookupResponseData {
     downPayment: IPaymentRangeSpec;
     link?: string;
     totalResidualValue: number;
+    vehiclePrice: number;
+    loanAmount: number;
     useCreditScoring: boolean;
     financialProductCode?: string;
 }
