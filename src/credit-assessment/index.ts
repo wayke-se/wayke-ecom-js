@@ -19,8 +19,7 @@ export const signCase = (request: ICreditAssessmentSignRequest) =>
     api
         .signCase(request)
         .then(
-            (response) =>
-                new CreditAssessmentSignResponse(response, request.method)
+            (response) => new CreditAssessmentSignResponse(response, request)
         );
 
 export const cancelSigning = (caseId: string) => api.cancelSigning(caseId);

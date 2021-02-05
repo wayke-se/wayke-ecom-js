@@ -147,9 +147,7 @@ describe("PaymentLookupResponse", () => {
                 "IPaymentLookupResponse"
             );
 
-            const actual = new PaymentLookupResponse(
-                response
-            ).getPrice();
+            const actual = new PaymentLookupResponse(response).getPrice();
 
             expect(actual).toEqual(response.vehiclePrice);
         });

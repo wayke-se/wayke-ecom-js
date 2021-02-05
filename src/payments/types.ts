@@ -37,6 +37,10 @@ export interface IPaymentLookupResponse {
     getResidualValueSpec(): IPaymentRangeSpec;
     getTotalResidualValue(): number;
     getPublicURL(): string | undefined;
+    shouldUseCreditScoring(): boolean;
+    getFinancialProductCode(): string | undefined;
+    getPrice(): number;
+    getCreditAmount(): number;
 }
 
 export interface IPaymentLookupResponseData {

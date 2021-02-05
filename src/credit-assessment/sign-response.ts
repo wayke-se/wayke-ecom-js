@@ -1,6 +1,7 @@
 import { AuthMethod } from "../bankid/types";
 import {
     ICreditAssessmentSignApiResponse,
+    ICreditAssessmentSignRequest,
     ICreditAssessmentSignResponse,
 } from "./types";
 
@@ -9,22 +10,24 @@ export class CreditAssessmentSignResponse
     private qrCodeAsBase64: string | undefined;
     private autoLaunchUrl: string | undefined;
     private method: AuthMethod;
+    private caseId: string;
 
     public constructor(
         response: ICreditAssessmentSignApiResponse,
-        method: AuthMethod
+        request: ICreditAssessmentSignRequest
     ) {
         if (!response) {
             throw new Error("Response can not be falsy");
         }
 
-        if (!method) {
+        if (!request.method) {
             throw new Error("Method can not be falsy");
         }
 
         this.qrCodeAsBase64 = response.qrCodeAsBase64;
         this.autoLaunchUrl = response.autoLaunchUrl;
-        this.method = method;
+        this.method = request.method;
+        this.caseId = request.caseId;
     }
 
     public getMethod() {
@@ -53,5 +56,9 @@ export class CreditAssessmentSignResponse
         }
 
         return this.autoLaunchUrl;
+    }
+
+    public getCaseId() {
+        return this.caseId;
     }
 }

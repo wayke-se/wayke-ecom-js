@@ -76,4 +76,5 @@ export interface ICreditAssessmentSignResponse {
     getQrCode: () => string | undefined;
     getAutoLaunchUrl: () => string | undefined;
     getMethod: () => AuthMethod;
+    getCaseId: () => string;
 }
