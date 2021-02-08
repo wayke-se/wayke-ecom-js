@@ -3,7 +3,11 @@ const fixture = (name: string, withValues: any = undefined): any =>
     fixtures.create(name, withValues);
 
 import { CreditAssessmentStatusResponse } from "./status-response";
-import { CreditAssessmentStatus, ICreditAssessmentStatusApiResponse, ICreditAssessmentStatusResponse } from "./types";
+import {
+    CreditAssessmentStatus,
+    ICreditAssessmentStatusApiResponse,
+    ICreditAssessmentStatusResponse,
+} from "./types";
 import * as convertStatusMock from "./convert-status";
 import * as messageResolverMock from "../bankid/message-resolver";
 
@@ -11,24 +15,26 @@ describe("Create credit assessment status response", () => {
     describe("Given any statys", () => {
         let apiResponse: ICreditAssessmentStatusApiResponse;
         let response: ICreditAssessmentStatusResponse;
-    
+
         beforeAll(() => {
             apiResponse = fixture("ICreditAssessmentStatusApiResponse");
             response = new CreditAssessmentStatusResponse(apiResponse);
         });
-    
+
         it("Should have provided scoring id", () => {
             expect(response.getScoringId()).toBe(apiResponse.vfsScoreCaseId);
         });
-    
+
         it("Should have provided recommendation", () => {
-            expect(response.getRecommendation()).toBe(apiResponse.recommendation);
+            expect(response.getRecommendation()).toBe(
+                apiResponse.recommendation
+            );
         });
-    
+
         it("Should have provided decision", () => {
             expect(response.getDecision()).toBe(apiResponse.decision);
         });
-    
+
         it("Should have provided hint code", () => {
             expect(response.getHintCode()).toBe(apiResponse.bankIdHintCode);
         });
@@ -37,7 +43,7 @@ describe("Create credit assessment status response", () => {
     describe("Given received status", () => {
         let asStatusMock: any;
         let response: ICreditAssessmentStatusResponse;
-        
+
         beforeAll(() => {
             asStatusMock = jest.spyOn(convertStatusMock, "default");
             asStatusMock.mockReturnValue(CreditAssessmentStatus.Received);
@@ -82,17 +88,21 @@ describe("Create credit assessment status response", () => {
     describe("Given signing initiated", () => {
         let asStatusMock: any;
         let response: ICreditAssessmentStatusResponse;
-        
+
         beforeAll(() => {
             asStatusMock = jest.spyOn(convertStatusMock, "default");
-            asStatusMock.mockReturnValue(CreditAssessmentStatus.SigningInitiated);
+            asStatusMock.mockReturnValue(
+                CreditAssessmentStatus.SigningInitiated
+            );
 
             const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
             response = new CreditAssessmentStatusResponse(apiResponse);
         });
 
         it("Should have matching status", () => {
-            expect(response.getStatus()).toBe(CreditAssessmentStatus.SigningInitiated);
+            expect(response.getStatus()).toBe(
+                CreditAssessmentStatus.SigningInitiated
+            );
         });
         it("Should have pending signing", () => {
             expect(response.hasPendingSigning()).toBe(true);
@@ -105,7 +115,7 @@ describe("Create credit assessment status response", () => {
 
     describe("Given signing failed", () => {
         let asStatusMock: any;
-        
+
         beforeAll(() => {
             asStatusMock = jest.spyOn(convertStatusMock, "default");
             asStatusMock.mockReturnValue(CreditAssessmentStatus.SigningFailed);
@@ -113,21 +123,28 @@ describe("Create credit assessment status response", () => {
 
         it("Should have matching status", () => {
             const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
-            
+
             const response = new CreditAssessmentStatusResponse(apiResponse);
 
-            expect(response.getStatus()).toBe(CreditAssessmentStatus.SigningFailed);
+            expect(response.getStatus()).toBe(
+                CreditAssessmentStatus.SigningFailed
+            );
         });
 
         describe("Given start failed hint code", () => {
             it("Should renew signing", () => {
-                const apiResponse = fixture("ICreditAssessmentStatusApiResponse",
+                const apiResponse = fixture(
+                    "ICreditAssessmentStatusApiResponse",
                     (res: ICreditAssessmentStatusApiResponse) => {
-                        res.bankIdHintCode = CreditAssessmentStatusResponse.START_FAILED_CODE;
+                        res.bankIdHintCode =
+                            CreditAssessmentStatusResponse.START_FAILED_CODE;
                         return res;
-                    });
-                
-                const response = new CreditAssessmentStatusResponse(apiResponse);
+                    }
+                );
+
+                const response = new CreditAssessmentStatusResponse(
+                    apiResponse
+                );
 
                 expect(response.shouldRenewSigning()).toBe(true);
             });
@@ -135,13 +152,18 @@ describe("Create credit assessment status response", () => {
 
         describe("Given user cancel hint code", () => {
             it("Should renew signing", () => {
-                const apiResponse = fixture("ICreditAssessmentStatusApiResponse",
+                const apiResponse = fixture(
+                    "ICreditAssessmentStatusApiResponse",
                     (res: ICreditAssessmentStatusApiResponse) => {
-                        res.bankIdHintCode = CreditAssessmentStatusResponse.USER_CANCEL_CODE;
+                        res.bankIdHintCode =
+                            CreditAssessmentStatusResponse.USER_CANCEL_CODE;
                         return res;
-                    });
-                
-                const response = new CreditAssessmentStatusResponse(apiResponse);
+                    }
+                );
+
+                const response = new CreditAssessmentStatusResponse(
+                    apiResponse
+                );
 
                 expect(response.shouldRenewSigning()).toBe(true);
             });
@@ -149,9 +171,13 @@ describe("Create credit assessment status response", () => {
 
         describe("Given other hint code", () => {
             it("Should renew signing", () => {
-                const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
-                
-                const response = new CreditAssessmentStatusResponse(apiResponse);
+                const apiResponse = fixture(
+                    "ICreditAssessmentStatusApiResponse"
+                );
+
+                const response = new CreditAssessmentStatusResponse(
+                    apiResponse
+                );
 
                 expect(response.shouldRenewSigning()).toBe(false);
             });
@@ -165,7 +191,7 @@ describe("Create credit assessment status response", () => {
     describe("Given signed status", () => {
         let asStatusMock: any;
         let response: ICreditAssessmentStatusResponse;
-        
+
         beforeAll(() => {
             asStatusMock = jest.spyOn(convertStatusMock, "default");
             asStatusMock.mockReturnValue(CreditAssessmentStatus.Signed);
@@ -190,17 +216,21 @@ describe("Create credit assessment status response", () => {
     describe("Given scoring initiated", () => {
         let asStatusMock: any;
         let response: ICreditAssessmentStatusResponse;
-        
+
         beforeAll(() => {
             asStatusMock = jest.spyOn(convertStatusMock, "default");
-            asStatusMock.mockReturnValue(CreditAssessmentStatus.ScoringInitiated);
+            asStatusMock.mockReturnValue(
+                CreditAssessmentStatus.ScoringInitiated
+            );
 
             const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
             response = new CreditAssessmentStatusResponse(apiResponse);
         });
 
         it("Should have matching status", () => {
-            expect(response.getStatus()).toBe(CreditAssessmentStatus.ScoringInitiated);
+            expect(response.getStatus()).toBe(
+                CreditAssessmentStatus.ScoringInitiated
+            );
         });
 
         it("Should be signed", () => {
@@ -219,7 +249,7 @@ describe("Create credit assessment status response", () => {
     describe("Given scored status", () => {
         let asStatusMock: any;
         let response: ICreditAssessmentStatusResponse;
-        
+
         beforeAll(() => {
             asStatusMock = jest.spyOn(convertStatusMock, "default");
             asStatusMock.mockReturnValue(CreditAssessmentStatus.Scored);
@@ -248,7 +278,7 @@ describe("Create credit assessment status response", () => {
     describe("Given accepted status", () => {
         let asStatusMock: any;
         let response: ICreditAssessmentStatusResponse;
-        
+
         beforeAll(() => {
             asStatusMock = jest.spyOn(convertStatusMock, "default");
             asStatusMock.mockReturnValue(CreditAssessmentStatus.Accepted);
@@ -277,7 +307,7 @@ describe("Create credit assessment status response", () => {
     describe("Given not scored status", () => {
         let asStatusMock: any;
         let response: ICreditAssessmentStatusResponse;
-        
+
         beforeAll(() => {
             asStatusMock = jest.spyOn(convertStatusMock, "default");
             asStatusMock.mockReturnValue(CreditAssessmentStatus.NotScored);
@@ -306,7 +336,7 @@ describe("Create credit assessment status response", () => {
     describe("Given message from resolver", () => {
         let resolveMessageMock: any;
         let expectedMessage = "Lorem ipsum...";
-        
+
         beforeAll(() => {
             resolveMessageMock = jest.spyOn(messageResolverMock, "default");
             resolveMessageMock.mockReturnValue(expectedMessage);
@@ -314,9 +344,9 @@ describe("Create credit assessment status response", () => {
 
         it("Should have resolved message", () => {
             const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
-            
+
             const response = new CreditAssessmentStatusResponse(apiResponse);
-            
+
             expect(response.getSigningMessage()).toBe(expectedMessage);
         });
 
