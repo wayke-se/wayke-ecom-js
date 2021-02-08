@@ -4,9 +4,11 @@ import {
     ICreditAssessmentStatusApiResponse,
     ICreditAssessmentStatusResponse,
 } from "./types";
+import asStatus from "./convert-status";
 
 export class CreditAssessmentStatusResponse
     implements ICreditAssessmentStatusResponse {
+    private status: CreditAssessmentStatus;
     private vfsScoreCaseId: string | undefined;
     private recommendation: string | undefined;
     private decision: string | undefined;
@@ -15,6 +17,8 @@ export class CreditAssessmentStatusResponse
         this.vfsScoreCaseId = response.vfsScoreCaseId;
         this.recommendation = response.recommendation;
         this.decision = response.decision;
+
+        this.status = asStatus(response.status);
     }
 
     getSigningMessage(): string {
@@ -34,7 +38,7 @@ export class CreditAssessmentStatusResponse
     }
 
     getStatus(): CreditAssessmentStatus {
-        throw new Error("Method not implemented.");
+        return this.status;
     }
 
     hasPendingSigning(): boolean {

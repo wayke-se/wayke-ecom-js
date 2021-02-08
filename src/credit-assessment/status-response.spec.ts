@@ -3,27 +3,51 @@ const fixture = (name: string, withValues: any = undefined): any =>
     fixtures.create(name, withValues);
 
 import { CreditAssessmentStatusResponse } from "./status-response";
-import { ICreditAssessmentStatusApiResponse, ICreditAssessmentStatusResponse } from "./types";
+import { CreditAssessmentStatus, ICreditAssessmentStatusApiResponse, ICreditAssessmentStatusResponse } from "./types";
+import * as convertStatusMock from "./convert-status";
 
 describe("Create credit assessment status response", () => {
-    let apiResponse: ICreditAssessmentStatusApiResponse;
-    let response: ICreditAssessmentStatusResponse;
-
-    beforeAll(() => {
-        apiResponse = fixture("ICreditAssessmentStatusApiResponse");
-        response = new CreditAssessmentStatusResponse(apiResponse);
+    describe("Given any statys", () => {
+        let apiResponse: ICreditAssessmentStatusApiResponse;
+        let response: ICreditAssessmentStatusResponse;
+    
+        beforeAll(() => {
+            apiResponse = fixture("ICreditAssessmentStatusApiResponse");
+            response = new CreditAssessmentStatusResponse(apiResponse);
+        });
+    
+        it("Should have provided scoring id", () => {
+            expect(response.getScoringId()).toBe(apiResponse.vfsScoreCaseId);
+        });
+    
+        it("Should have provided recommendation", () => {
+            expect(response.getRecommendation()).toBe(apiResponse.recommendation);
+        });
+    
+        it("Should have provided decision", () => {
+            expect(response.getDecision()).toBe(apiResponse.decision);
+        });
     });
 
-    it("Should have provided scoring id", () => {
-        expect(response.getScoringId()).toBe(apiResponse.vfsScoreCaseId);
-    });
+    describe("Given received status", () => {
+        let asStatusMock: any;
+        
+        beforeAll(() => {
+            asStatusMock = jest.spyOn(convertStatusMock, "default");
+            asStatusMock.mockReturnValue(CreditAssessmentStatus.Received);
+        });
 
-    it("Should have provided recommendation", () => {
-        expect(response.getRecommendation()).toBe(apiResponse.recommendation);
-    });
+        it("Should have status received", () => {
+            const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
+            
+            const response = new CreditAssessmentStatusResponse(apiResponse);
 
-    it("Should have provided decision", () => {
-        expect(response.getDecision()).toBe(apiResponse.decision);
+            expect(response.getStatus()).toBe(CreditAssessmentStatus.Received);
+        });
+
+        afterAll(() => {
+            asStatusMock.mockClear();
+        });
     });
 });
 
