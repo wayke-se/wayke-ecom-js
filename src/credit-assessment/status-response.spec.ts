@@ -98,6 +98,65 @@ describe("Create credit assessment status response", () => {
         });
     });
 
+    describe("Given signing failed", () => {
+        let asStatusMock: any;
+        
+        beforeAll(() => {
+            asStatusMock = jest.spyOn(convertStatusMock, "default");
+            asStatusMock.mockReturnValue(CreditAssessmentStatus.SigningFailed);
+        });
+
+        it("Should have matching status", () => {
+            const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
+            
+            const response = new CreditAssessmentStatusResponse(apiResponse);
+
+            expect(response.getStatus()).toBe(CreditAssessmentStatus.SigningFailed);
+        });
+
+        describe("Given start failed hint code", () => {
+            it("Should renew signing", () => {
+                const apiResponse = fixture("ICreditAssessmentStatusApiResponse",
+                    (res: ICreditAssessmentStatusApiResponse) => {
+                        res.bankIdHintCode = CreditAssessmentStatusResponse.START_FAILED_CODE;
+                        return res;
+                    });
+                
+                const response = new CreditAssessmentStatusResponse(apiResponse);
+
+                expect(response.shouldRenewSigning()).toBe(true);
+            });
+        });
+
+        describe("Given user cancel hint code", () => {
+            it("Should renew signing", () => {
+                const apiResponse = fixture("ICreditAssessmentStatusApiResponse",
+                    (res: ICreditAssessmentStatusApiResponse) => {
+                        res.bankIdHintCode = CreditAssessmentStatusResponse.USER_CANCEL_CODE;
+                        return res;
+                    });
+                
+                const response = new CreditAssessmentStatusResponse(apiResponse);
+
+                expect(response.shouldRenewSigning()).toBe(true);
+            });
+        });
+
+        describe("Given other hint code", () => {
+            it("Should renew signing", () => {
+                const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
+                
+                const response = new CreditAssessmentStatusResponse(apiResponse);
+
+                expect(response.shouldRenewSigning()).toBe(false);
+            });
+        });
+
+        afterAll(() => {
+            asStatusMock.mockClear();
+        });
+    });
+
     // Given signing failed, should renew signing
     // Given status signed, scoringInitiated, scored, notScored, accepted, is signed
     // Given status signingInitiated, has pending signing

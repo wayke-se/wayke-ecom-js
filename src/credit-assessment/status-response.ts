@@ -8,12 +8,17 @@ import asStatus from "./convert-status";
 
 export class CreditAssessmentStatusResponse
     implements ICreditAssessmentStatusResponse {
+    static START_FAILED_CODE = "startFailed";
+    static USER_CANCEL_CODE = "userCancel";
+
     private status: CreditAssessmentStatus;
+    private hintCode: string | undefined;
     private vfsScoreCaseId: string | undefined;
     private recommendation: string | undefined;
     private decision: string | undefined;
 
     constructor(response: ICreditAssessmentStatusApiResponse) {
+        this.hintCode = response.bankIdHintCode;
         this.vfsScoreCaseId = response.vfsScoreCaseId;
         this.recommendation = response.recommendation;
         this.decision = response.decision;
@@ -26,7 +31,13 @@ export class CreditAssessmentStatusResponse
     }
 
     shouldRenewSigning(): boolean {
-        return false;
+        const hasFailedSigning =
+            this.status === CreditAssessmentStatus.SigningFailed;
+        const isRenewHintCode =
+            this.hintCode ===
+                CreditAssessmentStatusResponse.START_FAILED_CODE ||
+            this.hintCode === CreditAssessmentStatusResponse.USER_CANCEL_CODE;
+        return hasFailedSigning && isRenewHintCode;
     }
 
     isSigned(): boolean {
