@@ -3,7 +3,7 @@ import {
     ICreditAssessmentInquiry,
     ICreditAssessmentSignApiResponse,
     ICreditAssessmentSignRequest,
-    ICreditAssessmentStatus,
+    ICreditAssessmentStatusApiResponse,
 } from "../../credit-assessment/types";
 import * as http from "../index";
 import { requestCaseStatus } from "./credit-assessment/get-status";
@@ -25,7 +25,9 @@ export const newCase = (
     inquiry: ICreditAssessmentInquiry
 ): Promise<ICreditAssessmentCase> => requestNewCase(inquiry).then(validate);
 
-export const getStatus = (caseId: string): Promise<ICreditAssessmentStatus> =>
+export const getStatus = (
+    caseId: string
+): Promise<ICreditAssessmentStatusApiResponse> =>
     requestCaseStatus(caseId).then(validate);
 
 export const signCase = (

@@ -1,10 +1,10 @@
 import * as http from "../../index";
-import { ICreditAssessmentStatus } from "../../../credit-assessment/types";
+import { ICreditAssessmentStatusApiResponse } from "../../../credit-assessment/types";
 import Configuration from "../../../config/index";
 
 export const requestCaseStatus = (
     caseId: string
-): Promise<http.IApiResponse<ICreditAssessmentStatus>> => {
+): Promise<http.IApiResponse<ICreditAssessmentStatusApiResponse>> => {
     const host = Configuration.current().getApiAddress();
     const url = `${host}/credit-assessment/${caseId}`;
 
@@ -18,6 +18,6 @@ export const requestCaseStatus = (
         .build();
 
     return http.captureStateContext(
-        http.json<ICreditAssessmentStatus>(url, request)
+        http.json<ICreditAssessmentStatusApiResponse>(url, request)
     );
 };

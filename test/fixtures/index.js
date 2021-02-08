@@ -319,7 +319,7 @@ factory.define("ICreditAssessmentCase", [
     "caseId",
 ]);
 
-factory.define("ICreditAssessmentStatus", [
+factory.define("ICreditAssessmentStatusApiResponse", [
     "status",
     "bankIdHintCode",
     "vfsScoreCaseId",

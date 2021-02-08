@@ -80,7 +80,7 @@ export {
     MaritalStatus,
     Employment,
     ICreditAssessmentSignRequest,
-    ICreditAssessmentStatus,
+    ICreditAssessmentStatusResponse,
     ICreditAssessmentInquiry,
     ICreditAssessmentCase,
     ICreditAssessmentSignResponse,

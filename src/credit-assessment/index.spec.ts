@@ -2,7 +2,7 @@ const fixtures = require("../../test/fixtures");
 const fixture = (name: string): any => fixtures.create(name);
 
 import { newCase } from "./index";
-import { ICreditAssessmentStatus } from "./types";
+import { ICreditAssessmentStatusApiResponse } from "./types";
 
 const validator = require("./validator");
 const api = require("../http/apis/credit-assessment");
@@ -69,10 +69,10 @@ describe("Credit assessment functions", () => {
 
     describe("Get status", () => {
         describe("Given status from api", () => {
-            let expectedStatus: ICreditAssessmentStatus;
+            let expectedStatus: ICreditAssessmentStatusApiResponse;
 
             beforeAll(() => {
-                expectedStatus = fixture("ICreditAssessmentStatus");
+                expectedStatus = fixture("ICreditAssessmentStatusApiResponse");
 
                 api.getStatus = jest.fn().mockImplementation(
                     () =>

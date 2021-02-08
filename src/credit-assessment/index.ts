@@ -1,5 +1,6 @@
 import * as api from "../http/apis/credit-assessment";
 import { CreditAssessmentSignResponse } from "./sign-response";
+import { CreditAssessmentStatusResponse } from "./status-response";
 
 import {
     ICreditAssessmentInquiry,
@@ -13,7 +14,10 @@ export const newCase = (request: ICreditAssessmentInquiry) => {
     return api.newCase(request);
 };
 
-export const getStatus = (caseId: string) => api.getStatus(caseId);
+export const getStatus = (caseId: string) =>
+    api
+        .getStatus(caseId)
+        .then((response) => new CreditAssessmentStatusResponse(response));
 
 export const signCase = (request: ICreditAssessmentSignRequest) =>
     api

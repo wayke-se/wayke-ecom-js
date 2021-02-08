@@ -1,4 +1,5 @@
 import { AuthMethod } from "../bankid/types";
+import { IAddress } from "../customers/types";
 
 export enum MaritalStatus {
     Married = "married",
@@ -52,12 +53,41 @@ export interface ICreditAssessmentCase {
     caseId: string;
 }
 
-export interface ICreditAssessmentStatus {
+export interface ICreditAssessmentStatusApiResponse {
     status: string;
     bankIdHintCode?: string;
     vfsScoreCaseId?: string;
     recommendation?: string;
     decision?: string;
+}
+
+export interface ICreditAssessmentStatusResponse {
+    getStatus: () => CreditAssessmentStatus;
+    hasPendingSigning: () => boolean;
+    getHintCode: () => string | undefined;
+    getSigningMessage(): string;
+    shouldRenewSigning(): boolean;
+    isSigned(): boolean;
+    getAddress(): IAddress | undefined;
+    hasPendingScoring: () => boolean;
+    isScored: () => boolean;
+    isNotScored: () => boolean;
+    getScoringId: () => string | undefined;
+    getRecommendation: () => string | undefined;
+    getDecision: () => string | undefined;
+}
+
+export enum CreditAssessmentStatus {
+    Received = "received",
+    SigningInitiated = "signingInitiated",
+    SigningFailed = "signingFailed",
+    Signed = "signed",
+    ScoringInitiated = "scoringInitiated",
+    Scored = "scored",
+    NotScored = "notScored",
+    Accepted = "accepted",
+    Declined = "declined",
+    Unknown = "unknown",
 }
 
 export interface ICreditAssessmentSignRequest {
