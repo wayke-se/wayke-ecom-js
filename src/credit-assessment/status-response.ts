@@ -26,11 +26,11 @@ export class CreditAssessmentStatusResponse
     }
 
     shouldRenewSigning(): boolean {
-        throw new Error("Method not implemented.");
+        return false;
     }
 
     isSigned(): boolean {
-        throw new Error("Method not implemented.");
+        return false;
     }
 
     getAddress(): IAddress | undefined {
@@ -42,7 +42,7 @@ export class CreditAssessmentStatusResponse
     }
 
     hasPendingSigning(): boolean {
-        throw new Error("Method not implemented.");
+        return false;
     }
 
     getHintCode(): string {
@@ -50,15 +50,15 @@ export class CreditAssessmentStatusResponse
     }
 
     hasPendingScoring(): boolean {
-        throw new Error("Method not implemented.");
+        return false;
     }
 
     isScored(): boolean {
-        throw new Error("Method not implemented.");
+        return false;
     }
 
-    isNotScored(): boolean {
-        throw new Error("Method not implemented.");
+    hasScoringError(): boolean {
+        return false;
     }
 
     getScoringId(): string | undefined {

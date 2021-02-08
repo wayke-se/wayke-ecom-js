@@ -31,24 +31,53 @@ describe("Create credit assessment status response", () => {
 
     describe("Given received status", () => {
         let asStatusMock: any;
+        let response: ICreditAssessmentStatusResponse;
         
         beforeAll(() => {
             asStatusMock = jest.spyOn(convertStatusMock, "default");
             asStatusMock.mockReturnValue(CreditAssessmentStatus.Received);
+
+            const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
+            response = new CreditAssessmentStatusResponse(apiResponse);
         });
 
         it("Should have status received", () => {
-            const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
-            
-            const response = new CreditAssessmentStatusResponse(apiResponse);
-
             expect(response.getStatus()).toBe(CreditAssessmentStatus.Received);
         });
+
+        it("Should not renew signing", () => {
+            expect(response.shouldRenewSigning()).toBe(false);
+        });
+
+        it("Is not signed", () => {
+            expect(response.isSigned()).toBe(false);
+        });
+
+        it("Should not have pending signing", () => {
+            expect(response.hasPendingSigning()).toBe(false);
+        });
+
+        it("Should not have pending scoring", () => {
+            expect(response.hasPendingScoring()).toBe(false);
+        });
+
+        it("Should not be scored", () => {
+            expect(response.isScored()).toBe(false);
+        });
+
+        it("Should not have scoring error", () => {
+            expect(response.hasScoringError()).toBe(false);
+        });
+
+        // Given status scored, is scored = true
+        // should renew signing = false
+        // is signed = true
+        // has pending signing = false
+        // has pending scoring = false
+        // is scored = false
 
         afterAll(() => {
             asStatusMock.mockClear();
         });
     });
 });
-
-// Add status converter in separate files.

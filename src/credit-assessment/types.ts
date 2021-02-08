@@ -71,7 +71,7 @@ export interface ICreditAssessmentStatusResponse {
     getAddress(): IAddress | undefined;
     hasPendingScoring: () => boolean;
     isScored: () => boolean;
-    isNotScored: () => boolean;
+    hasScoringError: () => boolean;
     getScoringId: () => string | undefined;
     getRecommendation: () => string | undefined;
     getDecision: () => string | undefined;
