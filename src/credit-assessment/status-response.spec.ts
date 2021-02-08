@@ -41,7 +41,7 @@ describe("Create credit assessment status response", () => {
             response = new CreditAssessmentStatusResponse(apiResponse);
         });
 
-        it("Should have status received", () => {
+        it("Should have matching status", () => {
             expect(response.getStatus()).toBe(CreditAssessmentStatus.Received);
         });
 
@@ -69,15 +69,40 @@ describe("Create credit assessment status response", () => {
             expect(response.hasScoringError()).toBe(false);
         });
 
-        // Given status scored, is scored = true
-        // should renew signing = false
-        // is signed = true
-        // has pending signing = false
-        // has pending scoring = false
-        // is scored = false
+        afterAll(() => {
+            asStatusMock.mockClear();
+        });
+    });
+
+    describe("Given signing initiated", () => {
+        let asStatusMock: any;
+        let response: ICreditAssessmentStatusResponse;
+        
+        beforeAll(() => {
+            asStatusMock = jest.spyOn(convertStatusMock, "default");
+            asStatusMock.mockReturnValue(CreditAssessmentStatus.SigningInitiated);
+
+            const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
+            response = new CreditAssessmentStatusResponse(apiResponse);
+        });
+
+        it("Should have matching status", () => {
+            expect(response.getStatus()).toBe(CreditAssessmentStatus.SigningInitiated);
+        });
+        it("Should not pending signing", () => {
+            expect(response.hasPendingSigning()).toBe(true);
+        });
 
         afterAll(() => {
             asStatusMock.mockClear();
         });
     });
+
+    // Given signing failed, should renew signing
+    // Given status signed, scoringInitiated, scored, notScored, accepted, is signed
+    // Given status signingInitiated, has pending signing
+    // Given status scoringInitiated, has pending scoring
+    // Given status scored, accepted, is scored
+    // Given status scored, is scored = true
+    // Given status notScored, has scoring error
 });

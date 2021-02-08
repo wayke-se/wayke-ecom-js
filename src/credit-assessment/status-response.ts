@@ -42,7 +42,7 @@ export class CreditAssessmentStatusResponse
     }
 
     hasPendingSigning(): boolean {
-        return false;
+        return this.status === CreditAssessmentStatus.SigningInitiated;
     }
 
     getHintCode(): string {
