@@ -5,6 +5,7 @@ import {
     ICreditAssessmentStatusResponse,
 } from "./types";
 import asStatus from "./convert-status";
+import resolveMessage from "../bankid/message-resolver";
 
 export class CreditAssessmentStatusResponse
     implements ICreditAssessmentStatusResponse {
@@ -13,6 +14,7 @@ export class CreditAssessmentStatusResponse
 
     private status: CreditAssessmentStatus;
     private hintCode: string | undefined;
+    private signingMessage: string;
     private vfsScoreCaseId: string | undefined;
     private recommendation: string | undefined;
     private decision: string | undefined;
@@ -23,14 +25,15 @@ export class CreditAssessmentStatusResponse
         this.recommendation = response.recommendation;
         this.decision = response.decision;
 
+        this.signingMessage = resolveMessage(response.bankIdHintCode);
         this.status = asStatus(response.status);
     }
 
-    getSigningMessage(): string {
-        throw new Error("Method not implemented.");
+    getSigningMessage() {
+        return this.signingMessage;
     }
 
-    shouldRenewSigning(): boolean {
+    shouldRenewSigning() {
         const hasFailedSigning =
             this.status === CreditAssessmentStatus.SigningFailed;
         const isRenewHintCode =
@@ -40,7 +43,7 @@ export class CreditAssessmentStatusResponse
         return hasFailedSigning && isRenewHintCode;
     }
 
-    isSigned(): boolean {
+    isSigned() {
         return (
             this.status === CreditAssessmentStatus.Signed ||
             this.status === CreditAssessmentStatus.ScoringInitiated ||
@@ -54,38 +57,38 @@ export class CreditAssessmentStatusResponse
         throw new Error("Method not implemented.");
     }
 
-    getStatus(): CreditAssessmentStatus {
+    getStatus() {
         return this.status;
     }
 
-    hasPendingSigning(): boolean {
+    hasPendingSigning() {
         return this.status === CreditAssessmentStatus.SigningInitiated;
     }
 
-    getHintCode(): string | undefined {
+    getHintCode() {
         return this.hintCode;
     }
 
-    hasPendingScoring(): boolean {
+    hasPendingScoring() {
         return this.status === CreditAssessmentStatus.ScoringInitiated;
     }
 
-    isScored(): boolean {
+    isScored() {
         return (
             this.status === CreditAssessmentStatus.Scored ||
             this.status === CreditAssessmentStatus.Accepted
         );
     }
 
-    hasScoringError(): boolean {
+    hasScoringError() {
         return this.status === CreditAssessmentStatus.NotScored;
     }
 
-    getScoringId(): string | undefined {
+    getScoringId() {
         return this.vfsScoreCaseId;
     }
 
-    getRecommendation(): string | undefined {
+    getRecommendation() {
         return this.recommendation;
     }
 

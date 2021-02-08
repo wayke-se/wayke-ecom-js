@@ -5,6 +5,7 @@ const fixture = (name: string, withValues: any = undefined): any =>
 import { CreditAssessmentStatusResponse } from "./status-response";
 import { CreditAssessmentStatus, ICreditAssessmentStatusApiResponse, ICreditAssessmentStatusResponse } from "./types";
 import * as convertStatusMock from "./convert-status";
+import * as messageResolverMock from "../bankid/message-resolver";
 
 describe("Create credit assessment status response", () => {
     describe("Given any statys", () => {
@@ -299,6 +300,28 @@ describe("Create credit assessment status response", () => {
 
         afterAll(() => {
             asStatusMock.mockClear();
+        });
+    });
+
+    describe("Given message from resolver", () => {
+        let resolveMessageMock: any;
+        let expectedMessage = "Lorem ipsum...";
+        
+        beforeAll(() => {
+            resolveMessageMock = jest.spyOn(messageResolverMock, "default");
+            resolveMessageMock.mockReturnValue(expectedMessage);
+        });
+
+        it("Should have resolved message", () => {
+            const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
+            
+            const response = new CreditAssessmentStatusResponse(apiResponse);
+            
+            expect(response.getSigningMessage()).toBe(expectedMessage);
+        });
+
+        afterAll(() => {
+            resolveMessageMock.mockClear();
         });
     });
 });
