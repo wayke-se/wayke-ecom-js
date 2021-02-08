@@ -41,7 +41,13 @@ export class CreditAssessmentStatusResponse
     }
 
     isSigned(): boolean {
-        return false;
+        return (
+            this.status === CreditAssessmentStatus.Signed ||
+            this.status === CreditAssessmentStatus.ScoringInitiated ||
+            this.status === CreditAssessmentStatus.Scored ||
+            this.status === CreditAssessmentStatus.NotScored ||
+            this.status === CreditAssessmentStatus.Accepted
+        );
     }
 
     getAddress(): IAddress | undefined {
@@ -56,20 +62,23 @@ export class CreditAssessmentStatusResponse
         return this.status === CreditAssessmentStatus.SigningInitiated;
     }
 
-    getHintCode(): string {
-        throw new Error("Method not implemented.");
+    getHintCode(): string | undefined {
+        return this.hintCode;
     }
 
     hasPendingScoring(): boolean {
-        return false;
+        return this.status === CreditAssessmentStatus.ScoringInitiated;
     }
 
     isScored(): boolean {
-        return false;
+        return (
+            this.status === CreditAssessmentStatus.Scored ||
+            this.status === CreditAssessmentStatus.Accepted
+        );
     }
 
     hasScoringError(): boolean {
-        return false;
+        return this.status === CreditAssessmentStatus.NotScored;
     }
 
     getScoringId(): string | undefined {

@@ -27,6 +27,10 @@ describe("Create credit assessment status response", () => {
         it("Should have provided decision", () => {
             expect(response.getDecision()).toBe(apiResponse.decision);
         });
+    
+        it("Should have provided hint code", () => {
+            expect(response.getHintCode()).toBe(apiResponse.bankIdHintCode);
+        });
     });
 
     describe("Given received status", () => {
@@ -89,7 +93,7 @@ describe("Create credit assessment status response", () => {
         it("Should have matching status", () => {
             expect(response.getStatus()).toBe(CreditAssessmentStatus.SigningInitiated);
         });
-        it("Should not pending signing", () => {
+        it("Should have pending signing", () => {
             expect(response.hasPendingSigning()).toBe(true);
         });
 
@@ -157,11 +161,144 @@ describe("Create credit assessment status response", () => {
         });
     });
 
-    // Given signing failed, should renew signing
-    // Given status signed, scoringInitiated, scored, notScored, accepted, is signed
-    // Given status signingInitiated, has pending signing
-    // Given status scoringInitiated, has pending scoring
-    // Given status scored, accepted, is scored
-    // Given status scored, is scored = true
-    // Given status notScored, has scoring error
+    describe("Given signed status", () => {
+        let asStatusMock: any;
+        let response: ICreditAssessmentStatusResponse;
+        
+        beforeAll(() => {
+            asStatusMock = jest.spyOn(convertStatusMock, "default");
+            asStatusMock.mockReturnValue(CreditAssessmentStatus.Signed);
+
+            const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
+            response = new CreditAssessmentStatusResponse(apiResponse);
+        });
+
+        it("Should have matching status", () => {
+            expect(response.getStatus()).toBe(CreditAssessmentStatus.Signed);
+        });
+
+        it("Should be signed", () => {
+            expect(response.isSigned()).toBe(true);
+        });
+
+        afterAll(() => {
+            asStatusMock.mockClear();
+        });
+    });
+
+    describe("Given scoring initiated", () => {
+        let asStatusMock: any;
+        let response: ICreditAssessmentStatusResponse;
+        
+        beforeAll(() => {
+            asStatusMock = jest.spyOn(convertStatusMock, "default");
+            asStatusMock.mockReturnValue(CreditAssessmentStatus.ScoringInitiated);
+
+            const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
+            response = new CreditAssessmentStatusResponse(apiResponse);
+        });
+
+        it("Should have matching status", () => {
+            expect(response.getStatus()).toBe(CreditAssessmentStatus.ScoringInitiated);
+        });
+
+        it("Should be signed", () => {
+            expect(response.isSigned()).toBe(true);
+        });
+
+        it("Should have pending scoring", () => {
+            expect(response.hasPendingScoring()).toBe(true);
+        });
+
+        afterAll(() => {
+            asStatusMock.mockClear();
+        });
+    });
+
+    describe("Given scored status", () => {
+        let asStatusMock: any;
+        let response: ICreditAssessmentStatusResponse;
+        
+        beforeAll(() => {
+            asStatusMock = jest.spyOn(convertStatusMock, "default");
+            asStatusMock.mockReturnValue(CreditAssessmentStatus.Scored);
+
+            const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
+            response = new CreditAssessmentStatusResponse(apiResponse);
+        });
+
+        it("Should have matching status", () => {
+            expect(response.getStatus()).toBe(CreditAssessmentStatus.Scored);
+        });
+
+        it("Should be signed", () => {
+            expect(response.isSigned()).toBe(true);
+        });
+
+        it("Should be scored", () => {
+            expect(response.isScored()).toBe(true);
+        });
+
+        afterAll(() => {
+            asStatusMock.mockClear();
+        });
+    });
+
+    describe("Given accepted status", () => {
+        let asStatusMock: any;
+        let response: ICreditAssessmentStatusResponse;
+        
+        beforeAll(() => {
+            asStatusMock = jest.spyOn(convertStatusMock, "default");
+            asStatusMock.mockReturnValue(CreditAssessmentStatus.Accepted);
+
+            const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
+            response = new CreditAssessmentStatusResponse(apiResponse);
+        });
+
+        it("Should have matching status", () => {
+            expect(response.getStatus()).toBe(CreditAssessmentStatus.Accepted);
+        });
+
+        it("Should be signed", () => {
+            expect(response.isSigned()).toBe(true);
+        });
+
+        it("Should be scored", () => {
+            expect(response.isScored()).toBe(true);
+        });
+
+        afterAll(() => {
+            asStatusMock.mockClear();
+        });
+    });
+
+    describe("Given not scored status", () => {
+        let asStatusMock: any;
+        let response: ICreditAssessmentStatusResponse;
+        
+        beforeAll(() => {
+            asStatusMock = jest.spyOn(convertStatusMock, "default");
+            asStatusMock.mockReturnValue(CreditAssessmentStatus.NotScored);
+
+            const apiResponse = fixture("ICreditAssessmentStatusApiResponse");
+            response = new CreditAssessmentStatusResponse(apiResponse);
+        });
+
+        it("Should have matching status", () => {
+            expect(response.getStatus()).toBe(CreditAssessmentStatus.NotScored);
+        });
+
+        it("Should be signed", () => {
+            expect(response.isSigned()).toBe(true);
+        });
+
+        it("Should have scoring error", () => {
+            expect(response.hasScoringError()).toBe(true);
+        });
+
+        afterAll(() => {
+            asStatusMock.mockClear();
+        });
+    });
 });
