@@ -320,13 +320,23 @@ factory.define("ICreditAssessmentCase", [
 ]);
 
 factory.define("ICreditAssessmentStatusApiResponse", [
-    "status",
+    "status".pickFrom([
+        "received",
+        "signingInitiated",
+        "signingFailed",
+        "signed",
+        "scoringInitiated",
+        "scored",
+        "notScored",
+        "accepted",
+        "declined",
+        "unknown",
+    ]),
     "bankIdHintCode",
     "vfsScoreCaseId",
     "recommendation",
     "decision",
 ]);
-
 factory.define("ICreditAssessmentSignRequest", [
     "method".pickFrom(["SameDevice", "QrCode"]),
     "caseId",
