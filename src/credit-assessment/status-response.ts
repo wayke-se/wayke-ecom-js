@@ -70,7 +70,10 @@ export class CreditAssessmentStatusResponse
     }
 
     hasPendingScoring() {
-        return this.status === CreditAssessmentStatus.ScoringInitiated;
+        return (
+            this.status === CreditAssessmentStatus.Signed ||
+            this.status === CreditAssessmentStatus.ScoringInitiated
+        );
     }
 
     isScored() {

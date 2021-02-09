@@ -204,6 +204,10 @@ describe("Create credit assessment status response", () => {
             expect(response.getStatus()).toBe(CreditAssessmentStatus.Signed);
         });
 
+        it("Should have pending scoring", () => {
+            expect(response.hasPendingScoring()).toBe(true);
+        });
+
         it("Should be signed", () => {
             expect(response.isSigned()).toBe(true);
         });
