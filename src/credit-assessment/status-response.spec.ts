@@ -12,7 +12,7 @@ import * as convertStatusMock from "./convert-status";
 import * as messageResolverMock from "../bankid/message-resolver";
 
 describe("Create credit assessment status response", () => {
-    describe("Given any statys", () => {
+    describe("Given any status", () => {
         let apiResponse: ICreditAssessmentStatusApiResponse;
         let response: ICreditAssessmentStatusResponse;
 
@@ -29,10 +29,6 @@ describe("Create credit assessment status response", () => {
             expect(response.getRecommendation()).toBe(
                 apiResponse.recommendation
             );
-        });
-
-        it("Should have provided decision", () => {
-            expect(response.getDecision()).toBe(apiResponse.decision);
         });
 
         it("Should have provided hint code", () => {
