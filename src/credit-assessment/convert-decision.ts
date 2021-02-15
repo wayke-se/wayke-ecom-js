@@ -1,7 +1,7 @@
 import { CreditAssessmentDecision } from "./types";
 
-const asDecision = (statusString?: string) => {
-    switch (statusString) {
+const asDecision = (text?: string) => {
+    switch (text) {
         case "approved":
             return CreditAssessmentDecision.Approved;
         case "rejected":

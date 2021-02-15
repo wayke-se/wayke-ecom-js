@@ -3,7 +3,7 @@ import theoretically from "jest-theories";
 import asDecision from "./convert-decision";
 import { CreditAssessmentDecision } from "./types";
 
-describe("Convert status text to status", () => {
+describe("Convert decision text to decision", () => {
     const theories = [
         {
             text: "approved",
@@ -21,8 +21,8 @@ describe("Convert status text to status", () => {
         "Given '{text}', should be '{expectedDecision}'",
         theories,
         (theory) => {
-            const status = asDecision(theory.text);
-            expect(status).toBe(theory.expectedDecision);
+            const decision = asDecision(theory.text);
+            expect(decision).toBe(theory.expectedDecision);
         }
     );
 });

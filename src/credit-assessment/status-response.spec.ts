@@ -25,12 +25,6 @@ describe("Create credit assessment status response", () => {
             expect(response.getScoringId()).toBe(apiResponse.vfsScoreCaseId);
         });
 
-        it("Should have provided recommendation", () => {
-            expect(response.getRecommendation()).toBe(
-                apiResponse.recommendation
-            );
-        });
-
         it("Should have provided hint code", () => {
             expect(response.getHintCode()).toBe(apiResponse.bankIdHintCode);
         });

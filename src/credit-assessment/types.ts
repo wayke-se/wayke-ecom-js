@@ -73,7 +73,7 @@ export interface ICreditAssessmentStatusResponse {
     isScored: () => boolean;
     hasScoringError: () => boolean;
     getScoringId: () => string | undefined;
-    getRecommendation: () => string | undefined;
+    getRecommendation: () => CreditAssessmentRecommendation;
     getDecision: () => CreditAssessmentDecision;
 }
 
@@ -93,6 +93,13 @@ export enum CreditAssessmentStatus {
 export enum CreditAssessmentDecision {
     Approved = "approved",
     Rejected = "rejected",
+    Unknown = "unknown",
+}
+
+export enum CreditAssessmentRecommendation {
+    Approve = "approve",
+    AssessManually = "assessManually",
+    Reject = "reject",
     Unknown = "unknown",
 }
 

@@ -1,6 +1,7 @@
 import { IAddress } from "..";
 import {
     CreditAssessmentDecision,
+    CreditAssessmentRecommendation,
     CreditAssessmentStatus,
     ICreditAssessmentStatusApiResponse,
     ICreditAssessmentStatusResponse,
@@ -8,6 +9,7 @@ import {
 import asStatus from "./convert-status";
 import resolveMessage from "../bankid/message-resolver";
 import asDecision from "./convert-decision";
+import asRecommendation from "./convert-recommendation";
 
 export class CreditAssessmentStatusResponse
     implements ICreditAssessmentStatusResponse {
@@ -18,17 +20,18 @@ export class CreditAssessmentStatusResponse
     private hintCode: string | undefined;
     private signingMessage: string;
     private vfsScoreCaseId: string | undefined;
-    private recommendation: string | undefined;
+    private recommendation: CreditAssessmentRecommendation;
     private decision: CreditAssessmentDecision;
 
     constructor(response: ICreditAssessmentStatusApiResponse) {
         this.hintCode = response.bankIdHintCode;
         this.vfsScoreCaseId = response.vfsScoreCaseId;
-        this.recommendation = response.recommendation;
 
         this.signingMessage = resolveMessage(response.bankIdHintCode);
+
         this.status = asStatus(response.status);
         this.decision = asDecision(response.decision);
+        this.recommendation = asRecommendation(response.recommendation);
     }
 
     getSigningMessage() {
