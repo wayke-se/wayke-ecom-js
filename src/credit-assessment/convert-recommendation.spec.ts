@@ -11,14 +11,21 @@ describe("Convert recommendation text to recommendation", () => {
         },
         {
             text: "assessManually",
-            expectedRecommendation: CreditAssessmentRecommendation.AssessManually,
+            expectedRecommendation:
+                CreditAssessmentRecommendation.AssessManually,
         },
         {
             text: "reject",
             expectedRecommendation: CreditAssessmentRecommendation.Reject,
         },
-        { text: "asdf", expectedRecommendation: CreditAssessmentRecommendation.Unknown },
-        { text: undefined, expectedRecommendation: CreditAssessmentRecommendation.Unknown },
+        {
+            text: "asdf",
+            expectedRecommendation: CreditAssessmentRecommendation.Unknown,
+        },
+        {
+            text: undefined,
+            expectedRecommendation: CreditAssessmentRecommendation.Unknown,
+        },
     ];
 
     theoretically(
