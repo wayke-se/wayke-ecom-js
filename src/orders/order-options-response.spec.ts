@@ -3,6 +3,7 @@ const fixtures = require("../../test/fixtures");
 import { PaymentLookupResponse } from "../payments/payment-lookup-response";
 import { OrderOptionsResponse } from "./order-options-response";
 import { IOrderOptionsResponseData } from "./types";
+import { IDealerOption } from "./types";
 
 const fixture = (name: string, withData: any = undefined): any =>
     fixtures.create(name, withData);
@@ -13,6 +14,40 @@ describe("OrderOptionsResponse", () => {
             expect(() => {
                 new OrderOptionsResponse(null as any);
             }).toThrowError();
+        });
+    });
+
+    describe(":requiresDealerSelection()", () => {
+        it("is falsy when only one dealer is available", () => {
+            const response = fixture("IOrderOptionsResponse");
+            response.dealers = [fixture("IDealerOption")];
+            const actual = new OrderOptionsResponse(
+                response
+            ).requiresDealerSelection();
+
+            expect(actual).toBeFalsy();
+        });
+        it("is truthy when more than one dealer is available", () => {
+            const response = fixture("IOrderOptionsResponse");
+            response.dealers = [
+                fixture("IDealerOption"),
+                fixture("IDealerOption"),
+            ];
+            const actual = new OrderOptionsResponse(
+                response
+            ).requiresDealerSelection();
+
+            expect(actual).toBeTruthy();
+        });
+    });
+
+    describe(":getDealerSites()", () => {
+        it("returns a list of available dealers", () => {
+            const response = fixture("IOrderOptionsResponse");
+            const expected: Array<IDealerOption> = response.dealers;
+            const actual = new OrderOptionsResponse(response).getDealerSites();
+
+            expect(actual).toEqual(expected);
         });
     });
 

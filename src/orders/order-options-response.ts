@@ -2,6 +2,7 @@ import { PaymentLookupResponse } from "../payments/payment-lookup-response";
 import {
     IAvailableInsuranceOption,
     IContactInformation,
+    IDealerOption,
     IDeliveryOption,
     IOrderOptionsResponse,
     IOrderOptionsResponseData,
@@ -17,6 +18,18 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
         }
 
         this.response = response;
+    }
+
+    public requiresDealerSelection(): boolean {
+        return this.response.dealers && this.response.dealers.length > 1;
+    }
+
+    public getDealerSites(): IDealerOption[] {
+        if (!this.response.dealers || !this.response.dealers.length) {
+            return [];
+        }
+
+        return this.response.dealers;
     }
 
     public getPaymentOptions(): IPaymentOption[] {

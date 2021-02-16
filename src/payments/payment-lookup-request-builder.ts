@@ -26,6 +26,12 @@ export class PaymentLookupRequestBuilder {
         return this;
     }
 
+    public forDealer(id: string): PaymentLookupRequestBuilder {
+        this.properties.branchId = id;
+
+        return this;
+    }
+
     public withDuration(duration: number): PaymentLookupRequestBuilder {
         this.properties.duration = duration;
 
