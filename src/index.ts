@@ -84,4 +84,7 @@ export {
     ICreditAssessmentInquiry,
     ICreditAssessmentCase,
     ICreditAssessmentSignResponse,
+    CreditAssessmentStatus,
+    CreditAssessmentDecision,
+    CreditAssessmentRecommendation,
 } from "./credit-assessment/types";
