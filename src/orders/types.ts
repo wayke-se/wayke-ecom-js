@@ -42,11 +42,20 @@ export interface IOrderInsuranceRequest {
     addons: string[] | undefined;
 }
 
+export interface IOrderCreditAssessment {
+    scoreId: string;
+    financialProductCode: string;
+    recommendation: string;
+    decision: string;
+}
+
 export interface IOrderPaymentRequest {
     type: PaymentType;
     months: number;
     downPayment: number;
     residualValue: number | undefined;
+    externalId?: string;
+    creditAssessment?: IOrderCreditAssessment;
 }
 
 export interface IOrderOptionsResponseData {

@@ -49,6 +49,7 @@ export {
     IOrderCustomer,
     IOrderOptionsRequest,
     IOrderOptionsResponse,
+    IOrderCreditAssessment,
     IOrderPaymentRequest,
     IPaymentOption,
     PaymentType,

@@ -141,11 +141,19 @@ factory.define("IOrderInsuranceRequest", [
     "drivingDistance".pickFrom(["Between0And1000", "Between1000And1500", "Between1500And2000", "Between2000And2500", "Over2500"]),
     "addons".asArray(2),
 ]);
+factory.define("IOrderCreditAssessment", [
+    "scoreId",
+    "financialProductCode",
+    "recommendation",
+    "decision",
+]);
 factory.define("IOrderPaymentRequest", [
     "type".pickFrom(["Cash", "Lease", "Loan"]),
     "months".asNumber(),
     "downPayment".asNumber(),
     "residualValue".asNumber(),
+    "externalId",
+    "creditAssessment".fromFixture("IOrderCreditAssessment"),
 ]);
 factory.define("IOrderCreateRequest", [
     "id",
