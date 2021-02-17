@@ -264,6 +264,10 @@ describe("Create credit assessment status response", () => {
             expect(response.isScored()).toBe(true);
         });
 
+        it("Should not be accepted", () => {
+            expect(response.isAccepted()).toBe(false);
+        });
+
         afterAll(() => {
             asStatusMock.mockClear();
         });

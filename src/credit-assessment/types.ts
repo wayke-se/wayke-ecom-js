@@ -75,6 +75,7 @@ export interface ICreditAssessmentStatusResponse {
     getScoringId: () => string | undefined;
     getRecommendation: () => CreditAssessmentRecommendation;
     getDecision: () => CreditAssessmentDecision;
+    isAccepted: () => boolean;
 }
 
 export enum CreditAssessmentStatus {

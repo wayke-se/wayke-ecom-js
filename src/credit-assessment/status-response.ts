@@ -103,4 +103,8 @@ export class CreditAssessmentStatusResponse
     getDecision() {
         return this.decision;
     }
+
+    isAccepted() {
+        return this.status === CreditAssessmentStatus.Accepted;
+    }
 }
