@@ -341,7 +341,7 @@ factory.define("ICreditAssessmentStatusApiResponse", [
         "unknown",
     ]),
     "bankIdHintCode",
-    "vfsScoreCaseId",
+    "vfScoreCaseId",
     "recommendation",
     "decision",
 ]);

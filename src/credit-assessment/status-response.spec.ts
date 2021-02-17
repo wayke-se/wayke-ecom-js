@@ -22,7 +22,7 @@ describe("Create credit assessment status response", () => {
         });
 
         it("Should have provided scoring id", () => {
-            expect(response.getScoringId()).toBe(apiResponse.vfsScoreCaseId);
+            expect(response.getScoringId()).toBe(apiResponse.vfScoreCaseId);
         });
 
         it("Should have provided hint code", () => {

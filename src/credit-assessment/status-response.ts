@@ -19,13 +19,13 @@ export class CreditAssessmentStatusResponse
     private status: CreditAssessmentStatus;
     private hintCode: string | undefined;
     private signingMessage: string;
-    private vfsScoreCaseId: string | undefined;
+    private vfScoreCaseId: string | undefined;
     private recommendation: CreditAssessmentRecommendation;
     private decision: CreditAssessmentDecision;
 
     constructor(response: ICreditAssessmentStatusApiResponse) {
         this.hintCode = response.bankIdHintCode;
-        this.vfsScoreCaseId = response.vfsScoreCaseId;
+        this.vfScoreCaseId = response.vfScoreCaseId;
 
         this.signingMessage = resolveMessage(response.bankIdHintCode);
 
@@ -93,7 +93,7 @@ export class CreditAssessmentStatusResponse
     }
 
     getScoringId() {
-        return this.vfsScoreCaseId;
+        return this.vfScoreCaseId;
     }
 
     getRecommendation() {

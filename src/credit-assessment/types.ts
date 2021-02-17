@@ -56,7 +56,7 @@ export interface ICreditAssessmentCase {
 export interface ICreditAssessmentStatusApiResponse {
     status: string;
     bankIdHintCode?: string;
-    vfsScoreCaseId?: string;
+    vfScoreCaseId?: string;
     recommendation?: string;
     decision?: string;
 }
