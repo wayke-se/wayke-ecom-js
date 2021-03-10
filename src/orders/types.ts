@@ -23,9 +23,12 @@ export interface IOrderCreateResponseData {
 
 export interface IOrderOptionsRequest {
     id: string;
+    branchId?: string;
 }
 
 export interface IOrderOptionsResponse {
+    requiresDealerSelection(): boolean;
+    getDealerSites(): IDealerOption[];
     getPaymentOptions(): IPaymentOption[];
     getDeliveryOptions(): IDeliveryOption[];
     getInsuranceOption(): IAvailableInsuranceOption | undefined;
@@ -50,6 +53,7 @@ export interface IOrderPaymentRequest {
 }
 
 export interface IOrderOptionsResponseData {
+    dealers: IDealerOption[];
     conditions: string | undefined;
     returnConditions: string | undefined;
     conditionsPdfUri: string | null | undefined;
@@ -58,6 +62,19 @@ export interface IOrderOptionsResponseData {
     insurance: IAvailableInsuranceOption | undefined;
     payment: IPaymentOptionResponseData[];
     tradeIn: boolean;
+}
+
+export interface IDealerOption {
+    id: string;
+    name: string;
+    location: ILocation | undefined;
+}
+
+export interface ILocation {
+    address: string | undefined;
+    city: string | undefined;
+    latitude: number | undefined;
+    longitude: number | undefined;
 }
 
 export interface IOrderCustomer {
