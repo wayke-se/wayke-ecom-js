@@ -43,7 +43,7 @@ export interface IPaymentLookupResponse {
     getPrice(): number;
     getCreditAmount(): number;
     hasPrivacyPolicy(): boolean;
-    getPrivacyPolicy(): string | undefined;
+    getPrivacyPolicyUrl(): string | undefined;
 }
 
 export interface IPaymentLookupResponseData {

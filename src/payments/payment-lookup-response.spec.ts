@@ -172,7 +172,7 @@ describe("PaymentLookupResponse", () => {
         let response: IPaymentLookupResponse;
 
         beforeAll(() => {
-            expectedUrl = "https://www.privacy-policy.com"
+            expectedUrl = "https://www.privacy-policy.com";
             const rawResponse = fixture("IPaymentLookupResponse", {
                 privacyPolicyUrl: expectedUrl,
             });
@@ -189,7 +189,7 @@ describe("PaymentLookupResponse", () => {
 
         describe(":getPrivacyPolicyUrl()", () => {
             it("should equal url for raw response", () => {
-                const privacyPolicyUrl = response.getPrivacyPolicy();
+                const privacyPolicyUrl = response.getPrivacyPolicyUrl();
                 expect(privacyPolicyUrl).toBe(expectedUrl);
             });
         });
@@ -214,7 +214,7 @@ describe("PaymentLookupResponse", () => {
 
         describe(":getPrivacyPolicyUrl()", () => {
             it("should be falsy", () => {
-                const privacyPolicyUrl = response.getPrivacyPolicy();
+                const privacyPolicyUrl = response.getPrivacyPolicyUrl();
                 expect(privacyPolicyUrl).toBeFalsy();
             });
         });

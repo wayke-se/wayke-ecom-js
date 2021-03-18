@@ -29,7 +29,7 @@ export interface ICreditAssessmentLoan {
     credit: number;
     interestRate: number;
     monthlyCost: number;
-    term?: string;
+    term: string;
 }
 
 export interface ICreditAssessmentHouseholdEconomy {

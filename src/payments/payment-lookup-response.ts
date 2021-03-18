@@ -79,7 +79,7 @@ export class PaymentLookupResponse implements IPaymentLookupResponse {
         return !!this.response.privacyPolicyUrl;
     }
 
-    public getPrivacyPolicy() {
+    public getPrivacyPolicyUrl() {
         return this.response.privacyPolicyUrl;
     }
 }
