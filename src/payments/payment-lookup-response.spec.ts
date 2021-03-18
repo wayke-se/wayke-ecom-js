@@ -1,7 +1,7 @@
 const fixtures = require("../../test/fixtures");
 
 import { PaymentLookupResponse } from "./payment-lookup-response";
-import { IPaymentLookupResponseData } from "./types";
+import { IPaymentLookupResponse, IPaymentLookupResponseData } from "./types";
 
 const fixture = (name: string, withData: any = undefined) =>
     fixtures.create(name, withData);
@@ -164,6 +164,59 @@ describe("PaymentLookupResponse", () => {
             ).getCreditAmount();
 
             expect(actual).toEqual(response.loanAmount);
+        });
+    });
+
+    describe("given privacy policy url", () => {
+        let expectedUrl: string;
+        let response: IPaymentLookupResponse;
+
+        beforeAll(() => {
+            expectedUrl = "https://www.privacy-policy.com"
+            const rawResponse = fixture("IPaymentLookupResponse", {
+                privacyPolicyUrl: expectedUrl,
+            });
+
+            response = new PaymentLookupResponse(rawResponse);
+        });
+
+        describe(":hasPrivacyPolicy()", () => {
+            it("is true", () => {
+                const hasPrivacyPolicy = response.hasPrivacyPolicy();
+                expect(hasPrivacyPolicy).toBe(true);
+            });
+        });
+
+        describe(":getPrivacyPolicyUrl()", () => {
+            it("should equal url for raw response", () => {
+                const privacyPolicyUrl = response.getPrivacyPolicy();
+                expect(privacyPolicyUrl).toBe(expectedUrl);
+            });
+        });
+    });
+
+    describe("given no privacy policy url", () => {
+        let response: IPaymentLookupResponse;
+
+        beforeAll(() => {
+            const rawResponse = fixture("IPaymentLookupResponse", {
+                privacyPolicyUrl: null,
+            });
+            response = new PaymentLookupResponse(rawResponse);
+        });
+
+        describe(":hasPrivacyPolicy()", () => {
+            it("is false", () => {
+                const hasPrivacyPolicy = response.hasPrivacyPolicy();
+                expect(hasPrivacyPolicy).toBe(false);
+            });
+        });
+
+        describe(":getPrivacyPolicyUrl()", () => {
+            it("should be falsy", () => {
+                const privacyPolicyUrl = response.getPrivacyPolicy();
+                expect(privacyPolicyUrl).toBeFalsy();
+            });
         });
     });
 });

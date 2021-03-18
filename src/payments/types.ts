@@ -42,6 +42,8 @@ export interface IPaymentLookupResponse {
     getFinancialProductCode(): string | undefined;
     getPrice(): number;
     getCreditAmount(): number;
+    hasPrivacyPolicy(): boolean;
+    getPrivacyPolicy(): string | undefined;
 }
 
 export interface IPaymentLookupResponseData {
@@ -60,4 +62,5 @@ export interface IPaymentLookupResponseData {
     loanAmount: number;
     useCreditScoring: boolean;
     financialProductCode?: string;
+    privacyPolicyUrl?: string;
 }

@@ -74,4 +74,12 @@ export class PaymentLookupResponse implements IPaymentLookupResponse {
     public getCreditAmount() {
         return this.response.loanAmount;
     }
+
+    public hasPrivacyPolicy() {
+        return !!this.response.privacyPolicyUrl;
+    }
+
+    public getPrivacyPolicy() {
+        return this.response.privacyPolicyUrl;
+    }
 }
