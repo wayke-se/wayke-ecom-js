@@ -59,7 +59,7 @@ To manually set these values, to enable a more granular control over the order o
 
 As an example, orders originating from https://www.wayke.se will have a topic `Wayke` and a channel `wayke.se`. For orders originating from the Wayke iOS app, the topic will be `Wayke` and the channel `iOS-app`. For Android, the channel will be `Android-app`.
 
-### Swedish BankId Thumbprint 
+### Swedish BankId Thumbprint
 
 By default Wayke's BankId certificate is used to verify customer identity. There is an optional configuration property `bankIdThumbprint` which allows for dealers to use their own BankId certificate. If the certificate's thumbprint is set that certificate will be used instead, given that it is correctly setup in the Dealer back-office.
 
@@ -82,6 +82,8 @@ The resulting request object can now be used to communicate with Waykes e-com AP
     const response = await orders.getOptions(request);
 
 The returned `IOrderOptionsResponse` exposes helper methods to select partial data points:
+- `.requiresDealerSelection()` returns `true` when more than one dealer site is available
+- `.getDealerSites()` return a `IDealerOption[]` with all available dealer sites
 - `.getPaymentOptions()` returns a `IPaymentOption[]`
 - `.getDeliveryOptions()` returns a `IDeliveryOption[]`
 - `.getInsuranceOption()` returns a `IInsuranceOption` if available
@@ -92,6 +94,13 @@ The returned `IOrderOptionsResponse` exposes helper methods to select partial da
 - `.allowsTradeIn()` returns `true`/`false` if the retailer allows a trade-in vehicle for possible orders
 
 These values should provide enough information to continue the boarding process for the customer.
+
+If `.requiresDealerSelection()` returns truthy, the customer should be displayed a list of all available dealer sites from `.getDealerSites()`. When the customer has made a selection for his or hers preferred dealer site, a new order option request should be made:
+
+    const request = orders.newOptionsRequest()
+        .forVehicle("VEHICLE-ID-FROM-WAYKE")
+        .forDealer("DEALER-ID-SELECTION")
+        .build();
 
 ### Retrieving insurance options
 
@@ -157,6 +166,7 @@ Wayke exposes functionality to calculate interest rates, fees, etc, for a vehicl
 
     const request = payments.newLookupRequest()
         .forVehicle("VEHICLE-ID-FROM-WAYKE")
+        .forDealer("DEALER-ID-SELECTION") // optional, should be applied when there's multiple dealer sites available for a vehicle
         .withDownPayment(90000)
         .withDuration(72)
         .withResidualValue(0.2) // optional
@@ -267,7 +277,7 @@ Once a authentication process is started, _a collect request should be made appr
         .newCollectRequest()
         .withOrderRef(data.orderRef)
         .build();
-        
+
     try {
         await bankid.collect(request);
         // Do something with response.

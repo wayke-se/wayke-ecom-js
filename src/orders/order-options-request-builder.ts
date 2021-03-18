@@ -18,6 +18,12 @@ export class OrderOptionsRequestBuilder {
         return this;
     }
 
+    public forDealer(id: string): OrderOptionsRequestBuilder {
+        this.properties.branchId = id;
+
+        return this;
+    }
+
     public build(): IOrderOptionsRequest {
         return this.properties as IOrderOptionsRequest;
     }

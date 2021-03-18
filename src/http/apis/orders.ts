@@ -69,6 +69,14 @@ const validateCreateResponse = (
     return response.response;
 };
 
+const getInitUrl = ({ id, branchId }: IOrderOptionsRequest): string => {
+    const url = `/v2/orders/new?vehicleId=${id}`;
+
+    if (!branchId) return url;
+
+    return `${url}&branchId=${branchId}`;
+};
+
 export const init = (
     request: IOrderOptionsRequest,
     config: IConfiguration
@@ -76,13 +84,13 @@ export const init = (
     http
         .captureStateContext(
             http.json<IOrderOptionsResponseData>(
-                `${config.getApiAddress()}/v2/orders/new?vehicleId=${
-                    request.id
-                }`,
+                `${config.getApiAddress()}${getInitUrl(request)}`,
                 buildOptionsRequest()
             )
         )
         .then(validateOptionsResponse);
+
+const getCreateUrl = () => "/v2/orders";
 
 export const create = (
     request: IOrderCreateRequest,
@@ -91,7 +99,7 @@ export const create = (
     http
         .captureStateContext(
             http.json<IOrderCreateResponseData>(
-                `${config.getApiAddress()}/v2/orders`,
+                `${config.getApiAddress()}${getCreateUrl()}`,
                 buildCreateRequest(request, config, http.context())
             )
         )

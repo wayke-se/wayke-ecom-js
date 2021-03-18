@@ -66,6 +66,15 @@ describe("PaymentLookupRequestBuilder", () => {
         });
     });
 
+    describe(":forDealer()", () => {
+        it("returns the PaymentLookupRequestBuilder instance", () => {
+            const builder = new PaymentLookupRequestBuilder();
+            const instance = builder.forDealer("dealer-id");
+
+            expect(instance).toBe(builder);
+        });
+    });
+
     describe(":withDownPayment()", () => {
         it("returns the PaymentLookupRequestBuilder instance", () => {
             const builder = new PaymentLookupRequestBuilder();
@@ -98,6 +107,7 @@ describe("PaymentLookupRequestBuilder", () => {
             const expected = fixture("IPaymentLookupRequest");
             const actual = new PaymentLookupRequestBuilder()
                 .forVehicle(expected.id)
+                .forDealer(expected.branchId)
                 .withDownPayment(expected.downPayment)
                 .withDuration(expected.duration)
                 .build();

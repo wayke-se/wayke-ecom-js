@@ -1,4 +1,5 @@
 export interface IPaymentLookupRequest {
+    branchId: string;
     downPayment: number;
     duration: number;
     residual: number;
