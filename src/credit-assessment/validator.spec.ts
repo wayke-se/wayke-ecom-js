@@ -123,19 +123,6 @@ describe("Validate loan for credit assessment", () => {
             expect(() => validateLoan(loan)).not.toThrowError();
         });
     });
-
-    describe("Given undefined term", () => {
-        it("Should not throw", () => {
-            const loan = fixture(
-                "ICreditAssessmentLoan",
-                (data: ICreditAssessmentLoan) => {
-                    data.term = undefined;
-                    return data;
-                }
-            );
-            expect(() => validateLoan(loan)).not.toThrowError();
-        });
-    });
 });
 
 describe("Validate household economy for credit assessment", () => {
