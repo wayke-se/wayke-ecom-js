@@ -58,4 +58,28 @@ export class PaymentLookupResponse implements IPaymentLookupResponse {
     public getPublicURL(): string | undefined {
         return this.response.link;
     }
+
+    public shouldUseCreditScoring() {
+        return this.response.useCreditScoring;
+    }
+
+    public getFinancialProductCode() {
+        return this.response.financialProductCode;
+    }
+
+    public getPrice() {
+        return this.response.vehiclePrice;
+    }
+
+    public getCreditAmount() {
+        return this.response.loanAmount;
+    }
+
+    public hasPrivacyPolicy() {
+        return !!this.response.privacyPolicyUrl;
+    }
+
+    public getPrivacyPolicyUrl() {
+        return this.response.privacyPolicyUrl;
+    }
 }

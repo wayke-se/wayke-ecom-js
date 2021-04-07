@@ -5,6 +5,7 @@ import * as orders from "./orders/index";
 import * as payments from "./payments/index";
 import * as vehicles from "./vehicles/index";
 import * as bankid from "./bankid/index";
+import * as creditAssessment from "./credit-assessment/index";
 
 export { config };
 export { customers };
@@ -13,6 +14,7 @@ export { orders };
 export { payments };
 export { vehicles };
 export { bankid };
+export { creditAssessment };
 
 export {
     IConfiguration,
@@ -47,6 +49,7 @@ export {
     IOrderCustomer,
     IOrderOptionsRequest,
     IOrderOptionsResponse,
+    IOrderCreditAssessment,
     IOrderPaymentRequest,
     IPaymentOption,
     PaymentType,
@@ -74,3 +77,15 @@ export {
     AuthStatus,
     IBankIdCancelRequest,
 } from "./bankid/types";
+export {
+    MaritalStatus,
+    Employment,
+    ICreditAssessmentSignRequest,
+    ICreditAssessmentStatusResponse,
+    ICreditAssessmentInquiry,
+    ICreditAssessmentCase,
+    ICreditAssessmentSignResponse,
+    CreditAssessmentStatus,
+    CreditAssessmentDecision,
+    CreditAssessmentRecommendation,
+} from "./credit-assessment/types";

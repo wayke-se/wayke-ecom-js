@@ -2,7 +2,7 @@ const fixtures = require("../../test/fixtures");
 
 import { PaymentLookupResponse } from "../payments/payment-lookup-response";
 import { OrderOptionsResponse } from "./order-options-response";
-import { IDealerOption } from "./types";
+import { IOrderOptionsResponseData, IDealerOption } from "./types";
 
 const fixture = (name: string, withData: any = undefined): any =>
     fixtures.create(name, withData);
@@ -88,6 +88,21 @@ describe("OrderOptionsResponse", () => {
                 .filter((x) => !!x);
 
             expect(actual.length).toBe(0);
+        });
+        it("returns external id in payment options", () => {
+            const response: IOrderOptionsResponseData = fixture(
+                "IOrderOptionsResponse"
+            );
+
+            const options = new OrderOptionsResponse(
+                response
+            ).getPaymentOptions();
+
+            for (let i = 0; i < response.payment.length; i++) {
+                const expected = response.payment[i].externalId;
+                const actual = options[i].externalId;
+                expect(actual).toBe(expected);
+            }
         });
     });
 

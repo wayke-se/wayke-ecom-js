@@ -38,6 +38,12 @@ export interface IPaymentLookupResponse {
     getResidualValueSpec(): IPaymentRangeSpec;
     getTotalResidualValue(): number;
     getPublicURL(): string | undefined;
+    shouldUseCreditScoring(): boolean;
+    getFinancialProductCode(): string | undefined;
+    getPrice(): number;
+    getCreditAmount(): number;
+    hasPrivacyPolicy(): boolean;
+    getPrivacyPolicyUrl(): string | undefined;
 }
 
 export interface IPaymentLookupResponseData {
@@ -52,4 +58,9 @@ export interface IPaymentLookupResponseData {
     downPayment: IPaymentRangeSpec;
     link?: string;
     totalResidualValue: number;
+    vehiclePrice: number;
+    loanAmount: number;
+    useCreditScoring: boolean;
+    financialProductCode?: string;
+    privacyPolicyUrl?: string;
 }

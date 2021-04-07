@@ -1,4 +1,8 @@
-import { IOrderPaymentRequest, PaymentType } from "./types";
+import {
+    IOrderCreditAssessment,
+    IOrderPaymentRequest,
+    PaymentType,
+} from "./types";
 
 export class PaymentBuilder {
     private properties: { [key: string]: any } = {};
@@ -23,6 +27,20 @@ export class PaymentBuilder {
 
     public withResidualValue(residualValue: number): PaymentBuilder {
         this.properties.residualValue = residualValue;
+
+        return this;
+    }
+
+    public withExternalId(externalId: string): PaymentBuilder {
+        this.properties.externalId = externalId;
+
+        return this;
+    }
+
+    public withCreditAssessment(
+        creditAssessment: IOrderCreditAssessment
+    ): PaymentBuilder {
+        this.properties.creditAssessment = creditAssessment;
 
         return this;
     }

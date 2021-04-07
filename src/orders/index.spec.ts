@@ -9,6 +9,7 @@ import { OrderOptionsRequestBuilder } from "./order-options-request-builder";
 
 import * as orders from ".";
 import { PaymentBuilder } from "./payment-builder";
+import { OrderCreditAssessmentBuilder } from "./order-credit-assessment-builder";
 import { InsuranceBuilder } from "./insurance-builder";
 
 const fixture = (name: string, withData: any = undefined) =>
@@ -66,6 +67,20 @@ describe("Order Functions", () => {
         it("returns a new instance of PaymentBuilder", () => {
             const b1 = orders.newPayment();
             const b2 = orders.newPayment();
+
+            expect(b1).not.toBe(b2);
+        });
+    });
+
+    describe("newCreditAssessment()", () => {
+        it("returns a OrderCreditAssessmentBuilder", () => {
+            const builder = orders.newCreditAssessment();
+
+            expect(builder).toBeInstanceOf(OrderCreditAssessmentBuilder);
+        });
+        it("returns a new instance of OrderCreditAssessmentBuilder", () => {
+            const b1 = orders.newCreditAssessment();
+            const b2 = orders.newCreditAssessment();
 
             expect(b1).not.toBe(b2);
         });

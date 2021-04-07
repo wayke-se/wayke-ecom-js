@@ -127,6 +127,7 @@ factory.define("IOrderPayment", [
     "price".asNumber(),
     "type".pickFrom(["Cash", "Lease", "Loan"]),
     "unit",
+    "externalId",
 ]);
 
 factory.define("IVehicleTrade", [
@@ -140,11 +141,19 @@ factory.define("IOrderInsuranceRequest", [
     "drivingDistance".pickFrom(["Between0And1000", "Between1000And1500", "Between1500And2000", "Between2000And2500", "Over2500"]),
     "addons".asArray(2),
 ]);
+factory.define("IOrderCreditAssessment", [
+    "scoreId",
+    "financialProductCode",
+    "recommendation",
+    "decision",
+]);
 factory.define("IOrderPaymentRequest", [
     "type".pickFrom(["Cash", "Lease", "Loan"]),
     "months".asNumber(),
     "downPayment".asNumber(),
     "residualValue".asNumber(),
+    "externalId",
+    "creditAssessment".fromFixture("IOrderCreditAssessment"),
 ]);
 factory.define("IOrderCreateRequest", [
     "id",
@@ -224,6 +233,10 @@ factory.define("IPaymentLookupResponse", [
     "downPayment".fromFixture("IPaymentRangeSpec"),
     "totalResidualValue".asNumber(),
     "link",
+    "vehiclePrice".asNumber(),
+    "loanAmount".asNumber(),
+    "useCreditScoring".asBoolean(),
+    "financialProductCode",
 ]);
 
 factory.define("IVehicleLookupRequest", [
@@ -280,6 +293,82 @@ factory.define("IBankIdCompletionData", [
 
 factory.define("IBankIdCancelRequest", [
     "orderRef",
+]);
+
+factory.define("ICreditAssessmentCustomer", [
+    "socialId",
+    "email",
+    "phone",
+    "signerIp",
+]);
+
+factory.define("ICreditAssessmentLoan", [
+    "financialProductId",
+    "price".asNumber(),
+    "downPayment".asNumber(),
+    "credit".asNumber(),
+    "interestRate".asNumber(),
+    "monthlyCost".asNumber(),
+    "term",
+]);
+
+factory.define("ICreditAssessmentHouseholdEconomy", [
+    "maritalStatus".pickFrom([
+        "married",
+        "single",
+    ]),
+    "income".asNumber(),
+    "employment".pickFrom([
+        "other",
+        "retired",
+        "fullTimeEmployed",
+        "student",
+        "temporarilyEmployed",
+        "selfEmployed",
+    ]),
+    "householdChildren".asNumber(),
+    "householdIncome".asNumber(),
+    "householdHousingCost".asNumber(),
+    "householdDebt".asNumber(),
+]);
+
+factory.define("ICreditAssessmentInquiry", [
+    "externalId",
+    "customer".fromFixture("ICreditAssessmentCustomer"),
+    "loan".fromFixture("ICreditAssessmentLoan"),
+    "householdEconomy".fromFixture("ICreditAssessmentHouseholdEconomy"),
+]);
+
+factory.define("ICreditAssessmentCase", [
+    "caseId",
+]);
+
+factory.define("ICreditAssessmentStatusApiResponse", [
+    "status".pickFrom([
+        "received",
+        "signingInitiated",
+        "signingFailed",
+        "signed",
+        "scoringInitiated",
+        "scored",
+        "notScored",
+        "accepted",
+        "declined",
+        "unknown",
+    ]),
+    "bankIdHintCode",
+    "vfScoreCaseId",
+    "recommendation",
+    "decision",
+]);
+factory.define("ICreditAssessmentSignRequest", [
+    "method".pickFrom(["SameDevice", "QrCode"]),
+    "caseId",
+]);
+
+factory.define("ICreditAssessmentSignApiResponse", [
+    "qrCodeAsBase64",
+    "autoLaunchUrl",
 ]);
 
 module.exports = factory;

@@ -1,6 +1,7 @@
 const fixtures = require("../../test/fixtures");
 
 import { PaymentLookupResponse } from "./payment-lookup-response";
+import { IPaymentLookupResponse, IPaymentLookupResponseData } from "./types";
 
 const fixture = (name: string, withData: any = undefined) =>
     fixtures.create(name, withData);
@@ -109,6 +110,113 @@ describe("PaymentLookupResponse", () => {
             const actual = new PaymentLookupResponse(response).getPublicURL();
 
             expect(actual).toEqual(expected);
+        });
+    });
+
+    describe(":shouldUseCreditScoring()", () => {
+        it("returns the specified response", () => {
+            const response: IPaymentLookupResponseData = fixture(
+                "IPaymentLookupResponse"
+            );
+
+            const actual = new PaymentLookupResponse(
+                response
+            ).shouldUseCreditScoring();
+
+            expect(actual).toEqual(response.useCreditScoring);
+        });
+    });
+
+    describe(":getFinacialProductCode()", () => {
+        it("returns the specified response", () => {
+            const response: IPaymentLookupResponseData = fixture(
+                "IPaymentLookupResponse"
+            );
+
+            const actual = new PaymentLookupResponse(
+                response
+            ).getFinancialProductCode();
+
+            expect(actual).toEqual(response.financialProductCode);
+        });
+    });
+
+    describe(":getPrice()", () => {
+        it("returns the specified response", () => {
+            const response: IPaymentLookupResponseData = fixture(
+                "IPaymentLookupResponse"
+            );
+
+            const actual = new PaymentLookupResponse(response).getPrice();
+
+            expect(actual).toEqual(response.vehiclePrice);
+        });
+    });
+
+    describe(":getCreditAmount()", () => {
+        it("returns the specified response", () => {
+            const response: IPaymentLookupResponseData = fixture(
+                "IPaymentLookupResponse"
+            );
+
+            const actual = new PaymentLookupResponse(
+                response
+            ).getCreditAmount();
+
+            expect(actual).toEqual(response.loanAmount);
+        });
+    });
+
+    describe("given privacy policy url", () => {
+        let expectedUrl: string;
+        let response: IPaymentLookupResponse;
+
+        beforeAll(() => {
+            expectedUrl = "https://www.privacy-policy.com";
+            const rawResponse = fixture("IPaymentLookupResponse", {
+                privacyPolicyUrl: expectedUrl,
+            });
+
+            response = new PaymentLookupResponse(rawResponse);
+        });
+
+        describe(":hasPrivacyPolicy()", () => {
+            it("is true", () => {
+                const hasPrivacyPolicy = response.hasPrivacyPolicy();
+                expect(hasPrivacyPolicy).toBe(true);
+            });
+        });
+
+        describe(":getPrivacyPolicyUrl()", () => {
+            it("should equal url for raw response", () => {
+                const privacyPolicyUrl = response.getPrivacyPolicyUrl();
+                expect(privacyPolicyUrl).toBe(expectedUrl);
+            });
+        });
+    });
+
+    describe("given no privacy policy url", () => {
+        let response: IPaymentLookupResponse;
+
+        beforeAll(() => {
+            const rawResponse = fixture("IPaymentLookupResponse", {
+                privacyPolicyUrl: null,
+            });
+            response = new PaymentLookupResponse(rawResponse);
+        });
+
+        describe(":hasPrivacyPolicy()", () => {
+            it("is false", () => {
+                const hasPrivacyPolicy = response.hasPrivacyPolicy();
+                expect(hasPrivacyPolicy).toBe(false);
+            });
+        });
+
+        describe(":getPrivacyPolicyUrl()", () => {
+            it("should be falsy", () => {
+                const privacyPolicyUrl = response.getPrivacyPolicyUrl();
+                expect(privacyPolicyUrl).toBeFalsy();
+            });
         });
     });
 });

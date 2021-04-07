@@ -304,3 +304,148 @@ interface IBankIdCollectResponse {
     getAddress(): IAddress | undefined;
 }
 ```
+
+### Assess a customers credit inquiry
+
+*This feature is currently limited to some specific financial providers.*
+
+For some financial providers it is possible to do a real time credit assessment for a loan. The steps of this process are:
+
+1. The customer selects *loan* as payment choice for an order that has *credit assessments* activated.
+2. In an upcoming step the customer provides some household information required to make the assessment.
+3. The credit assessment case is signed by the customer using Swedish bank id.
+4. A spinner is displayed while the assessment is performed. This can take a few seconds.
+5. The customer is presented with the credit assessment result: *accept, decline or manuall assessment*.
+
+#### Starting a new credit assessment cases
+
+```
+const inquiry = {...} // Specify inquiry.
+
+try {
+        await creditAssessment.newCase(inquiry);
+        // Do something with response.
+    } catch (e) {
+        // Handle errors.
+    }
+```
+
+```
+interface ICreditAssessmentInquiry {
+    externalId: string;
+    customer: ICreditAssessmentCustomer;
+    loan: ICreditAssessmentLoan;
+    householdEconomy: ICreditAssessmentHouseholdEconomy;
+}
+
+interface ICreditAssessmentCustomer {
+    socialId: string;
+    email: string;
+    phone: string;
+    signerIp?: string;
+}
+
+interface ICreditAssessmentLoan {
+    financialProductId: string;
+    price: number;
+    downPayment: number;
+    credit: number;
+    interestRate: number;
+    monthlyCost: number;
+    term: string;
+}
+
+interface ICreditAssessmentHouseholdEconomy {
+    maritalStatus: MaritalStatus;
+    income: number;
+    employment: Employment;
+    householdChildren: number;
+    householdIncome: number;
+    householdHousingCost: number;
+    householdDebt: number;
+}
+```
+
+The result of the request should be a credit assessment **case id**. This id is used for all following credit assessment requests.
+
+#### Signing a credit assessment case with bank id
+
+A credit asssessment case needs to be signed with Swedish bank id. The two supported signing methds are *qr code* and *same device*.
+
+```
+const request = {
+    caseId,
+    method: AuthMethod.QrCode,
+};
+
+creditAssessment.signCase(request)
+    .then(() => // Handle success)
+    .catch(() => // Handle failure);
+```
+
+To collect the results of signing process the `getStatus` method is used. This should be done approximately every two seconds, just like bank id collect.
+
+```
+creditAssessment.getStatus(caseId)
+    .then((status) => // Handle success)
+    .catch((err) => // Handle failure);
+```
+
+The `getStatus` method returns a credit assessment status response:
+
+```
+interface ICreditAssessmentStatusResponse {
+    getStatus: () => CreditAssessmentStatus;
+    hasPendingSigning: () => boolean;
+    getHintCode: () => string | undefined;
+    getSigningMessage(): string;
+    shouldRenewSigning(): boolean;
+    isSigned(): boolean;
+    getAddress(): IAddress | undefined;
+    hasPendingScoring: () => boolean;
+    isScored: () => boolean;
+    hasScoringError: () => boolean;
+    getScoringId: () => string | undefined;
+    getRecommendation: () => CreditAssessmentRecommendation;
+    getDecision: () => CreditAssessmentDecision;
+    isAccepted: () => boolean;
+}
+```
+
+During the signing the status should be `SigningInitiated`. Once the case is signed, the status shuld change to `Signed` or `ScoringInitiated`.
+
+It is also possible to cancel the signing process:
+
+```
+creditAssessment
+    .cancelSigning(caseId)
+    .then(() => // Handle success)
+    .catch(() => // Handle failure);
+```
+
+#### Collecting the assessment result
+
+To acquire the credit assessment result, simply use the `getStatus` method untill a status response is received with the status `Scored`. This response should also have a *recommendation* and possible a *decision*.
+
+#### Accepting a credit assessment result
+
+The credit assessment won't be finalized unless it is accepted, which is possible once the case has the `Scored` status. This is done with using the `accept` method:
+
+```
+creditAssessment
+    .accept(caseId)
+    .then(() => // Handle success)
+    .catch(() => // Handle failure);
+```
+
+#### Declining the credit assessment result
+
+Anytime during the credit assessment process, the case may be declined. To do this, use the `decline` method:
+
+```
+
+creditAssessment
+    .decline(caseId)
+    .then(() => // Handle success)
+    .catch(() => // Handle failure);
+```

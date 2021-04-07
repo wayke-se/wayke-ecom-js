@@ -15,6 +15,8 @@ describe("PaymentBuilder", () => {
                 .withDuration(expected.months)
                 .withDownPayment(expected.downPayment)
                 .withResidualValue(expected.residualValue)
+                .withExternalId(expected.externalId)
+                .withCreditAssessment(expected.creditAssessment)
                 .build();
 
             expect(actual).toEqual(expected);

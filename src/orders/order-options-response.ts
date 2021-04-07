@@ -46,6 +46,7 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
             price: payment.price,
             type: payment.type,
             unit: payment.unit,
+            externalId: payment.externalId,
         }));
     }
 

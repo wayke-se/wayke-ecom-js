@@ -70,11 +70,11 @@ describe("API: BankId", () => {
 
         describe(":cancel()", () => {
             it("throws error", async () => {
-                const request = fixture("IBankIdCollectRequest");
+                const request = fixture("IBankIdCancelRequest");
 
                 let err: any;
                 try {
-                    await collect(request);
+                    await cancel(request);
                 } catch (e) {
                     err = e;
                 }
