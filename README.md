@@ -174,13 +174,19 @@ Wayke exposes functionality to calculate interest rates, fees, etc, for a vehicl
 
     const response = await payments.lookupPayment(request);
 
-The returns `IPaymentLookupResponse` exposes methods to retrieve financial data:
+The returned `IPaymentLookupResponse` exposes methods to retrieve financial data:
 - `.getCosts()` returns a `IPaymentCosts` object containing a monthly cost and a total cost.
 - `.getFees()` returns a `IPaymentFees` object containing setup fee and administration fee.
 - `.getInterests()` returns a `IPaymentInterests` object containing the interest and effective interest.
 - `.getDownPaymentSpec()` returns a `IPaymentRangeSpec` defining the ranges for a down payment.
 - `.getDurationSpec()` returns a `IPaymentRangeSpec` defining the ranges for a duration.
 - `.getResidualValueSpec()` returns a `IPaymentRangeSpec` defining the ranges for a residual value.
+- `.getPrice()` returns a `number` defining the price of the vehicle.
+- `.getCreditAmount()` returns a `number` defining the total credit amount used.
+- `.hasPrivacyPolicy()` returns a `boolean` defining if the financial provider has a privacy policy.
+- `.getPrivacyPolicyUrl()` returns a `string` defining if the financial provider's privacy policy.
+- `.shouldUseCreditScoring()` returns a `boolean` defining if the vehicle is configured to use real time credit assessments *(described below)*.
+- `.getFinancialProductCode()` returns a `string` defining if the financial product code *(used by real time credit assessments)*.
 
 ### Creating order details and an order
 
@@ -308,16 +314,27 @@ interface IBankIdCollectResponse {
 ### Assess a customers credit inquiry
 
 *This feature is currently limited to some specific financial providers.*
+*This feature is currently limited to loans. Credit inquiries for leases are not yet supported.*
 
-For some financial providers it is possible to do a real time credit assessment for a loan. The steps of this process are:
+For some financial providers it is possible to do a real time credit assessment for a loan. The prerequisites for using real time credit assessments are:
 
-1. The customer selects *loan* as payment choice for an order that has *credit assessments* activated.
-2. In an upcoming step the customer provides some household information required to make the assessment.
-3. The credit assessment case is signed by the customer using Swedish bank id.
-4. A spinner is displayed while the assessment is performed. This can take a few seconds.
-5. The customer is presented with the credit assessment result: *accept, decline or manuall assessment*.
+1. The flag `useBankid` should be set to `true`, since bank id is required for the inquiry.
+2. The dealer that sells the vehicle must have a financial option with credit assessments activated for the vehicle.
+
+The steps of this process are:
+
+1. Perform a payment lookup request returns a `IPaymentLookupResponse` *(described above)*. This response has a method `shouldUseCreditScoring()` that indicates if credit scoring is available for the vehicle. The response also contains a method `getFinancialProductCode`. This methods returns the financial product code of the payment option, which is required for the credit inquiry.
+2. Create the credit assessment case. This includes various household information such as monthly income as well as social id, email and phone number. The provided social id will be used for the bank id signing that is required for the order to be processed.
+3. The credit assessment case is signed by the customer using Swedish bank id. The signing is towards the financial provider that performs the credit assessment. The status of the signing can be polled using the `creditAssessment.getStatus(caseId)` method.
+4. The credit assessment is performed by the financial provider. The status of the signing can be polled using the `creditAssessment.getStatus(caseId)` method. Once complete, a result of the inquiry is provided in the status response.
+5. Finally, in order to accept the credit assessment, the case is accepted by the `creditAssessment.accept(caseId)` method.
+- If a started case should be abandoned or cancelled for any reason, the `creditAssessment.decline(caseId)` method should be called. This is needed for the financial provider to cancel the case in their systems.
+
+* *Note that if the credit assessment flow replaces the bank id flow described above. Both flows can not be used for the same Ecom order.*
 
 #### Starting a new credit assessment cases
+
+Start a new credit inquiry using the financial provider of the vehicle.
 
 ```
 const inquiry = {...} // Specify inquiry.
@@ -330,9 +347,11 @@ try {
     }
 ```
 
+To start a case a complete `ICreditAssessmentInquiry`. This includes customer personal information, household finance information as well as information about the loan.
+
 ```
 interface ICreditAssessmentInquiry {
-    externalId: string;
+    externalId: string; // Acquired in `IPaymentOption`
     customer: ICreditAssessmentCustomer;
     loan: ICreditAssessmentLoan;
     householdEconomy: ICreditAssessmentHouseholdEconomy;
@@ -345,14 +364,14 @@ interface ICreditAssessmentCustomer {
     signerIp?: string;
 }
 
-interface ICreditAssessmentLoan {
+interface ICreditAssessmentLoan { // Required data is acquired in `IPaymentLookupResponse`
     financialProductId: string;
     price: number;
     downPayment: number;
     credit: number;
     interestRate: number;
     monthlyCost: number;
-    term: string;
+    term: string; // See below
 }
 
 interface ICreditAssessmentHouseholdEconomy {
@@ -365,6 +384,25 @@ interface ICreditAssessmentHouseholdEconomy {
     householdDebt: number;
 }
 ```
+
+##### Term
+
+The `term` field required in `ICreditAssessmentLoan` is created from the duration of the loan:
+
+```
+const durationInMoths = 24;
+const term = durationInMoths + "months";
+```
+
+for example: 
+
+```
+"12moths"
+"48months"
+"72months"
+```
+
+* *The months in `term` must be a factor of 12.*
 
 The result of the request should be a credit assessment **case id**. This id is used for all following credit assessment requests.
 
@@ -414,7 +452,13 @@ interface ICreditAssessmentStatusResponse {
 
 During the signing the status should be `SigningInitiated`. Once the case is signed, the status shuld change to `Signed` or `ScoringInitiated`.
 
-It is also possible to cancel the signing process:
+- `hasPendingSigning`  indicates that a signing is ongoing.
+- `getHintCode` returns the current bank id hint code of the signing process.
+- `getSigningMessage` returns the message that should be displayed for an ongoing sign process.
+- `shouldRenewSigning` indicates that a signing failed for some reason (for example time out) and should be restarted.
+- `isSigned` indicates that the user has successfully signed the credit assessment case using Swedish bank id.
+
+It is also possible to cancel the signing process. This should be done if the user wants to change sign method (for example from *qr code* to *same device*) or if a new case should be created with new other information.
 
 ```
 creditAssessment
@@ -425,7 +469,12 @@ creditAssessment
 
 #### Collecting the assessment result
 
-To acquire the credit assessment result, simply use the `getStatus` method untill a status response is received with the status `Scored`. This response should also have a *recommendation* and possible a *decision*.
+To acquire the credit assessment result, simply use the `getStatus` method (the same one that was used to poll the status of the bank id signing) untill a status response is received with the status `Scored`. This response should also have a *recommendation* and possible a *decision*.
+
+- `hasPendingScoring` indicates that a scoring is ongoing.
+- `isScored` indicates that the case is scored.
+- `getRecommendation` provides the recommendation of the scoring.
+- `getDecision` provides the decision of the scoring.
 
 #### Accepting a credit assessment result
 
@@ -437,6 +486,10 @@ creditAssessment
     .then(() => // Handle success)
     .catch(() => // Handle failure);
 ```
+
+The status returned from the `creditAssessment.getStatus` method should now be accepted:
+
+- `isAccepted` indicates that the case is accepted.
 
 #### Declining the credit assessment result
 
