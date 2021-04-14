@@ -318,12 +318,15 @@ interface IBankIdCollectResponse {
 
 For some financial providers it is possible to do a real time credit assessment for a loan. The prerequisites for using real time credit assessments are:
 
-1. The flag `useBankid` should be set to `true`, since bank id is required for the inquiry.
-2. The dealer that sells the vehicle must have a financial option with credit assessments activated for the vehicle.
+1. The dealer that sells the vehicle must have a financial option with credit assessments activated for the vehicle. This includes defining a payment option that:
+  - Should be a *loan*.
+  - Should have an `externalId`.
+  - Should have a `financialProductCode`.
+  - Should have set the `useCreditScoring` flag to `true`.
 
 The steps of this process are:
 
-1. Perform a payment lookup request returns a `IPaymentLookupResponse` *(described above)*. This response has a method `shouldUseCreditScoring()` that indicates if credit scoring is available for the vehicle. The response also contains a method `getFinancialProductCode`. This methods returns the financial product code of the payment option, which is required for the credit inquiry.
+1. Perform a payment lookup request returns a `IPaymentLookupResponse` *(described above)*. This response has a method `shouldUseCreditScoring()` that indicates if credit scoring is available for the vehicle. The response also contains a method `getFinancialProductCode()`. This methods returns the financial product code of the payment option, which is required for the credit inquiry.
 2. Create the credit assessment case. This includes various household information such as monthly income as well as social id, email and phone number. The provided social id will be used for the bank id signing that is required for the order to be processed.
 3. The credit assessment case is signed by the customer using Swedish bank id. The signing is towards the financial provider that performs the credit assessment. The status of the signing can be polled using the `creditAssessment.getStatus(caseId)` method.
 4. The credit assessment is performed by the financial provider. The status of the signing can be polled using the `creditAssessment.getStatus(caseId)` method. Once complete, a result of the inquiry is provided in the status response.
@@ -347,7 +350,7 @@ try {
     }
 ```
 
-To start a case a complete `ICreditAssessmentInquiry`. This includes customer personal information, household finance information as well as information about the loan.
+To start a case, an `ICreditAssessmentInquiry` is required. This includes customer personal information, household finance information as well as information about the loan.
 
 ```
 interface ICreditAssessmentInquiry {
