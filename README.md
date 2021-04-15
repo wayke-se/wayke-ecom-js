@@ -421,7 +421,7 @@ const request = {
 
 creditAssessment.signCase(request)
     .then(() => // Handle success)
-    .catch(() => // Handle failure);
+    .catch((err) => // Handle failure);
 ```
 
 To collect the results of signing process the `getStatus` method is used. This should be done approximately every two seconds, just like bank id collect.
@@ -467,7 +467,7 @@ It is also possible to cancel the signing process. This should be done if the us
 creditAssessment
     .cancelSigning(caseId)
     .then(() => // Handle success)
-    .catch(() => // Handle failure);
+    .catch((err) => // Handle failure);
 ```
 
 #### Collecting the assessment result
@@ -487,7 +487,7 @@ The credit assessment won't be finalized unless it is accepted, which is possibl
 creditAssessment
     .accept(caseId)
     .then(() => // Handle success)
-    .catch(() => // Handle failure);
+    .catch((err) => // Handle failure);
 ```
 
 The status returned from the `creditAssessment.getStatus` method should now be accepted:
@@ -503,5 +503,5 @@ Anytime during the credit assessment process, the case may be declined. To do th
 creditAssessment
     .decline(caseId)
     .then(() => // Handle success)
-    .catch(() => // Handle failure);
+    .catch((err) => // Handle failure);
 ```
