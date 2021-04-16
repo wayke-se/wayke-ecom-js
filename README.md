@@ -92,6 +92,7 @@ The returned `IOrderOptionsResponse` exposes helper methods to select partial da
 - `.getConditionsPdfUri()` returns a `string` with a URI to a PDF containing the conditions
 - `.getContactInformation()` returns a `IContactInformation` if available
 - `.allowsTradeIn()` returns `true`/`false` if the retailer allows a trade-in vehicle for possible orders
+- `.isUnavailable()` returns `boolean` defining if the vehicle is unavailable for purchase.
 
 These values should provide enough information to continue the boarding process for the customer.
 
@@ -393,14 +394,14 @@ interface ICreditAssessmentHouseholdEconomy {
 The `term` field required in `ICreditAssessmentLoan` is created from the duration of the loan:
 
 ```
-const durationInMoths = 24;
-const term = durationInMoths + "months";
+const durationInMonths = 24;
+const term = durationInMonths + "months";
 ```
 
 for example: 
 
 ```
-"12moths"
+"12months"
 "48months"
 "72months"
 ```
