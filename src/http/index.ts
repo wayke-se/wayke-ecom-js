@@ -8,6 +8,11 @@ export interface IApiResponse<T> {
     requestForgeryToken: string | undefined;
 }
 
+export interface IApiErrorResponse {
+    errorCode: number;
+    message: string;
+}
+
 const httpStatusCheck = (
     response: Response,
     request: RequestInit

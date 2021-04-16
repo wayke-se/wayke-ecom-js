@@ -37,6 +37,7 @@ export interface IOrderOptionsResponse {
     getConditionsPdfUri(): string | null | undefined;
     getContactInformation(): IContactInformation | undefined;
     allowsTradeIn(): boolean;
+    isUnavailable(): boolean;
 }
 
 export interface IOrderInsuranceRequest {
@@ -71,6 +72,7 @@ export interface IOrderOptionsResponseData {
     insurance: IAvailableInsuranceOption | undefined;
     payment: IPaymentOptionResponseData[];
     tradeIn: boolean;
+    unavailable: boolean;
 }
 
 export interface IDealerOption {

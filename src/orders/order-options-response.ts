@@ -97,4 +97,8 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
     public allowsTradeIn(): boolean {
         return this.response.tradeIn;
     }
+
+    public isUnavailable() {
+        return this.response.unavailable;
+    }
 }

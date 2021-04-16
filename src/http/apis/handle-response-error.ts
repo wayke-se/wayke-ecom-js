@@ -1,12 +1,13 @@
+import { IApiErrorResponse } from "..";
 import { ResponseError } from "../../errors/request-error";
 import { VehicleUnavailableError } from "../../errors/vehicle-unavailable-error";
 
-const throwErrorByType = (content: any) => {
-    switch (content.type) {
-        case "VehicleUnavailableException":
+const throwErrorByType = (errorBody: IApiErrorResponse) => {
+    switch (errorBody.errorCode) {
+        case 1:
             throw new VehicleUnavailableError();
         default:
-            throw new Error("Unhandled response error");
+            throw new Error(errorBody.message);
     }
 };
 

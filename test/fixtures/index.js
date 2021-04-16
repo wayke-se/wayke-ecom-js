@@ -21,6 +21,12 @@ factory.define("IApiResponse", [
     "requestForgeryToken",
 ]);
 
+factory.define("IApiErrorResponse", [
+    "successful".asConstant(false),
+    "errorCode".asNumber(),
+    "message",
+]);
+
 factory.define("IDistance", [
     "value".asNumber(),
     "unit".pickFrom(["m", "km"]),
@@ -181,6 +187,7 @@ factory.define("IOrderOptionsResponse", [
     "insurance".fromFixture("IOrderInsurance"),
     "payment".asListOfFixtures("IOrderPayment", 2),
     "tradeIn".asBoolean(),
+    "unavailable".asBoolean(),
 ]);
 
 factory.define("IDealerOption", [
