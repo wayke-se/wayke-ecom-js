@@ -206,4 +206,14 @@ describe("OrderOptionsResponse", () => {
             expect(actual).toEqual(expected);
         });
     });
+
+    describe(":isUnavailable()", () => {
+        it("returns the unavailable in flag from the response object", () => {
+            const response = fixture("IOrderOptionsResponse");
+            const expected = response.unavailable;
+            const actual = new OrderOptionsResponse(response).isUnavailable();
+
+            expect(actual).toEqual(expected);
+        });
+    });
 });

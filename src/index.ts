@@ -89,3 +89,4 @@ export {
     CreditAssessmentDecision,
     CreditAssessmentRecommendation,
 } from "./credit-assessment/types";
+export { VehicleUnavailableError } from "./errors/vehicle-unavailable-error";

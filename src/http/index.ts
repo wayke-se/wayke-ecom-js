@@ -1,9 +1,16 @@
+import { ResponseError } from "../errors/request-error";
+import handleResponseError from "./apis/handle-response-error";
 import HttpRequestBuilder from "./http-request-builder";
 
 export interface IApiResponse<T> {
     successful: boolean;
     response: T;
     requestForgeryToken: string | undefined;
+}
+
+export interface IApiErrorResponse {
+    errorCode: number;
+    message: string;
 }
 
 const httpStatusCheck = (
@@ -22,7 +29,7 @@ const httpStatusCheck = (
         console.groupEnd();
     }
     /* eslint-enable */
-    throw new Error(String(response.status));
+    throw new ResponseError(response, String(response.status));
 };
 
 export interface IHttpStateContext {
@@ -51,11 +58,18 @@ export const json = <T>(
     url: string,
     options: RequestInit
 ): Promise<IApiResponse<T>> =>
-    raw(url, options).then((response: Response) => {
-        if (noContentCodes.includes(String(response.status))) return null;
+    raw(url, options)
+        .then((response: Response) => {
+            if (noContentCodes.includes(String(response.status))) return null;
 
-        return response.json();
-    });
+            return response.json();
+        })
+        .catch((err) => {
+            if (err instanceof ResponseError) {
+                return handleResponseError(err);
+            }
+            throw err;
+        });
 
 export const captureStateContext = <T>(
     promise: Promise<IApiResponse<T>>
