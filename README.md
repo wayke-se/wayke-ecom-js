@@ -321,7 +321,7 @@ interface IBankIdCollectResponse {
 }
 ```
 
-### Assess a customers credit inquiry
+### Assess a customers credit
 
 *This feature is currently limited to some specific financial providers.*
 *This feature is currently limited to loans. Credit inquiries for leases are not yet supported.*
@@ -438,8 +438,21 @@ const request = {
 };
 
 creditAssessment.signCase(request)
-    .then(() => // Handle success)
+    .then((response) => // Handle success)
     .catch((err) => // Handle failure);
+```
+
+The `signCase` function returns a `ICreditAssessmentSignRespons` that may include the qr code to display or the auto launch url.
+
+```
+export interface ICreditAssessmentSignResponse {
+    isQrCode: () => boolean;
+    isSameDevice: () => boolean;
+    getQrCode: () => string | undefined;
+    getAutoLaunchUrl: () => string | undefined;
+    getMethod: () => AuthMethod;
+    getCaseId: () => string;
+}
 ```
 
 To collect the results of signing process the `getStatus` method is used. This should be done approximately every two seconds, just like bank id collect.
