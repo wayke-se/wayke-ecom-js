@@ -339,7 +339,7 @@ The steps of this process are:
 1. Perform a payment lookup request returns a `IPaymentLookupResponse` *(described above)*. This response has a method `shouldUseCreditScoring()` that indicates if credit scoring is available for the vehicle. The response also contains a method `getFinancialProductCode()`. This methods returns the financial product code of the payment option, which is required for the credit inquiry.
 2. Create the credit assessment case. This includes various household information such as monthly income as well as social id, email and phone number. The provided social id will be used for the bank id signing that is required for the order to be processed.
 3. The credit assessment case is signed by the customer using Swedish bank id. The signing is towards the financial provider that performs the credit assessment. The status of the signing can be polled using the `creditAssessment.getStatus(caseId)` method.
-4. The credit assessment is performed by the financial provider. The status of the signing can be polled using the `creditAssessment.getStatus(caseId)` method. Once complete, a result of the inquiry is provided in the status response.
+4. The credit assessment is performed by the financial provider. The status of the scoring can be polled using the `creditAssessment.getStatus(caseId)` method. Once complete, a result of the inquiry is provided in the status response.
 5. Finally, in order to accept the credit assessment, the case is accepted by the `creditAssessment.accept(caseId)` method.
 - If a started case should be abandoned or cancelled for any reason, the `creditAssessment.decline(caseId)` method should be called. This is needed for the financial provider to cancel the case in their systems.
 
@@ -353,7 +353,7 @@ Start a new credit inquiry using the financial provider of the vehicle.
 const inquiry = {...} // Specify inquiry.
 
 try {
-        await creditAssessment.newCase(inquiry);
+        const case = await creditAssessment.newCase(inquiry);
         // Do something with response.
     } catch (e) {
         // Handle errors.
@@ -395,6 +395,14 @@ interface ICreditAssessmentHouseholdEconomy {
     householdIncome: number;
     householdHousingCost: number;
     householdDebt: number;
+}
+```
+
+The `newCase` functions returns a `ICreditAssessmentCase` that has a case id that is used for all other credit assessment requests.
+
+```
+export interface ICreditAssessmentCase {
+    caseId: string;
 }
 ```
 
