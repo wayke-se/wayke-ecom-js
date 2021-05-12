@@ -202,11 +202,20 @@ To create a valid order we should use appropriate builders, and specify our data
         .withPhoneNumber("0707-123 123")
         .build();
 
+    const creditAssessment = orders.newCreditAssessment() // Only required for orders using credit assessment
+        .withScoreId("score-id")
+        .withFinancialProductCode("code")
+        .withRecommendation("recommendation")
+        .withDecision("decision")
+        .build()
+
     const payment = orders.newPayment()
         .withType(aPaymentOption.type)
         .withDuration(36) // months, only applicable when payment type === PaymentType.Loan
         .withDownPayment(25000) // only applicable when payment type === PaymentType.Loan
         .withResidualValue(20000) // only applicable when payment type === PaymentType.Loan
+        .withExternalId("some-id") // only applicable when payment type === PaymentType.Loan
+        .withCreditAssessment(creditAssessment) // only applicable for orders that should use credit assessment
         .build();
 
     const insurance = orders.newInsurance()
