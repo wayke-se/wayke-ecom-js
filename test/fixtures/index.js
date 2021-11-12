@@ -178,6 +178,7 @@ factory.define("IOrderOptionsRequest", [
     "branchId",
 ]);
 factory.define("IOrderOptionsResponse", [
+    "accessories".asListOfFixtures("IAccessory", 2),
     "dealers".asListOfFixtures("IDealerOption", 2),
     "conditions",
     "returnConditions",
@@ -189,6 +190,32 @@ factory.define("IOrderOptionsResponse", [
     "tradeIn".asBoolean(),
     "unavailable".asBoolean(),
 ]);
+
+factory.define("IAccessory", [
+    "id",
+    "articleNumber",
+    "logoUrl",
+    "longDescription",
+    "shortDescription",
+    "manufacturer",
+    "model",
+    "name",
+    "price".asNumber(),
+    "assemblyPrice".asNumber(),
+    "salePrice".asNumber(),
+    "productPageLink",
+    "productPageLinkText",
+    "media".asListOfFixtures("IAccessoryMedia", 2),
+    "templateDeleted".asBoolean(),
+    "createdAt",
+    "updatedAt",
+])
+
+factory.define("IAccessoryMedia", [
+    "externalId:",
+    "sortOrder".asNumber(),
+    "url",
+])
 
 factory.define("IDealerOption", [
     "id",
