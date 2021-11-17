@@ -28,6 +28,7 @@ export interface IOrderOptionsRequest {
 
 export interface IOrderOptionsResponse {
     requiresDealerSelection(): boolean;
+    getAccessories(): IAccessory[];
     getDealerSites(): IDealerOption[];
     getPaymentOptions(): IPaymentOption[];
     getDeliveryOptions(): IDeliveryOption[];
@@ -78,27 +79,27 @@ export interface IOrderOptionsResponseData {
 export interface IAccessory {
     id: string;
     articleNumber: string;
-    logoUrl: string,
-    longDescription: string,
-    shortDescription: string,
-    manufacturer: string,
-    model: string,
-    name: string,
-    price: number,
-    assemblyPrice:  number | undefined,
-    salePrice: number | undefined,
-    productPageLink: string | undefined,
-    productPageLinkText: string | undefined,
-    media: IAccessoryMedia[],
-    templateDeleted: boolean,
-    createdAt: string,
-    updatedAt: string,
+    logoUrl: string;
+    longDescription: string;
+    shortDescription: string;
+    manufacturer: string;
+    model: string;
+    name: string;
+    price: number;
+    assemblyPrice: number | undefined;
+    salePrice: number | undefined;
+    productPageLink: string | undefined;
+    productPageLinkText: string | undefined;
+    media: IAccessoryMedia[];
+    templateDeleted: boolean;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface IAccessoryMedia {
-    externalId: string,
-    sortOrder: number,
-    url: string,
+    externalId: string;
+    sortOrder: number;
+    url: string;
 }
 
 export interface IDealerOption {

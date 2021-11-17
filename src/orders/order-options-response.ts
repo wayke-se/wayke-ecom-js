@@ -22,7 +22,7 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
     }
 
     public getAccessories(): IAccessory[] {
-        if(!this.response.accessories || !this.response.accessories.length) {
+        if (!this.response.accessories || !this.response.accessories.length) {
             return [];
         }
 
