@@ -37,6 +37,7 @@ const buildCreateRequest = (
             givenName: request.customer.givenName,
             surname: request.customer.surname,
         },
+        accessories: request.accessories,
         origin: config.getOrigin(),
     };
 
