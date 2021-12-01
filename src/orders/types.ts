@@ -11,6 +11,7 @@ export interface IOrderCreateRequest {
     payment: IOrderPaymentRequest;
     deliveryType: DeliveryType;
     customer: ICustomer;
+    accessories: IAccessoryRequest[] | undefined;
 }
 
 export interface IOrderCreateResponse {
@@ -100,6 +101,10 @@ export interface IAccessoryMedia {
     externalId: string;
     sortOrder: number;
     url: string;
+}
+
+export interface IAccessoryRequest {
+    id: string;
 }
 
 export interface IDealerOption {
