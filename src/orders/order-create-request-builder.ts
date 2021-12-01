@@ -5,7 +5,6 @@ import {
     IOrderCreateRequest,
     IOrderInsuranceRequest,
     IOrderPaymentRequest,
-    IAccessoryRequest,
 } from "./types";
 
 export class OrderCreateRequestBuilder {
@@ -38,8 +37,12 @@ export class OrderCreateRequestBuilder {
         return this;
     }
 
-    public withAccessories(accessories: IAccessoryRequest[]) {
-        this.properties.accessories = accessories;
+    public withAccessoriesIds(
+        accessoriesIds: string[]
+    ): OrderCreateRequestBuilder {
+        this.properties.accessories = accessoriesIds.map((accessoryId) => {
+            return { id: accessoryId };
+        });
 
         return this;
     }
