@@ -37,6 +37,12 @@ export class OrderCreateRequestBuilder {
         return this;
     }
 
+    public withAccessories(accessoryIds: string[]) {
+        this.properties.accessories = accessoryIds.map((id) => {
+            return { id };
+        });
+    }
+
     public withCustomer(customer: ICustomer): OrderCreateRequestBuilder {
         this.properties.customer = customer;
 
