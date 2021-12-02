@@ -41,9 +41,6 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
             productPageLink: accessory.productPageLink,
             productPageLinkText: accessory.productPageLinkText,
             media: accessory.media,
-            templateDeleted: accessory.templateDeleted,
-            createdAt: accessory.createdAt,
-            updatedAt: accessory.updatedAt,
         }));
     }
 

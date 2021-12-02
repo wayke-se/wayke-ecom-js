@@ -206,9 +206,6 @@ factory.define("IAccessory", [
     "productPageLink",
     "productPageLinkText",
     "media".asListOfFixtures("IAccessoryMedia", 2),
-    "templateDeleted".asBoolean(),
-    "createdAt",
-    "updatedAt",
 ])
 
 factory.define("IAccessoryMedia", [

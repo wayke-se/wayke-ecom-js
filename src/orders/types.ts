@@ -92,9 +92,6 @@ export interface IAccessory {
     productPageLink: string | undefined;
     productPageLinkText: string | undefined;
     media: IAccessoryMedia[];
-    templateDeleted: boolean;
-    createdAt: string;
-    updatedAt: string;
 }
 
 export interface IAccessoryMedia {
