@@ -2,6 +2,7 @@ import { ICustomer } from "../customers/types";
 import { IVehicleTrade } from "../vehicles/types";
 import {
     DeliveryType,
+    IAccessory,
     IOrderCreateRequest,
     IOrderInsuranceRequest,
     IOrderPaymentRequest,
@@ -37,12 +38,10 @@ export class OrderCreateRequestBuilder {
         return this;
     }
 
-    public withAccessoriesIds(
-        accessoriesIds: string[]
+    public withAccessories(
+        accessories: IAccessory[]
     ): OrderCreateRequestBuilder {
-        this.properties.accessories = accessoriesIds.map((accessoryId) => {
-            return { id: accessoryId };
-        });
+        this.properties.accessories = accessories
 
         return this;
     }
