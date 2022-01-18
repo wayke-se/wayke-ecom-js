@@ -209,7 +209,7 @@ factory.define("IAccessory", [
 ])
 
 factory.define("IAccessoryMedia", [
-    "externalId:",
+    "externalId",
     "sortOrder".asNumber(),
     "url",
 ])

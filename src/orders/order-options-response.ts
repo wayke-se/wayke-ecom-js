@@ -40,7 +40,15 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
             salePrice: accessory.salePrice,
             productPageLink: accessory.productPageLink,
             productPageLinkText: accessory.productPageLinkText,
-            media: accessory.media,
+            media: accessory.media
+                ? accessory.media.map((m) => {
+                      return {
+                          externalId: m.externalId,
+                          sortOrder: m.sortOrder,
+                          url: m.url,
+                      };
+                  })
+                : [],
         }));
     }
 
