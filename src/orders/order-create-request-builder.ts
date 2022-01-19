@@ -2,6 +2,7 @@ import { ICustomer } from "../customers/types";
 import { IVehicleTrade } from "../vehicles/types";
 import {
     DeliveryType,
+    IAccessory,
     IOrderCreateRequest,
     IOrderInsuranceRequest,
     IOrderPaymentRequest,
@@ -33,6 +34,14 @@ export class OrderCreateRequestBuilder {
     private properties: { [key: string]: any } = {};
     public forVehicle(id: string): OrderCreateRequestBuilder {
         this.properties.id = id;
+
+        return this;
+    }
+
+    public withAccessories(
+        accessories: IAccessory[]
+    ): OrderCreateRequestBuilder {
+        this.properties.accessories = accessories
 
         return this;
     }

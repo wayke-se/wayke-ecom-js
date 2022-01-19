@@ -2,7 +2,7 @@ const fixtures = require("../../test/fixtures");
 
 import { PaymentLookupResponse } from "../payments/payment-lookup-response";
 import { OrderOptionsResponse } from "./order-options-response";
-import { IOrderOptionsResponseData, IDealerOption } from "./types";
+import { IOrderOptionsResponseData, IDealerOption, IAccessory } from "./types";
 
 const fixture = (name: string, withData: any = undefined): any =>
     fixtures.create(name, withData);
@@ -13,6 +13,16 @@ describe("OrderOptionsResponse", () => {
             expect(() => {
                 new OrderOptionsResponse(null as any);
             }).toThrowError();
+        });
+    });
+
+    describe(":getAccessories()", () => {
+        it("returns a list of vehicle accessories", () => {
+            const response = fixture("IOrderOptionsResponse");
+            const expected: Array<IAccessory> = response.accessories;
+            const actual = new OrderOptionsResponse(response).getAccessories();
+            
+            expect(actual).toEqual(expected);
         });
     });
 
