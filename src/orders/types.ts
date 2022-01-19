@@ -11,6 +11,7 @@ export interface IOrderCreateRequest {
     payment: IOrderPaymentRequest;
     deliveryType: DeliveryType;
     customer: ICustomer;
+    accessories: IAccessoryRequest[] | undefined;
 }
 
 export interface IOrderCreateResponse {
@@ -28,6 +29,7 @@ export interface IOrderOptionsRequest {
 
 export interface IOrderOptionsResponse {
     requiresDealerSelection(): boolean;
+    getAccessories(): IAccessory[];
     getDealerSites(): IDealerOption[];
     getPaymentOptions(): IPaymentOption[];
     getDeliveryOptions(): IDeliveryOption[];
@@ -63,6 +65,7 @@ export interface IOrderPaymentRequest {
 }
 
 export interface IOrderOptionsResponseData {
+    accessories: IAccessory[];
     dealers: IDealerOption[];
     conditions: string | undefined;
     returnConditions: string | undefined;
@@ -73,6 +76,32 @@ export interface IOrderOptionsResponseData {
     payment: IPaymentOptionResponseData[];
     tradeIn: boolean;
     unavailable: boolean;
+}
+export interface IAccessory {
+    id: string;
+    articleNumber: string;
+    logoUrl: string;
+    longDescription: string;
+    shortDescription: string;
+    manufacturer: string;
+    model: string;
+    name: string;
+    price: number;
+    assemblyPrice: number | undefined;
+    salePrice: number | undefined;
+    productPageLink: string | undefined;
+    productPageLinkText: string | undefined;
+    media: IAccessoryMedia[];
+}
+
+export interface IAccessoryMedia {
+    externalId: string;
+    sortOrder: number;
+    url: string;
+}
+
+export interface IAccessoryRequest {
+    id: string;
 }
 
 export interface IDealerOption {

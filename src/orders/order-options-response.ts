@@ -1,5 +1,6 @@
 import { PaymentLookupResponse } from "../payments/payment-lookup-response";
 import {
+    IAccessory,
     IAvailableInsuranceOption,
     IContactInformation,
     IDealerOption,
@@ -18,6 +19,37 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
         }
 
         this.response = response;
+    }
+
+    public getAccessories(): IAccessory[] {
+        if (!this.response.accessories || !this.response.accessories.length) {
+            return [];
+        }
+
+        return this.response.accessories.map((accessory) => ({
+            id: accessory.id,
+            articleNumber: accessory.articleNumber,
+            logoUrl: accessory.logoUrl,
+            longDescription: accessory.longDescription,
+            shortDescription: accessory.shortDescription,
+            manufacturer: accessory.manufacturer,
+            model: accessory.model,
+            name: accessory.name,
+            price: accessory.price,
+            assemblyPrice: accessory.assemblyPrice,
+            salePrice: accessory.salePrice,
+            productPageLink: accessory.productPageLink,
+            productPageLinkText: accessory.productPageLinkText,
+            media: accessory.media
+                ? accessory.media.map((m) => {
+                      return {
+                          externalId: m.externalId,
+                          sortOrder: m.sortOrder,
+                          url: m.url,
+                      };
+                  })
+                : [],
+        }));
     }
 
     public requiresDealerSelection(): boolean {
