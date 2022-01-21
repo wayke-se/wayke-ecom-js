@@ -41,7 +41,9 @@ export class OrderCreateRequestBuilder {
     public withAccessories(
         accessories: IAccessory[]
     ): OrderCreateRequestBuilder {
-        this.properties.accessories = accessories
+        this.properties.accessories = accessories.map((a) => {
+            return { id: a.id };
+        });
 
         return this;
     }
