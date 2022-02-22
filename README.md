@@ -86,6 +86,7 @@ The returned `IOrderOptionsResponse` exposes helper methods to select partial da
 - `.getDealerSites()` return a `IDealerOption[]` with all available dealer sites
 - `.getPaymentOptions()` returns a `IPaymentOption[]`
 - `.getDeliveryOptions()` returns a `IDeliveryOption[]`
+- `.getAccessories()` returns a `IAccessory[]`
 - `.getInsuranceOption()` returns a `IInsuranceOption` if available
 - `.getOrderConditions()` returns a `string` with conditions for possible orders
 - `.getOrderReturnConditions()` returns a `string` with return conditions for possible orders
@@ -93,6 +94,7 @@ The returned `IOrderOptionsResponse` exposes helper methods to select partial da
 - `.getContactInformation()` returns a `IContactInformation` if available
 - `.allowsTradeIn()` returns `true`/`false` if the retailer allows a trade-in vehicle for possible orders
 - `.isUnavailable()` returns `boolean` defining if the vehicle is unavailable for purchase.
+
 
 These values should provide enough information to continue the boarding process for the customer.
 
