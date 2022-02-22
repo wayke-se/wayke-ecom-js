@@ -71,7 +71,7 @@ const validateCreateResponse = (
 };
 
 const getInitUrl = ({ id, branchId }: IOrderOptionsRequest): string => {
-    const url = `/v2/orders/new?vehicleId=${id}`;
+    const url = `/v3/orders/new?vehicleId=${id}`;
 
     if (!branchId) return url;
 
