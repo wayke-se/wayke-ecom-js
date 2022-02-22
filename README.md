@@ -239,6 +239,7 @@ To create a valid order we should use appropriate builders, and specify our data
         .withDeliveryType(aDeliveryOption.type)
         .withInsurance(insurance) // optional
         .withTradeIn(tradein) // optional
+        .withAccessories(accessories) // optional
         .build();
 
     const response = await orders.create(request);
