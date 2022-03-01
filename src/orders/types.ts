@@ -156,11 +156,16 @@ export interface IDeliveryOption {
 }
 
 export interface IAvailableInsuranceOption {
+    institute: string,
+    identifier: string | undefined,
     description: string | undefined;
+    longDescription: string | undefined,
     logo: string | undefined;
     title: string;
     url: string | undefined;
     ecomInsuranceText: string | undefined;
+    requiresPersonalNumber: boolean,
+    requiresDistance: boolean
 }
 
 export enum PaymentType {

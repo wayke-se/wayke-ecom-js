@@ -15,7 +15,7 @@ describe("InsuranceOptionsResponse", () => {
         });
     });
 
-    describe(":getInsuranceOption()", () => {
+    describe(":getInsuranceOptions()", () => {
         it("returns a IInsuranceOption with mapped data from IInsuranceOptionsResponse", () => {
             const response = fixture("IInsuranceOptionsResponse");
 
@@ -47,7 +47,7 @@ describe("InsuranceOptionsResponse", () => {
                 ]
             const actual = new InsuranceOptionsResponse(
                 response
-            ).getInsuranceOption();
+            ).getInsuranceOptions();
 
             expect(actual).toEqual(expected);
         });

@@ -121,7 +121,7 @@ The customer might want to sign up for an insurance as well, and to select a sui
     const response = await insurances.getOptions(request);
 
 The returned `IInsuranceOptionsResponse` exposes only one method:
-- `.getInsuranceOption()` returns a `IInsuranceOption[]` with a range of values for the insurance in question.
+- `.getInsuranceOptions()` returns a `IInsuranceOption[]`.
 
 ### Retrieving a customers address based on his or hers personal number
 

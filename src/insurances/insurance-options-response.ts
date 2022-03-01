@@ -15,7 +15,7 @@ export class InsuranceOptionsResponse implements IInsuranceOptionsResponse {
         this.response = response;
     }
 
-    public getInsuranceOption(): IInsuranceOption[] {
+    public getInsuranceOptions(): IInsuranceOption[] {
         return this.response.insurances;
     }
 }

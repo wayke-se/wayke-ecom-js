@@ -5,7 +5,7 @@ export interface IInsuranceOptionsRequest {
 }
 
 export interface IInsuranceOptionsResponse {
-    getInsuranceOption(): IInsuranceOption[];
+    getInsuranceOptions(): IInsuranceOption[];
 }
 
 export interface IInsuranceOptionsResponseData {
