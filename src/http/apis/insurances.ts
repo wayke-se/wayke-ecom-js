@@ -13,6 +13,7 @@ const buildInsuranceRequest = (
         drivingDistance: request.drivingDistance,
         socialId: request.personalNumber,
         vehicleId: request.id,
+        branchId: request.branchId,
     };
 
     return http

@@ -115,6 +115,7 @@ The customer might want to sign up for an insurance as well, and to select a sui
     const request = insurances.newInsuranceOptionsRequest()
         .forCustomer("YYYYMMDD-XXXX")
         .forVehicle("VEHICLE-ID-FROM-WAYKE")
+        .forDealer("DEALER-ID-SELECTION") // optional, should be applied when there's multiple dealer sites available for a vehicle
         .withDrivingDistance(DrivingDistance.Between1000And1500)
         .build();
 

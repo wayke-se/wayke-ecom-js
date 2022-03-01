@@ -31,6 +31,12 @@ export class InsuranceOptionsRequestBuilder {
         return this;
     }
 
+    public forDealer(id: string): InsuranceOptionsRequestBuilder {
+        this.properties.branchId = id;
+
+        return this;
+    }
+
     public forCustomer(personalNumber: string): InsuranceOptionsRequestBuilder {
         this.properties.personalNumber = personalNumber;
 

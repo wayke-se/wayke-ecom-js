@@ -1,5 +1,6 @@
 export interface IInsuranceOptionsRequest {
     id: string;
+    branchId: string;
     personalNumber: string;
     drivingDistance: DrivingDistance;
 }
