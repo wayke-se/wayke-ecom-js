@@ -1,5 +1,6 @@
 const fixtures = require("../../test/fixtures");
 
+import { resolveNaptr } from "dns";
 import { InsuranceOptionsResponse } from "./insurance-options-response";
 
 const fixture = (name: string, withData: any = undefined): any =>
@@ -18,36 +19,32 @@ describe("InsuranceOptionsResponse", () => {
         it("returns a IInsuranceOption with mapped data from IInsuranceOptionsResponse", () => {
             const response = fixture("IInsuranceOptionsResponse");
 
-            const expected = {
-                brand: {
-                    name: response.branding.name,
-                    description: response.branding.description,
-                    logotype: response.branding.logo.file.url,
-                    terms: {
-                        url: response.branding.termsUrl,
+            const expected = [
+                    {
+                        name: response.insurances[0].name,
+                        price: response.insurances[0].price,
+                        unit: response.insurances[0].unit,
+                        includesFinancingInPrice: response.insurances[0].includesFinancingInPrice,
+                        addons: response.insurances[0].addons,
+                        branding: response.insurances[0].branding,
+                        description: response.insurances[0].description,
+                        insuranceItems: response.insurances[0].insuranceItems,
+                        legalUrl: response.insurances[0].legalUrl,
+                        legalDescription: response.insurances[0].legalDescription,
                     },
-                    url: response.branding.website,
-                },
-                name: response.details.name,
-                description: response.details.description,
-                price: response.details.price,
-                unit: response.details.unit,
-                conditions: {
-                    description: response.details.legalDescription,
-                    url: response.details.legalUrl,
-                },
-                addons: response.details.addOns.map((addon: any) => ({
-                    title: addon.title,
-                    name: addon.name,
-                    description: addon.description,
-                    monthlyPrice: addon.monthlyPrice,
-                    excludes: addon.exclude,
-                })),
-                items: response.details.insuranceItems.map((item: any) => ({
-                    name: item.name,
-                    description: item.description,
-                })),
-            };
+                    {
+                        name: response.insurances[1].name,
+                        price: response.insurances[1].price,
+                        unit: response.insurances[1].unit,
+                        includesFinancingInPrice: response.insurances[1].includesFinancingInPrice,
+                        addons: response.insurances[1].addons,
+                        description: response.insurances[1].description,
+                        branding: response.insurances[1].branding,
+                        insuranceItems: response.insurances[1].insuranceItems,
+                        legalUrl: response.insurances[1].legalUrl,
+                        legalDescription: response.insurances[1].legalDescription,
+                    }
+                ]
             const actual = new InsuranceOptionsResponse(
                 response
             ).getInsuranceOption();

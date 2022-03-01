@@ -11,7 +11,6 @@ const buildInsuranceRequest = (
 ): RequestInit => {
     const content = {
         drivingDistance: request.drivingDistance,
-        includeFinance: request.includeFinance,
         socialId: request.personalNumber,
         vehicleId: request.id,
     };
@@ -42,7 +41,7 @@ export const find = (
     http
         .captureStateContext(
             http.json<IInsuranceOptionsResponseData>(
-                `${config.getApiAddress()}/v2/insurance`,
+                `${config.getApiAddress()}/v3/insurance`,
                 buildInsuranceRequest(request, http.context())
             )
         )

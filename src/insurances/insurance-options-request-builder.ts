@@ -37,14 +37,6 @@ export class InsuranceOptionsRequestBuilder {
         return this;
     }
 
-    public withPaymentType(
-        paymentType: PaymentType
-    ): InsuranceOptionsRequestBuilder {
-        this.properties.includeFinance = paymentType === PaymentType.Loan;
-
-        return this;
-    }
-
     public withDrivingDistance(
         drivingDistance: DrivingDistance
     ): InsuranceOptionsRequestBuilder {
