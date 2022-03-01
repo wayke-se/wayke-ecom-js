@@ -7,6 +7,7 @@ import {
     IDeliveryOption,
     IOrderOptionsResponse,
     IOrderOptionsResponseData,
+    IOrderVehicle,
     IPaymentOption,
 } from "./types";
 
@@ -19,6 +20,10 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
         }
 
         this.response = response;
+    }
+
+    public getOrderVehicle(): IOrderVehicle {
+        return this.response.vehicle;
     }
 
     public getAccessories(): IAccessory[] {

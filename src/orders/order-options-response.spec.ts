@@ -16,6 +16,16 @@ describe("OrderOptionsResponse", () => {
         });
     });
 
+    describe(":getOrderVehicle()", () => {
+        it("returns the vehicle in the order", () => {
+            const response = fixture("IOrderOptionsResponse");
+            const expected: Array<IAccessory> = response.accessories;
+            const actual = new OrderOptionsResponse(response).getAccessories();
+            
+            expect(actual).toEqual(expected);
+        });
+    });
+
     describe(":getAccessories()", () => {
         it("returns a list of vehicle accessories", () => {
             const response = fixture("IOrderOptionsResponse");

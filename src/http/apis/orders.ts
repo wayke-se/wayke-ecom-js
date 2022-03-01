@@ -91,7 +91,7 @@ export const init = (
         )
         .then(validateOptionsResponse);
 
-const getCreateUrl = () => "/v2/orders";
+const getCreateUrl = () => "/v3/orders";
 
 export const create = (
     request: IOrderCreateRequest,

@@ -178,6 +178,7 @@ factory.define("IOrderOptionsRequest", [
     "branchId",
 ]);
 factory.define("IOrderOptionsResponse", [
+    "vehicle",
     "accessories".asListOfFixtures("IAccessory", 2),
     "dealers".asListOfFixtures("IDealerOption", 2),
     "conditions",
