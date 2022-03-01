@@ -1,3 +1,4 @@
+import internal from "stream";
 import { IAddress, ICustomer } from "../customers/types";
 import { DrivingDistance } from "../insurances/types";
 import { PaymentLookupResponse } from "../payments/payment-lookup-response";
@@ -29,6 +30,7 @@ export interface IOrderOptionsRequest {
 
 export interface IOrderOptionsResponse {
     requiresDealerSelection(): boolean;
+    getOrderVehicle(): IOrderVehicle;
     getAccessories(): IAccessory[];
     getDealerSites(): IDealerOption[];
     getPaymentOptions(): IPaymentOption[];
@@ -66,6 +68,7 @@ export interface IOrderPaymentRequest {
 
 export interface IOrderOptionsResponseData {
     accessories: IAccessory[];
+    vehicle: IOrderVehicle;
     dealers: IDealerOption[];
     conditions: string | undefined;
     returnConditions: string | undefined;
@@ -77,6 +80,18 @@ export interface IOrderOptionsResponseData {
     tradeIn: boolean;
     unavailable: boolean;
 }
+
+export interface IOrderVehicle {
+    title: string;
+    shortDescription: string;
+    price: number;
+    imageUrls: string[];
+    mileage: number;
+    modelYear: number;
+    fuelType: string;
+    gearbox: string;
+}
+
 export interface IAccessory {
     id: string;
     articleNumber: string;
