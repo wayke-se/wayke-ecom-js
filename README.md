@@ -83,6 +83,7 @@ The resulting request object can now be used to communicate with Waykes e-com AP
 
 The returned `IOrderOptionsResponse` exposes helper methods to select partial data points:
 - `.requiresDealerSelection()` returns `true` when more than one dealer site is available
+- `.getOrderVehicle()` returns a `IOrderVehicle`
 - `.getDealerSites()` return a `IDealerOption[]` with all available dealer sites
 - `.getPaymentOptions()` returns a `IPaymentOption[]`
 - `.getDeliveryOptions()` returns a `IDeliveryOption[]`
