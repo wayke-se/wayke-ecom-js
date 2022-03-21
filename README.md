@@ -241,6 +241,7 @@ To create a valid order we should use appropriate builders, and specify our data
         .withInsurance(insurance) // optional
         .withTradeIn(tradein) // optional
         .withAccessories(accessories) // optional
+        .withUrls(redirectURL, paymentURL) // optional
         .build();
 
     const response = await orders.create(request);

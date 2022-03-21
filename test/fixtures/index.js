@@ -50,6 +50,12 @@ factory.define("ICustomer", [
     "address".fromFixture("IAddress"),
 ]);
 
+factory.define("IOrderUrls", [
+    "redirect",
+    "payment",
+]);
+
+
 factory.define("IAddressLookupRequest", [
     "personalNumber",
 ]);
@@ -159,6 +165,7 @@ factory.define("IOrderCreateRequest", [
     "payment".fromFixture("IOrderPaymentRequest"),
     "deliveryType".pickFrom("Pickup", "Delivery"),
     "customer".fromFixture("ICustomer"),
+    "urls".fromFixture("IOrderUrls")
 ]);
 factory.define("IOrderCreateResponse", [
     "id",

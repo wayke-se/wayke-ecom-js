@@ -27,7 +27,7 @@ export interface IInsuranceAddon {
     name: string;
     description: string;
     monthlyPrice: number;
-    excludes: string[];
+    exclude: string[];
 }
 
 export interface IInsuranceItem {
@@ -40,7 +40,7 @@ export interface IInsuranceOption {
     price: number;
     unit: string;
     includesFinancingInPrice: boolean;
-    addons: IInsuranceAddon[];
+    addOns: IInsuranceAddon[];
     description: string;
     branding: string;
     insuranceItems: IInsuranceItem[];

@@ -13,6 +13,7 @@ export interface IOrderCreateRequest {
     deliveryType: DeliveryType;
     customer: ICustomer;
     accessories: IAccessoryRequest[] | undefined;
+    urls: IOrderUrls | undefined;
 }
 
 export interface IOrderCreateResponse {
@@ -107,6 +108,11 @@ export interface IAccessory {
     productPageLink: string | undefined;
     productPageLinkText: string | undefined;
     media: IAccessoryMedia[];
+}
+
+export interface IOrderUrls {
+    redirect: string,
+    payment: string,
 }
 
 export interface IAccessoryMedia {
