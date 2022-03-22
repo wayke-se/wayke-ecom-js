@@ -143,4 +143,8 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
     public isUnavailable() {
         return this.response.unavailable;
     }
+
+    public isPaymentRequired() {
+        return this.response.paymentRequired;
+    }
 }

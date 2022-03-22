@@ -169,6 +169,7 @@ factory.define("IOrderCreateRequest", [
 ]);
 factory.define("IOrderCreateResponse", [
     "id",
+    "payment".fromFixture("IPaymentResponse")
 ]);
 
 factory.define("IOrderOptionsRequest", [
@@ -188,6 +189,7 @@ factory.define("IOrderOptionsResponse", [
     "payment".asListOfFixtures("IOrderPayment", 2),
     "tradeIn".asBoolean(),
     "unavailable".asBoolean(),
+    "paymentRequired".asBoolean()
 ]);
 
 factory.define("IAccessory", [
@@ -400,5 +402,10 @@ factory.define("ICreditAssessmentSignApiResponse", [
     "qrCodeAsBase64",
     "autoLaunchUrl",
 ]);
+
+factory.define("IPaymentResponse", [
+    "payment",
+    "url"
+])
 
 module.exports = factory;

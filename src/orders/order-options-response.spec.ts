@@ -236,4 +236,13 @@ describe("OrderOptionsResponse", () => {
             expect(actual).toEqual(expected);
         });
     });
+
+    describe(":isPaymentRequired()", () => {
+        it("returns the paymentRequired flag from the response object", () => {
+            const response = fixture("IOrderOptionsResponse");
+            const expected = response.paymentRequired;
+            const actual = new OrderOptionsResponse(response).isPaymentRequired();
+            expect(actual).toEqual(expected);
+        });
+    });
 });

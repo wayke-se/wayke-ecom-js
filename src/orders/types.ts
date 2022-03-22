@@ -18,10 +18,12 @@ export interface IOrderCreateRequest {
 
 export interface IOrderCreateResponse {
     getId(): string;
+    getPayment(): IPaymentResponse
 }
 
 export interface IOrderCreateResponseData {
     id: string;
+    payment: IPaymentResponse;
 }
 
 export interface IOrderOptionsRequest {
@@ -80,6 +82,7 @@ export interface IOrderOptionsResponseData {
     payment: IPaymentOptionResponseData[];
     tradeIn: boolean;
     unavailable: boolean;
+    paymentRequired: boolean;
 }
 
 export interface IOrderVehicle {
@@ -208,4 +211,9 @@ export interface IContactInformation {
     name: string | undefined;
     phone: string | undefined;
     zip: string | undefined;
+}
+
+export interface IPaymentResponse {
+    type: string,
+    url: string,
 }

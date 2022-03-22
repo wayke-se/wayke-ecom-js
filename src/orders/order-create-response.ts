@@ -1,4 +1,8 @@
-import { IOrderCreateResponse, IOrderCreateResponseData } from "./types";
+import {
+    IOrderCreateResponse,
+    IOrderCreateResponseData,
+    IPaymentResponse,
+} from "./types";
 
 export class OrderCreateResponse implements IOrderCreateResponse {
     private response: IOrderCreateResponseData;
@@ -13,5 +17,9 @@ export class OrderCreateResponse implements IOrderCreateResponse {
 
     public getId(): string {
         return this.response.id;
+    }
+
+    public getPayment(): IPaymentResponse {
+        return this.response.payment;
     }
 }

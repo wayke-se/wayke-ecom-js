@@ -95,6 +95,7 @@ The returned `IOrderOptionsResponse` exposes helper methods to select partial da
 - `.getContactInformation()` returns a `IContactInformation` if available
 - `.allowsTradeIn()` returns `true`/`false` if the retailer allows a trade-in vehicle for possible orders
 - `.isUnavailable()` returns `boolean` defining if the vehicle is unavailable for purchase.
+- `.isPaymentRequired()` returns `boolean` defining if payment is required for purchase.
 
 
 These values should provide enough information to continue the boarding process for the customer.
