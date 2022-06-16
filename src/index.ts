@@ -31,13 +31,10 @@ export {
 } from "./customers/types";
 export {
     IInsuranceAddon,
-    IInsuranceBrand,
-    IInsuranceConditions,
     IInsuranceItem,
     IInsuranceOption,
     IInsuranceOptionsResponse,
     IInsuranceOptionsRequest,
-    IInsuranceTerms,
     DrivingDistance,
 } from "./insurances/types";
 export {

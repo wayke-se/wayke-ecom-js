@@ -28,7 +28,7 @@ describe("API: Orders", () => {
             request.branchId = undefined;
             await init(request, config);
 
-            const expected = `${fake.api.address}/v2/orders/new?vehicleId=${request.id}`;
+            const expected = `${fake.api.address}/v3/orders/new?vehicleId=${request.id}`;
             const args = http.json.mock.calls[0];
             expect(args[0]).toEqual(expected);
         });
@@ -51,7 +51,7 @@ describe("API: Orders", () => {
             const request = fixture("IOrderOptionsRequest");
             await init(request, config);
 
-            const expected = `${fake.api.address}/v2/orders/new?vehicleId=${request.id}&branchId=${request.branchId}`;
+            const expected = `${fake.api.address}/v3/orders/new?vehicleId=${request.id}&branchId=${request.branchId}`;
             const args = http.json.mock.calls[0];
             expect(args[0]).toEqual(expected);
         });
@@ -156,7 +156,7 @@ describe("API: Orders", () => {
             const request = fixture("IOrderCreateRequest");
             await create(request, config);
 
-            const expected = `${fake.api.address}/v2/orders`;
+            const expected = `${fake.api.address}/v3/orders`;
             const args = http.json.mock.calls[0];
             expect(args[0]).toEqual(expected);
         });

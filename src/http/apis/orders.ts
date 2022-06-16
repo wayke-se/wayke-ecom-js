@@ -38,6 +38,7 @@ const buildCreateRequest = (
             surname: request.customer.surname,
         },
         accessories: request.accessories,
+        urls: request.urls,
         origin: config.getOrigin(),
     };
 
@@ -71,7 +72,7 @@ const validateCreateResponse = (
 };
 
 const getInitUrl = ({ id, branchId }: IOrderOptionsRequest): string => {
-    const url = `/v2/orders/new?vehicleId=${id}`;
+    const url = `/v3/orders/new?vehicleId=${id}`;
 
     if (!branchId) return url;
 
@@ -91,7 +92,7 @@ export const init = (
         )
         .then(validateOptionsResponse);
 
-const getCreateUrl = () => "/v2/orders";
+const getCreateUrl = () => "/v3/orders";
 
 export const create = (
     request: IOrderCreateRequest,

@@ -27,7 +27,7 @@ describe("API: Insurances", () => {
             );
             await find(fixture("IInsuranceOptionsRequest"), config);
 
-            const expected = `${fake.api.address}/v2/insurance`;
+            const expected = `${fake.api.address}/v3/insurance`;
             const args = http.json.mock.calls[0];
             expect(args[0]).toEqual(expected);
         });

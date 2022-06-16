@@ -50,23 +50,30 @@ factory.define("ICustomer", [
     "address".fromFixture("IAddress"),
 ]);
 
+factory.define("IOrderUrls", [
+    "redirect",
+    "payment",
+]);
+
+
 factory.define("IAddressLookupRequest", [
     "personalNumber",
 ]);
 factory.define("IAddressLookupResponse", [].concat(IAddress));
 
-factory.define("IInsuranceOptionsResponse.Branding", [
-    "id",
-    "description",
-    "logo".as(i => ({
-        file: {
-            url: `https://www.example.com/images/${i}.png`,
-        },
-    })),
+factory.define("IInsuranceOptionsResponse.IInsuranceOption", [
     "name",
-    "termsUrl",
-    "website",
+    "price".asNumber(),
+    "unit",
+    "includesFinancingInPrice".asBoolean(),
+    "addons".asListOfFixtures("IInsuranceOptionsResponse.AddOn", 3),
+    "description",
+    "branding",
+    "insuranceItems".asListOfFixtures("IInsuranceOptionsResponse.Item", 3),
+    "legalUrl",
+    "legalDescription",
 ]);
+
 factory.define("IInsuranceOptionsResponse.AddOn", [
     "title",
     "name",
@@ -74,30 +81,20 @@ factory.define("IInsuranceOptionsResponse.AddOn", [
     "monthlyPrice".asNumber(),
     "exclude".asArray(1),
 ]);
+
 factory.define("IInsuranceOptionsResponse.Item", [
     "name",
     "description",
-]);
-factory.define("IInsuranceOptionsResponse.Details", [
-    "name",
-    "price".asNumber(),
-    "unit",
-    "description",
-    "legalUrl",
-    "legalDescription",
-    "addOns".asListOfFixtures("IInsuranceOptionsResponse.AddOn", 3),
-    "insuranceItems".asListOfFixtures("IInsuranceOptionsResponse.Item", 3),
 ]);
 
 factory.define("IInsuranceOptionsRequest", [
     "id",
     "personalNumber",
     "drivingDistance".pickFrom(["Between0And1000", "Between1000And1500", "Between1500And2000", "Between2000And2500", "Over2500"]),
-    "includeFinance".asBoolean(),
 ]);
+
 factory.define("IInsuranceOptionsResponse", [
-    "branding".fromFixture("IInsuranceOptionsResponse.Branding"),
-    "details".fromFixture("IInsuranceOptionsResponse.Details"),
+    "insurances".asListOfFixtures("IInsuranceOptionsResponse.IInsuranceOption", 2),
 ]);
 
 factory.define("IContactInformation", [
@@ -168,9 +165,11 @@ factory.define("IOrderCreateRequest", [
     "payment".fromFixture("IOrderPaymentRequest"),
     "deliveryType".pickFrom("Pickup", "Delivery"),
     "customer".fromFixture("ICustomer"),
+    "urls".fromFixture("IOrderUrls")
 ]);
 factory.define("IOrderCreateResponse", [
     "id",
+    "payment".fromFixture("IPaymentResponse")
 ]);
 
 factory.define("IOrderOptionsRequest", [
@@ -178,6 +177,7 @@ factory.define("IOrderOptionsRequest", [
     "branchId",
 ]);
 factory.define("IOrderOptionsResponse", [
+    "vehicle",
     "accessories".asListOfFixtures("IAccessory", 2),
     "dealers".asListOfFixtures("IDealerOption", 2),
     "conditions",
@@ -189,6 +189,7 @@ factory.define("IOrderOptionsResponse", [
     "payment".asListOfFixtures("IOrderPayment", 2),
     "tradeIn".asBoolean(),
     "unavailable".asBoolean(),
+    "paymentRequired".asBoolean()
 ]);
 
 factory.define("IAccessory", [
@@ -401,5 +402,10 @@ factory.define("ICreditAssessmentSignApiResponse", [
     "qrCodeAsBase64",
     "autoLaunchUrl",
 ]);
+
+factory.define("IPaymentResponse", [
+    "payment",
+    "url"
+])
 
 module.exports = factory;

@@ -1,7 +1,6 @@
 const fixtures = require("../../test/fixtures");
 
 import { InsuranceOptionsRequestBuilder } from "./insurance-options-request-builder";
-import { PaymentType } from "../orders/types";
 import { DrivingDistance } from "./types";
 
 const fixture = (id: string, withData: any = undefined): any =>
@@ -61,15 +60,6 @@ describe("InsuranceOptionsRequestBuilder", () => {
         });
     });
 
-    describe(":withPaymentType()", () => {
-        it("returns the InsuranceOptionsRequestBuilder instance", () => {
-            const builder = new InsuranceOptionsRequestBuilder();
-            const instance = builder.withPaymentType(PaymentType.Cash);
-
-            expect(instance).toBe(builder);
-        });
-    });
-
     describe(":withDrivingDistance()", () => {
         it("returns the InsuranceOptionsRequestBuilder instance", () => {
             const builder = new InsuranceOptionsRequestBuilder();
@@ -85,13 +75,9 @@ describe("InsuranceOptionsRequestBuilder", () => {
         it("returns a IInsuranceOptionsRequest for the specified builder properties", () => {
             const expected = fixture("IInsuranceOptionsRequest");
 
-            const payment = fixture("IOrderPayment", {
-                type: expected.includeFinance ? "Loan" : "Cash",
-            });
             const actual = new InsuranceOptionsRequestBuilder()
                 .forCustomer(expected.personalNumber)
                 .forVehicle(expected.id)
-                .withPaymentType(payment.type)
                 .withDrivingDistance(expected.drivingDistance)
                 .build();
 

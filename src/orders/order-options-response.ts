@@ -7,6 +7,7 @@ import {
     IDeliveryOption,
     IOrderOptionsResponse,
     IOrderOptionsResponseData,
+    IOrderVehicle,
     IPaymentOption,
 } from "./types";
 
@@ -19,6 +20,10 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
         }
 
         this.response = response;
+    }
+
+    public getOrderVehicle(): IOrderVehicle {
+        return this.response.vehicle;
     }
 
     public getAccessories(): IAccessory[] {
@@ -101,11 +106,16 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
     public getInsuranceOption(): IAvailableInsuranceOption | undefined {
         return this.response.insurance
             ? {
+                  institute: this.response.insurance.institute,
+                  identifier: this.response.insurance.identifier,
+                  longDescription: this.response.insurance.longDescription,
                   description: this.response.insurance.description,
                   logo: this.response.insurance.logo,
                   title: this.response.insurance.title,
                   url: this.response.insurance.url,
                   ecomInsuranceText: this.response.insurance.ecomInsuranceText,
+                  requiresDistance: this.response.insurance.requiresDistance,
+                  requiresPersonalNumber: this.response.insurance.requiresPersonalNumber,
               }
             : undefined;
     }
@@ -132,5 +142,9 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
 
     public isUnavailable() {
         return this.response.unavailable;
+    }
+
+    public isPaymentRequired() {
+        return this.response.paymentRequired;
     }
 }

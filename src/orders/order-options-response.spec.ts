@@ -16,6 +16,16 @@ describe("OrderOptionsResponse", () => {
         });
     });
 
+    describe(":getOrderVehicle()", () => {
+        it("returns the vehicle in the order", () => {
+            const response = fixture("IOrderOptionsResponse");
+            const expected: Array<IAccessory> = response.accessories;
+            const actual = new OrderOptionsResponse(response).getAccessories();
+            
+            expect(actual).toEqual(expected);
+        });
+    });
+
     describe(":getAccessories()", () => {
         it("returns a list of vehicle accessories", () => {
             const response = fixture("IOrderOptionsResponse");
@@ -223,6 +233,15 @@ describe("OrderOptionsResponse", () => {
             const expected = response.unavailable;
             const actual = new OrderOptionsResponse(response).isUnavailable();
 
+            expect(actual).toEqual(expected);
+        });
+    });
+
+    describe(":isPaymentRequired()", () => {
+        it("returns the paymentRequired flag from the response object", () => {
+            const response = fixture("IOrderOptionsResponse");
+            const expected = response.paymentRequired;
+            const actual = new OrderOptionsResponse(response).isPaymentRequired();
             expect(actual).toEqual(expected);
         });
     });

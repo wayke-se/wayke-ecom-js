@@ -22,4 +22,13 @@ describe("OrderCreateResponse", () => {
             expect(actual.getId()).toEqual(response.id);
         });
     });
+
+    describe(":getPayment()", () => {
+        it("returns the payment from the response object", () => {
+            const response = fixture("IOrderCreateResponse");
+            const actual = new OrderCreateResponse(response);
+
+            expect(actual.getPayment()).toEqual(response.payment);
+        });
+    });
 });

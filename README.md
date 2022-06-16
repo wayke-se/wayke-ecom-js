@@ -83,6 +83,7 @@ The resulting request object can now be used to communicate with Waykes e-com AP
 
 The returned `IOrderOptionsResponse` exposes helper methods to select partial data points:
 - `.requiresDealerSelection()` returns `true` when more than one dealer site is available
+- `.getOrderVehicle()` returns a `IOrderVehicle`
 - `.getDealerSites()` return a `IDealerOption[]` with all available dealer sites
 - `.getPaymentOptions()` returns a `IPaymentOption[]`
 - `.getDeliveryOptions()` returns a `IDeliveryOption[]`
@@ -94,6 +95,7 @@ The returned `IOrderOptionsResponse` exposes helper methods to select partial da
 - `.getContactInformation()` returns a `IContactInformation` if available
 - `.allowsTradeIn()` returns `true`/`false` if the retailer allows a trade-in vehicle for possible orders
 - `.isUnavailable()` returns `boolean` defining if the vehicle is unavailable for purchase.
+- `.isPaymentRequired()` returns `boolean` defining if payment is required for purchase.
 
 
 These values should provide enough information to continue the boarding process for the customer.
@@ -114,14 +116,14 @@ The customer might want to sign up for an insurance as well, and to select a sui
     const request = insurances.newInsuranceOptionsRequest()
         .forCustomer("YYYYMMDD-XXXX")
         .forVehicle("VEHICLE-ID-FROM-WAYKE")
-        .withPaymentType(aPaymentOption.type)
+        .forDealer("DEALER-ID-SELECTION") // optional, should be applied when there's multiple dealer sites available for a vehicle
         .withDrivingDistance(DrivingDistance.Between1000And1500)
         .build();
 
     const response = await insurances.getOptions(request);
 
 The returned `IInsuranceOptionsResponse` exposes only one method:
-- `.getInsuranceOption()` returns a `IInsuranceOption` with a range of values for the insurance in question.
+- `.getInsuranceOptions()` returns a `IInsuranceOption[]`.
 
 ### Retrieving a customers address based on his or hers personal number
 
@@ -240,6 +242,7 @@ To create a valid order we should use appropriate builders, and specify our data
         .withInsurance(insurance) // optional
         .withTradeIn(tradein) // optional
         .withAccessories(accessories) // optional
+        .withUrls(redirectURL, paymentURL) // optional
         .build();
 
     const response = await orders.create(request);

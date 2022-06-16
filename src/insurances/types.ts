@@ -1,53 +1,16 @@
 export interface IInsuranceOptionsRequest {
     id: string;
+    branchId: string;
     personalNumber: string;
     drivingDistance: DrivingDistance;
-    includeFinance: boolean;
 }
 
 export interface IInsuranceOptionsResponse {
-    getInsuranceOption(): IInsuranceOption;
+    getInsuranceOptions(): IInsuranceOption[];
 }
 
 export interface IInsuranceOptionsResponseData {
-    branding: {
-        id: string;
-        createdAt: Date;
-        description: string;
-        documentId: string;
-        identifier: string;
-        institute: string;
-        logo: {
-            file: {
-                url: string;
-            };
-        };
-        name: string;
-        termsUrl: string;
-        updatedAt: Date;
-        website: string;
-    };
-    details: {
-        name: string;
-        price: number;
-        unit: string;
-        includesFinancingInPrice: boolean;
-        description: string;
-        branding: string;
-        legalUrl: string;
-        legalDescription: string;
-        addOns: Array<{
-            title: string;
-            name: string;
-            description: string;
-            monthlyPrice: number;
-            exclude: string[];
-        }>;
-        insuranceItems: Array<{
-            name: string;
-            description: string;
-        }>;
-    };
+    insurances: IInsuranceOption[]
 }
 
 export interface IInsuranceTerms {
@@ -59,20 +22,12 @@ export interface IInsuranceConditions {
     url: string;
 }
 
-export interface IInsuranceBrand {
-    name: string;
-    description: string;
-    logotype: string;
-    terms: IInsuranceTerms;
-    url: string;
-}
-
 export interface IInsuranceAddon {
     title: string;
     name: string;
     description: string;
     monthlyPrice: number;
-    excludes: string[];
+    exclude: string[];
 }
 
 export interface IInsuranceItem {
@@ -81,14 +36,16 @@ export interface IInsuranceItem {
 }
 
 export interface IInsuranceOption {
-    brand: IInsuranceBrand;
     name: string;
-    description: string;
     price: number;
     unit: string;
-    conditions: IInsuranceConditions;
-    addons: IInsuranceAddon[];
-    items: IInsuranceItem[];
+    includesFinancingInPrice: boolean;
+    addOns: IInsuranceAddon[];
+    description: string;
+    branding: string;
+    insuranceItems: IInsuranceItem[];
+    legalUrl: string;
+    legalDescription: string;
 }
 
 export enum DrivingDistance {

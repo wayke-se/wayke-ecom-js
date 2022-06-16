@@ -31,16 +31,14 @@ export class InsuranceOptionsRequestBuilder {
         return this;
     }
 
-    public forCustomer(personalNumber: string): InsuranceOptionsRequestBuilder {
-        this.properties.personalNumber = personalNumber;
+    public forDealer(id: string): InsuranceOptionsRequestBuilder {
+        this.properties.branchId = id;
 
         return this;
     }
 
-    public withPaymentType(
-        paymentType: PaymentType
-    ): InsuranceOptionsRequestBuilder {
-        this.properties.includeFinance = paymentType === PaymentType.Loan;
+    public forCustomer(personalNumber: string): InsuranceOptionsRequestBuilder {
+        this.properties.personalNumber = personalNumber;
 
         return this;
     }

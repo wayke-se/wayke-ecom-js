@@ -1,3 +1,4 @@
+import internal from "stream";
 import { IAddress, ICustomer } from "../customers/types";
 import { DrivingDistance } from "../insurances/types";
 import { PaymentLookupResponse } from "../payments/payment-lookup-response";
@@ -12,14 +13,17 @@ export interface IOrderCreateRequest {
     deliveryType: DeliveryType;
     customer: ICustomer;
     accessories: IAccessoryRequest[] | undefined;
+    urls: IOrderUrls | undefined;
 }
 
 export interface IOrderCreateResponse {
     getId(): string;
+    getPayment(): IPaymentResponse
 }
 
 export interface IOrderCreateResponseData {
     id: string;
+    payment: IPaymentResponse;
 }
 
 export interface IOrderOptionsRequest {
@@ -29,6 +33,7 @@ export interface IOrderOptionsRequest {
 
 export interface IOrderOptionsResponse {
     requiresDealerSelection(): boolean;
+    getOrderVehicle(): IOrderVehicle;
     getAccessories(): IAccessory[];
     getDealerSites(): IDealerOption[];
     getPaymentOptions(): IPaymentOption[];
@@ -66,6 +71,7 @@ export interface IOrderPaymentRequest {
 
 export interface IOrderOptionsResponseData {
     accessories: IAccessory[];
+    vehicle: IOrderVehicle;
     dealers: IDealerOption[];
     conditions: string | undefined;
     returnConditions: string | undefined;
@@ -76,7 +82,20 @@ export interface IOrderOptionsResponseData {
     payment: IPaymentOptionResponseData[];
     tradeIn: boolean;
     unavailable: boolean;
+    paymentRequired: boolean;
 }
+
+export interface IOrderVehicle {
+    title: string;
+    shortDescription: string;
+    price: number;
+    imageUrls: string[];
+    mileage: number;
+    modelYear: number;
+    fuelType: string;
+    gearbox: string;
+}
+
 export interface IAccessory {
     id: string;
     articleNumber: string;
@@ -92,6 +111,11 @@ export interface IAccessory {
     productPageLink: string | undefined;
     productPageLinkText: string | undefined;
     media: IAccessoryMedia[];
+}
+
+export interface IOrderUrls {
+    redirect: string,
+    payment: string,
 }
 
 export interface IAccessoryMedia {
@@ -141,11 +165,16 @@ export interface IDeliveryOption {
 }
 
 export interface IAvailableInsuranceOption {
+    institute: string,
+    identifier: string | undefined,
     description: string | undefined;
+    longDescription: string | undefined,
     logo: string | undefined;
     title: string;
     url: string | undefined;
     ecomInsuranceText: string | undefined;
+    requiresPersonalNumber: boolean,
+    requiresDistance: boolean
 }
 
 export enum PaymentType {
@@ -182,4 +211,9 @@ export interface IContactInformation {
     name: string | undefined;
     phone: string | undefined;
     zip: string | undefined;
+}
+
+export interface IPaymentResponse {
+    type: string,
+    url: string,
 }

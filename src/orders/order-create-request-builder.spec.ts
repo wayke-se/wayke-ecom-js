@@ -68,6 +68,7 @@ describe("OrderCreateRequestBuilder", () => {
                 .withInsurance(expected.insurance)
                 .withPayment(expected.payment)
                 .withTradeIn(expected.tradein)
+                .withUrls(expected.urls.redirect, expected.urls.payment)
                 .build();
 
             expect(actual).toEqual(expected);
