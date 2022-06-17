@@ -20,31 +20,33 @@ describe("InsuranceOptionsResponse", () => {
             const response = fixture("IInsuranceOptionsResponse");
 
             const expected = [
-                    {
-                        name: response.insurances[0].name,
-                        price: response.insurances[0].price,
-                        unit: response.insurances[0].unit,
-                        includesFinancingInPrice: response.insurances[0].includesFinancingInPrice,
-                        addons: response.insurances[0].addons,
-                        branding: response.insurances[0].branding,
-                        description: response.insurances[0].description,
-                        insuranceItems: response.insurances[0].insuranceItems,
-                        legalUrl: response.insurances[0].legalUrl,
-                        legalDescription: response.insurances[0].legalDescription,
-                    },
-                    {
-                        name: response.insurances[1].name,
-                        price: response.insurances[1].price,
-                        unit: response.insurances[1].unit,
-                        includesFinancingInPrice: response.insurances[1].includesFinancingInPrice,
-                        addons: response.insurances[1].addons,
-                        description: response.insurances[1].description,
-                        branding: response.insurances[1].branding,
-                        insuranceItems: response.insurances[1].insuranceItems,
-                        legalUrl: response.insurances[1].legalUrl,
-                        legalDescription: response.insurances[1].legalDescription,
-                    }
-                ]
+                {
+                    name: response.insurances[0].name,
+                    price: response.insurances[0].price,
+                    unit: response.insurances[0].unit,
+                    includesFinancingInPrice:
+                        response.insurances[0].includesFinancingInPrice,
+                    addons: response.insurances[0].addons,
+                    branding: response.insurances[0].branding,
+                    description: response.insurances[0].description,
+                    insuranceItems: response.insurances[0].insuranceItems,
+                    legalUrl: response.insurances[0].legalUrl,
+                    legalDescription: response.insurances[0].legalDescription,
+                },
+                {
+                    name: response.insurances[1].name,
+                    price: response.insurances[1].price,
+                    unit: response.insurances[1].unit,
+                    includesFinancingInPrice:
+                        response.insurances[1].includesFinancingInPrice,
+                    addons: response.insurances[1].addons,
+                    description: response.insurances[1].description,
+                    branding: response.insurances[1].branding,
+                    insuranceItems: response.insurances[1].insuranceItems,
+                    legalUrl: response.insurances[1].legalUrl,
+                    legalDescription: response.insurances[1].legalDescription,
+                },
+            ];
             const actual = new InsuranceOptionsResponse(
                 response
             ).getInsuranceOptions();

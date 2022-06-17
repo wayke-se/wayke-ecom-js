@@ -85,14 +85,13 @@ export class OrderCreateRequestBuilder {
     }
 
     public withUrls(
-        redirect: string, 
+        redirect: string,
         payment: string
     ): OrderCreateRequestBuilder {
-        this.properties.urls = {redirect, payment};
+        this.properties.urls = { redirect, payment };
 
         return this;
     }
-
 
     public build(): IOrderCreateRequest {
         return this.properties as IOrderCreateRequest;

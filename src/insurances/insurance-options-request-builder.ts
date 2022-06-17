@@ -1,4 +1,3 @@
-import { PaymentType } from "../orders/types";
 import { DrivingDistance, IInsuranceOptionsRequest } from "./types";
 
 export class InsuranceOptionsRequestBuilder {

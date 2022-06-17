@@ -22,4 +22,8 @@ export class OrderCreateResponse implements IOrderCreateResponse {
     public getPayment(): IPaymentResponse {
         return this.response.payment;
     }
+
+    public getOrderNumber(): string | null | undefined {
+        return this.response.orderNumber;
+    }
 }

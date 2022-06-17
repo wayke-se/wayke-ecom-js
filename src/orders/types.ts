@@ -1,4 +1,3 @@
-import internal from "stream";
 import { IAddress, ICustomer } from "../customers/types";
 import { DrivingDistance } from "../insurances/types";
 import { PaymentLookupResponse } from "../payments/payment-lookup-response";
@@ -18,12 +17,14 @@ export interface IOrderCreateRequest {
 
 export interface IOrderCreateResponse {
     getId(): string;
-    getPayment(): IPaymentResponse
+    getPayment(): IPaymentResponse;
+    getOrderNumber(): string | null | undefined;
 }
 
 export interface IOrderCreateResponseData {
     id: string;
     payment: IPaymentResponse;
+    orderNumber?: string | null;
 }
 
 export interface IOrderOptionsRequest {
@@ -114,8 +115,8 @@ export interface IAccessory {
 }
 
 export interface IOrderUrls {
-    redirect: string,
-    payment: string,
+    redirect: string;
+    payment: string;
 }
 
 export interface IAccessoryMedia {
@@ -165,16 +166,16 @@ export interface IDeliveryOption {
 }
 
 export interface IAvailableInsuranceOption {
-    institute: string,
-    identifier: string | undefined,
+    institute: string;
+    identifier: string | undefined;
     description: string | undefined;
-    longDescription: string | undefined,
+    longDescription: string | undefined;
     logo: string | undefined;
     title: string;
     url: string | undefined;
     ecomInsuranceText: string | undefined;
-    requiresPersonalNumber: boolean,
-    requiresDistance: boolean
+    requiresPersonalNumber: boolean;
+    requiresDistance: boolean;
 }
 
 export enum PaymentType {
@@ -214,6 +215,6 @@ export interface IContactInformation {
 }
 
 export interface IPaymentResponse {
-    type: string,
-    url: string,
+    type: string;
+    url: string;
 }

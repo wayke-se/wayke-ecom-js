@@ -21,7 +21,7 @@ describe("OrderOptionsResponse", () => {
             const response = fixture("IOrderOptionsResponse");
             const expected: Array<IAccessory> = response.accessories;
             const actual = new OrderOptionsResponse(response).getAccessories();
-            
+
             expect(actual).toEqual(expected);
         });
     });
@@ -31,7 +31,7 @@ describe("OrderOptionsResponse", () => {
             const response = fixture("IOrderOptionsResponse");
             const expected: Array<IAccessory> = response.accessories;
             const actual = new OrderOptionsResponse(response).getAccessories();
-            
+
             expect(actual).toEqual(expected);
         });
     });
@@ -241,7 +241,9 @@ describe("OrderOptionsResponse", () => {
         it("returns the paymentRequired flag from the response object", () => {
             const response = fixture("IOrderOptionsResponse");
             const expected = response.paymentRequired;
-            const actual = new OrderOptionsResponse(response).isPaymentRequired();
+            const actual = new OrderOptionsResponse(
+                response
+            ).isPaymentRequired();
             expect(actual).toEqual(expected);
         });
     });

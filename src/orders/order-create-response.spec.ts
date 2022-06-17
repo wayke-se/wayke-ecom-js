@@ -31,4 +31,13 @@ describe("OrderCreateResponse", () => {
             expect(actual.getPayment()).toEqual(response.payment);
         });
     });
+
+    describe(":getOrderNumber()", () => {
+        it("returns the order number from the response object", () => {
+            const response = fixture("IOrderCreateResponse");
+            const actual = new OrderCreateResponse(response);
+
+            expect(actual.getOrderNumber()).toEqual(response.orderNumber);
+        });
+    });
 });

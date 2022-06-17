@@ -10,7 +10,7 @@ export interface IInsuranceOptionsResponse {
 }
 
 export interface IInsuranceOptionsResponseData {
-    insurances: IInsuranceOption[]
+    insurances: IInsuranceOption[];
 }
 
 export interface IInsuranceTerms {

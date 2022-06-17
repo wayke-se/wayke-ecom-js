@@ -115,7 +115,8 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
                   url: this.response.insurance.url,
                   ecomInsuranceText: this.response.insurance.ecomInsuranceText,
                   requiresDistance: this.response.insurance.requiresDistance,
-                  requiresPersonalNumber: this.response.insurance.requiresPersonalNumber,
+                  requiresPersonalNumber: this.response.insurance
+                      .requiresPersonalNumber,
               }
             : undefined;
     }
