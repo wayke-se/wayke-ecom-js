@@ -25,6 +25,20 @@ export interface IBankIdAuthApiResponse {
     method: AuthMethod;
 }
 
+export interface IBankIdQrCodeRequest {
+    orderRef: string;
+}
+
+export interface IBankIdQrCodeResponse {
+    getOrderRef: () => string;
+    getQrCode: () => string;
+}
+
+export interface IBankIdQrCodeApiResponse {
+    orderRef: string;
+    qrCodeAsBase64: string;
+}
+
 export interface IBankIdCollectRequest {
     orderRef: string;
 }

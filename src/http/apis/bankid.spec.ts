@@ -6,13 +6,15 @@ const http = require("..");
 const authApi = require("./bankid/auth");
 const collectApi = require("./bankid/collect");
 const cancelApi = require("./bankid/cancel");
+const qrcodeApi = require("./bankid/qrcode");
 const bankidApiUtils = require("./bankid/utils");
 
 import {
     IBankIdAuthApiResponse,
     IBankIdCollectApiResponse,
+    IBankIdQrCodeApiResponse,
 } from "../../bankid/types";
-import { auth, collect, cancel } from "./bankid";
+import { auth, collect, cancel, qrcode } from "./bankid";
 
 describe("API: BankId", () => {
     beforeAll(() => {
@@ -20,6 +22,7 @@ describe("API: BankId", () => {
         authApi.getUrl = jest.fn();
         collectApi.getUrl = jest.fn();
         cancelApi.getUrl = jest.fn();
+        qrcodeApi.getUrl = jest.fn();
     });
 
     describe("Given unsuccessful request", () => {
@@ -83,6 +86,21 @@ describe("API: BankId", () => {
             });
         });
 
+        describe(":qrcode()", () => {
+            it("throws error", async () => {
+                const request = fixture("IBankIdQrCodeRequest");
+
+                let err: any;
+                try {
+                    await qrcode(request);
+                } catch (e) {
+                    err = e;
+                }
+
+                expect(err).toBeInstanceOf(Error);
+            });
+        });
+
         afterAll(() => {
             http.json.mockRestore();
             http.raw.mockRestore();
@@ -91,16 +109,16 @@ describe("API: BankId", () => {
 
     describe("Given successful request", () => {
         describe(":auth()", () => {
-            let expectedRespones: IBankIdAuthApiResponse;
+            let expectedResponse: IBankIdAuthApiResponse;
 
             beforeAll(() => {
-                expectedRespones = fixture("IBankIdAuthApiResponse");
+                expectedResponse = fixture("IBankIdAuthApiResponse");
                 http.json = jest.fn(
                     () =>
                         new Promise((resolve) => {
                             const apiResponse = fixture("IApiResponse", {
                                 successful: true,
-                                response: expectedRespones,
+                                response: expectedResponse,
                             });
                             resolve(apiResponse);
                         })
@@ -112,7 +130,7 @@ describe("API: BankId", () => {
 
                 const response = await auth(request);
 
-                expect(response).toEqual(expectedRespones);
+                expect(response).toEqual(expectedResponse);
             });
 
             afterAll(() => {
@@ -121,16 +139,16 @@ describe("API: BankId", () => {
         });
 
         describe(":collect()", () => {
-            let expectedRespones: IBankIdCollectApiResponse;
+            let expectedResponse: IBankIdCollectApiResponse;
 
             beforeAll(() => {
-                expectedRespones = fixture("IBankIdCollectApiResponse");
+                expectedResponse = fixture("IBankIdCollectApiResponse");
                 http.json = jest.fn(
                     () =>
                         new Promise((resolve) => {
                             const apiResponse = fixture("IApiResponse", {
                                 successful: true,
-                                response: expectedRespones,
+                                response: expectedResponse,
                             });
                             resolve(apiResponse);
                         })
@@ -142,7 +160,37 @@ describe("API: BankId", () => {
 
                 const response = await collect(request);
 
-                expect(response).toEqual(expectedRespones);
+                expect(response).toEqual(expectedResponse);
+            });
+
+            afterAll(() => {
+                http.json.mockRestore();
+            });
+        });
+
+        describe(":qrcode()", () => {
+            let expectedResponse: IBankIdQrCodeApiResponse;
+
+            beforeAll(() => {
+                expectedResponse = fixture("IBankIdQrCodeApiResponse");
+                http.json = jest.fn(
+                    () =>
+                        new Promise((resolve) => {
+                            const apiResponse = fixture("IApiResponse", {
+                                successful: true,
+                                response: expectedResponse,
+                            });
+                            resolve(apiResponse);
+                        })
+                );
+            });
+
+            it("return qrcode response", async () => {
+                const request = fixture("IBankIdQrCodeRequest");
+
+                const response = await qrcode(request);
+
+                expect(response).toEqual(expectedResponse);
             });
 
             afterAll(() => {
