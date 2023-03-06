@@ -327,6 +327,46 @@ interface IBankIdCollectResponse {
 }
 ```
 
+### Refresh a BankId QR code
+
+Once an authentication process is started with QR code support, the QR code should be refreshed continuously every second.
+
+```
+    const cancellation = setInterval(() => {
+        const request = bankid
+            .newQrCodeRequest()
+            .withOrderRef(data.orderRef)
+            .build();
+
+        try {
+            const response = await bankid.qrcode(request);
+            // update displayed QR code for consumer
+        } catch (e) {
+            // Handle errors.
+        }
+    }, 1000);
+
+    // When an authentication is successful, clear the interval
+    //
+    // clearInterval(cancellation);
+```
+
+The response of `qrcode` contains an orderRef and a base64 encoded QR code.
+
+```
+interface IBankIdQrCodeResponse {
+    getOrderRef: () => string;
+    getQrCode: () => string;
+}
+```
+
+The qr code from `getQrCode()` is base64 encoded. It can be rendered in an img tag:
+
+```
+    const qrCode = qrcodeResponse.getQrCode();
+    <img src="data:image/png;base64, {qrCode}" />;
+```
+
 ### Assess a customers credit
 
 *This feature is currently limited to some specific financial providers.*
@@ -421,7 +461,7 @@ const durationInMonths = 24;
 const term = durationInMonths + "months";
 ```
 
-for example: 
+for example:
 
 ```
 "12months"

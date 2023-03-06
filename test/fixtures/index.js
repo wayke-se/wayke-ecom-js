@@ -327,6 +327,15 @@ factory.define("IBankIdCancelRequest", [
     "orderRef",
 ]);
 
+factory.define("IBankIdQrCodeRequest", [
+    "orderRef",
+]);
+
+factory.define("IBankIdQrCodeApiResponse", [
+    "orderRef",
+    "qrCodeAsBase64",
+]);
+
 factory.define("ICreditAssessmentCustomer", [
     "socialId",
     "email",
