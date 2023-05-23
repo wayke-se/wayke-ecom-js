@@ -401,6 +401,7 @@ factory.define("ICreditAssessmentStatusApiResponse", [
     "vfScoreCaseId",
     "recommendation",
     "decision",
+    "qrCode",
 ]);
 factory.define("ICreditAssessmentSignRequest", [
     "method".pickFrom(["SameDevice", "QrCode"]),

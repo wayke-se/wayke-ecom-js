@@ -59,6 +59,7 @@ export interface ICreditAssessmentStatusApiResponse {
     vfScoreCaseId?: string;
     recommendation?: string;
     decision?: string;
+    qrCode?: string;
 }
 
 export interface ICreditAssessmentStatusResponse {
@@ -75,6 +76,7 @@ export interface ICreditAssessmentStatusResponse {
     getScoringId: () => string | undefined;
     getRecommendation: () => CreditAssessmentRecommendation;
     getDecision: () => CreditAssessmentDecision;
+    getQrCode: () => string | undefined;
     isAccepted: () => boolean;
 }
 
