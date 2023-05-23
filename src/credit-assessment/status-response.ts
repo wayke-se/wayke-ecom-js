@@ -22,6 +22,7 @@ export class CreditAssessmentStatusResponse
     private vfScoreCaseId: string | undefined;
     private recommendation: CreditAssessmentRecommendation;
     private decision: CreditAssessmentDecision;
+    private qrCode : string | undefined;
 
     constructor(response: ICreditAssessmentStatusApiResponse) {
         this.hintCode = response.bankIdHintCode;
@@ -32,6 +33,7 @@ export class CreditAssessmentStatusResponse
         this.status = asStatus(response.status);
         this.decision = asDecision(response.decision);
         this.recommendation = asRecommendation(response.recommendation);
+        this.qrCode = response.qrCode;
     }
 
     getSigningMessage() {
@@ -102,6 +104,10 @@ export class CreditAssessmentStatusResponse
 
     getDecision() {
         return this.decision;
+    }
+
+    getQrCode() {
+        return this.qrCode;
     }
 
     isAccepted() {
