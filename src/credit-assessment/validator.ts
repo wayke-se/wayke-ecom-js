@@ -31,11 +31,8 @@ export const validateHouseholdEconomy = (
         throw new TypeError("Household economy must have household children");
     }
 
-    if (
-        !householdEconomy.householdDebt &&
-        householdEconomy.householdDebt !== 0
-    ) {
-        throw new TypeError("Household economy must have household debt");
+    if (!householdEconomy.debtSpecification) {
+        throw new TypeError("A household dept specification is missing");
     }
 
     if (
@@ -45,6 +42,10 @@ export const validateHouseholdEconomy = (
         throw new TypeError(
             "Household economy must have household housing cost"
         );
+    }
+
+    if (!householdEconomy.housingType) {
+        throw new TypeError("Household must be of a specific type");
     }
 
     if (

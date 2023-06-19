@@ -22,7 +22,7 @@ export class CreditAssessmentStatusResponse
     private vfScoreCaseId: string | undefined;
     private recommendation: CreditAssessmentRecommendation;
     private decision: CreditAssessmentDecision;
-    private qrCode : string | undefined;
+    private qrCode: string | undefined;
 
     constructor(response: ICreditAssessmentStatusApiResponse) {
         this.hintCode = response.bankIdHintCode;

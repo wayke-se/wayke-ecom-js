@@ -9,7 +9,7 @@ export const requestNewCase = (
     inquery: ICreditAssessmentInquiry
 ): Promise<http.IApiResponse<ICreditAssessmentCase>> => {
     const host = Configuration.current().getApiAddress();
-    const url = `${host}/credit-assessment`;
+    const url = `${host}/credit-assessment/v2`;
 
     const forgeryToken = http.context().requestForgeryToken;
 
