@@ -376,14 +376,13 @@ factory.define("ICreditAssessmentHouseholdEconomy", [
         "temporarilyEmployed",
         "selfEmployed",
     ]),
+    "householdChildren".asNumber(),
     "housingType".pickFrom([
         "singleFamily",
         "condominium",
         "apartment",
     ]),
-    "householdChildren".asNumber(),
-    "householdIncome".asNumber(),
-    "householdHousingCost".asNumber(),
+    "housingCost".asNumber(),
     "debtSpecification".fromFixture("ICreditAssessmentDebtSpecification"),
 ]);
 

@@ -51,10 +51,9 @@ export interface ICreditAssessmentHouseholdEconomy {
     maritalStatus: MaritalStatus;
     income: number;
     employment: Employment;
-    housingType: HousingType;
     householdChildren: number;
-    householdIncome: number;
-    householdHousingCost: number;
+    housingType: HousingType;
+    housingCost: number;
     debtSpecification: IDebtSpecification;
 }
 
