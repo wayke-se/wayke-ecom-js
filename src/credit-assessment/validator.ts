@@ -41,13 +41,6 @@ export const validateHouseholdEconomy = (
         );
     }
 
-    if (
-        householdEconomy.housingType !== HousingType.SingleFamily &&
-        householdEconomy.housingCost < 1
-    ) {
-        throw new TypeError("Housing cost missing");
-    }
-
     if (!householdEconomy.housingType) {
         throw new TypeError("Household must be of a specific type");
     }
