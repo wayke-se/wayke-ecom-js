@@ -31,7 +31,7 @@ export interface ICreditAssessmentCustomer {
 
 export interface IDebtSpecification {
     privateLoan: number;
-    carLoan: number;
+    vehicleLoan: number;
     leasingFees: number;
     cardCredits: number;
     collateral: number;
