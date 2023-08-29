@@ -440,7 +440,6 @@ interface ICreditAssessmentHouseholdEconomy {
     householdChildren: number;
     householdIncome: number;
     householdHousingCost: number;
-    householdDebt: number;
 }
 ```
 

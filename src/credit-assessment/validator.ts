@@ -3,6 +3,7 @@ import {
     ICreditAssessmentInquiry,
     ICreditAssessmentLoan,
     ICreditAssessmentHouseholdEconomy,
+    HousingType,
 } from "./types";
 
 export const validateHouseholdEconomy = (
@@ -32,26 +33,16 @@ export const validateHouseholdEconomy = (
     }
 
     if (
-        !householdEconomy.householdDebt &&
-        householdEconomy.householdDebt !== 0
-    ) {
-        throw new TypeError("Household economy must have household debt");
-    }
-
-    if (
-        !householdEconomy.householdHousingCost &&
-        householdEconomy.householdHousingCost !== 0
+        householdEconomy.housingType === HousingType.SingleFamily &&
+        householdEconomy.housingCost > 0
     ) {
         throw new TypeError(
-            "Household economy must have household housing cost"
+            "A single family housing type can not have separate costs"
         );
     }
 
-    if (
-        !householdEconomy.householdIncome &&
-        householdEconomy.householdIncome !== 0
-    ) {
-        throw new TypeError("Household economy must have household income");
+    if (!householdEconomy.housingType) {
+        throw new TypeError("Household must be of a specific type");
     }
 };
 

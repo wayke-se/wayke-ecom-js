@@ -3,6 +3,7 @@ const fixture = (name: string, withValues: any = undefined): any =>
     fixtures.create(name, withValues);
 
 import {
+    HousingType,
     ICreditAssessmentCustomer,
     ICreditAssessmentHouseholdEconomy,
     ICreditAssessmentInquiry,
@@ -18,7 +19,14 @@ import {
 describe("Validate credit assessment inquiry", () => {
     describe("Given complete inquiry", () => {
         it("Should not throw", () => {
-            const inquiry = fixture("ICreditAssessmentInquiry");
+            const inquiry = fixture(
+                "ICreditAssessmentInquiry",
+                (data: ICreditAssessmentInquiry) => {
+                    data.householdEconomy.housingType = HousingType.Condominium;
+                    return data;
+                }
+            );
+
             expect(() => validateInquiry(inquiry)).not.toThrowError();
         });
     });
@@ -129,7 +137,11 @@ describe("Validate household economy for credit assessment", () => {
     describe("Given complete household economy", () => {
         it("Should not throw", () => {
             const householdEconomy = fixture(
-                "ICreditAssessmentHouseholdEconomy"
+                "ICreditAssessmentHouseholdEconomy",
+                (data: ICreditAssessmentHouseholdEconomy) => {
+                    data.housingType = HousingType.Condominium;
+                    return data;
+                }
             );
             expect(() =>
                 validateHouseholdEconomy(householdEconomy)
@@ -179,9 +191,11 @@ describe("Validate household economy for credit assessment", () => {
                 "ICreditAssessmentHouseholdEconomy",
                 (data: ICreditAssessmentHouseholdEconomy) => {
                     data.income = 0;
+                    data.housingType = HousingType.Condominium;
                     return data;
                 }
             );
+
             expect(() =>
                 validateHouseholdEconomy(householdEconomy)
             ).not.toThrowError();

@@ -4,6 +4,7 @@ import { IAddress } from "../customers/types";
 export enum MaritalStatus {
     Married = "married",
     Single = "single",
+    CommonLaw = "commonLaw",
 }
 
 export enum Employment {
@@ -15,11 +16,25 @@ export enum Employment {
     SelfEmployed = "selfEmployed",
 }
 
+export enum HousingType {
+    SingleFamily = "singleFamily",
+    Condominium = "condominium",
+    Apartment = "apartment",
+}
+
 export interface ICreditAssessmentCustomer {
     socialId: string;
     email: string;
     phone: string;
     signerIp?: string;
+}
+
+export interface IDebtSpecification {
+    privateLoan: number;
+    vehicleLoan: number;
+    leasingFees: number;
+    cardCredits: number;
+    collateral: number;
 }
 
 export interface ICreditAssessmentLoan {
@@ -37,9 +52,9 @@ export interface ICreditAssessmentHouseholdEconomy {
     income: number;
     employment: Employment;
     householdChildren: number;
-    householdIncome: number;
-    householdHousingCost: number;
-    householdDebt: number;
+    housingType: HousingType;
+    housingCost: number;
+    debtSpecification: IDebtSpecification;
 }
 
 export interface ICreditAssessmentInquiry {

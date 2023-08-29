@@ -353,9 +353,18 @@ factory.define("ICreditAssessmentLoan", [
     "term",
 ]);
 
+factory.define("ICreditAssessmentDebtSpecification", [
+    "privateLoan".asNumber(),
+    "vehicleLoan".asNumber(),
+    "leasingFees".asNumber(),
+    "cardCredits".asNumber(),
+    "collateral".asNumber(),
+]);
+
 factory.define("ICreditAssessmentHouseholdEconomy", [
     "maritalStatus".pickFrom([
         "married",
+        "commonLaw",
         "single",
     ]),
     "income".asNumber(),
@@ -368,9 +377,13 @@ factory.define("ICreditAssessmentHouseholdEconomy", [
         "selfEmployed",
     ]),
     "householdChildren".asNumber(),
-    "householdIncome".asNumber(),
-    "householdHousingCost".asNumber(),
-    "householdDebt".asNumber(),
+    "housingType".pickFrom([
+        "singleFamily",
+        "condominium",
+        "apartment",
+    ]),
+    "housingCost".asNumber(),
+    "debtSpecification".fromFixture("ICreditAssessmentDebtSpecification"),
 ]);
 
 factory.define("ICreditAssessmentInquiry", [
