@@ -219,4 +219,31 @@ describe("PaymentLookupResponse", () => {
             });
         });
     });
+
+    describe("given a money laundering information URL", () => {
+        let expectedURL: string;
+        let response: IPaymentLookupResponse;
+
+        beforeAll(() => {
+            expectedURL = "https://kalp.local/path";
+            const rawResponse = fixture("IPaymentLookupResponse", {
+                moneyLaunderingInformationUrl: expectedURL,
+            });
+            response = new PaymentLookupResponse(rawResponse);
+        });
+
+        describe(":hasMoneyLaunderingInformationURL()", () => {
+            it("is truthy", () => {
+                const v = response.hasMoneyLaunderingInformationURL();
+                expect(v).toBe(true);
+            });
+        });
+
+        describe(":getMoneyLaunderingInformationURL()", () => {
+            it("should equal url from raw response", () => {
+                const v = response.getMoneyLaunderingInformationURL();
+                expect(v).toEqual(expectedURL);
+            });
+        });
+    });
 });
