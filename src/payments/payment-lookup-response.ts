@@ -82,4 +82,12 @@ export class PaymentLookupResponse implements IPaymentLookupResponse {
     public getPrivacyPolicyUrl() {
         return this.response.privacyPolicyUrl;
     }
+
+    public hasMoneyLaunderingInformationURL() {
+        return !!this.response.moneyLaunderingInformationUrl;
+    }
+
+    public getMoneyLaunderingInformationURL() {
+        return this.response.moneyLaunderingInformationUrl;
+    }
 }

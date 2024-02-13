@@ -269,6 +269,8 @@ factory.define("IPaymentLookupResponse", [
     "loanAmount".asNumber(),
     "useCreditScoring".asBoolean(),
     "financialProductCode",
+    "privacyPolicyUrl",
+    "moneyLaunderingInformationUrl",
 ]);
 
 factory.define("IVehicleLookupRequest", [

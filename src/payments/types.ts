@@ -44,6 +44,8 @@ export interface IPaymentLookupResponse {
     getCreditAmount(): number;
     hasPrivacyPolicy(): boolean;
     getPrivacyPolicyUrl(): string | undefined;
+    hasMoneyLaunderingInformationURL(): boolean;
+    getMoneyLaunderingInformationURL(): string | undefined;
 }
 
 export interface IPaymentLookupResponseData {
@@ -63,4 +65,5 @@ export interface IPaymentLookupResponseData {
     useCreditScoring: boolean;
     financialProductCode?: string;
     privacyPolicyUrl?: string;
+    moneyLaunderingInformationUrl?: string;
 }
