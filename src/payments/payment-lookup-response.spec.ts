@@ -246,4 +246,31 @@ describe("PaymentLookupResponse", () => {
             });
         });
     });
+
+    describe("given a financial option ID", () => {
+        let expectedFinancialOptionId: string;
+        let response: IPaymentLookupResponse;
+
+        beforeAll(() => {
+            expectedFinancialOptionId = "financial-option-id-1";
+            const rawResponse = fixture("IPaymentLookupResponse", {
+                financialOptionId: expectedFinancialOptionId,
+            });
+            response = new PaymentLookupResponse(rawResponse);
+        });
+
+        describe(":hasFinancialOptionId()", () => {
+            it("is truthy", () => {
+                const v = response.hasFinancialOptionId();
+                expect(v).toBe(true);
+            });
+        });
+
+        describe(":getFinancialOptionId()", () => {
+            it("should equal financial option id from raw response", () => {
+                const v = response.getFinancialOptionId();
+                expect(v).toEqual(expectedFinancialOptionId);
+            });
+        });
+    });
 });

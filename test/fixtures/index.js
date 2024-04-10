@@ -252,6 +252,7 @@ factory.define("IPaymentLookupRequest", [
     "branchId",
     "duration".asNumber(),
     "downPayment".asNumber(),
+    "financialOptionId",
 ]);
 factory.define("IPaymentLookupResponse", [
     "monthlyCost".asNumber(),
@@ -271,6 +272,7 @@ factory.define("IPaymentLookupResponse", [
     "financialProductCode",
     "privacyPolicyUrl",
     "moneyLaunderingInformationUrl",
+    "financialOptionId",
 ]);
 
 factory.define("IVehicleLookupRequest", [

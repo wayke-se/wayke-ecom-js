@@ -3,6 +3,7 @@ export interface IPaymentLookupRequest {
     downPayment: number;
     duration: number;
     residual: number;
+    financialOptionId: string | undefined;
     id: string;
 }
 
@@ -46,6 +47,8 @@ export interface IPaymentLookupResponse {
     getPrivacyPolicyUrl(): string | undefined;
     hasMoneyLaunderingInformationURL(): boolean;
     getMoneyLaunderingInformationURL(): string | undefined;
+    hasFinancialOptionId(): boolean;
+    getFinancialOptionId(): string | undefined;
 }
 
 export interface IPaymentLookupResponseData {
@@ -66,4 +69,5 @@ export interface IPaymentLookupResponseData {
     financialProductCode?: string;
     privacyPolicyUrl?: string;
     moneyLaunderingInformationUrl?: string;
+    financialOptionId?: string;
 }

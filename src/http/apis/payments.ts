@@ -14,6 +14,7 @@ const buildLookupRequest = (
         duration: lookupRequest.duration,
         downPayment: lookupRequest.downPayment,
         residual: lookupRequest.residual,
+        financialOptionId: lookupRequest.financialOptionId,
     };
 
     return http

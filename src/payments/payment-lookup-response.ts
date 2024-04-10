@@ -90,4 +90,12 @@ export class PaymentLookupResponse implements IPaymentLookupResponse {
     public getMoneyLaunderingInformationURL() {
         return this.response.moneyLaunderingInformationUrl;
     }
+
+    public hasFinancialOptionId() {
+        return !!this.response.financialOptionId;
+    }
+
+    public getFinancialOptionId() {
+        return this.response.financialOptionId;
+    }
 }
