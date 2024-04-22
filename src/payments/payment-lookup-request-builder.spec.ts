@@ -102,6 +102,17 @@ describe("PaymentLookupRequestBuilder", () => {
         });
     });
 
+    describe(":withFinancialOptionId()", () => {
+        it("returns the PaymentLookupRequestBuilder instance", () => {
+            const builder = new PaymentLookupRequestBuilder();
+            const instance = builder.withFinancialOptionId(
+                "financial-option-id"
+            );
+
+            expect(instance).toBe(builder);
+        });
+    });
+
     describe(":build()", () => {
         it("returns a IPaymentLookupRequest for the specified builder properties", () => {
             const expected = fixture("IPaymentLookupRequest");
@@ -110,6 +121,7 @@ describe("PaymentLookupRequestBuilder", () => {
                 .forDealer(expected.branchId)
                 .withDownPayment(expected.downPayment)
                 .withDuration(expected.duration)
+                .withFinancialOptionId(expected.financialOptionId)
                 .build();
 
             expect(actual).toEqual(expected);

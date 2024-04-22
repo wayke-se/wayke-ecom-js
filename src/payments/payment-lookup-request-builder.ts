@@ -50,6 +50,14 @@ export class PaymentLookupRequestBuilder {
         return this;
     }
 
+    public withFinancialOptionId(
+        financialOptionId: string
+    ): PaymentLookupRequestBuilder {
+        this.properties.financialOptionId = financialOptionId;
+
+        return this;
+    }
+
     public build(): IPaymentLookupRequest {
         return this.properties as IPaymentLookupRequest;
     }
