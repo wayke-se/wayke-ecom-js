@@ -10,6 +10,7 @@ import {
     decline,
     getStatus,
     newCase,
+    refresh,
     signCase,
 } from "./credit-assessment";
 
@@ -104,6 +105,19 @@ describe("API: Credit Assessment", () => {
                 let err: any;
                 try {
                     await accept("test-case-id");
+                } catch (e) {
+                    err = e;
+                }
+
+                expect(err).toBeInstanceOf(Error);
+            });
+        });
+
+        describe("refresh()", () => {
+            it("Throws error", async () => {
+                let err: any;
+                try {
+                    await refresh("test-case-id");
                 } catch (e) {
                     err = e;
                 }

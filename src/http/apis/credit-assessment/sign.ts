@@ -4,6 +4,7 @@ import Configuration from "../../../config/index";
 import {
     ICreditAssessmentSignApiResponse,
     ICreditAssessmentSignRequest,
+    ICreditAssessmentRefreshQrCodeApiResponse,
 } from "../../../credit-assessment/types";
 
 const getRoute = (method: AuthMethod) => {
@@ -39,5 +40,23 @@ export const requestSignCase = (
 
     return http.captureStateContext(
         http.json<ICreditAssessmentSignApiResponse>(url, request)
+    );
+};
+
+export const requestRefreshQrCode = (
+    caseId: string
+): Promise<http.IApiResponse<ICreditAssessmentRefreshQrCodeApiResponse>> => {
+    const url = `${Configuration.current().getApiAddress()}/credit-assessment/refresh/${caseId}/qr-code`;
+    const forgeryToken = http.context().requestForgeryToken;
+
+    const request = http
+        .builder()
+        .method("post")
+        .accept("application/json")
+        .requestForgeryToken(forgeryToken)
+        .build();
+
+    return http.captureStateContext(
+        http.json<ICreditAssessmentRefreshQrCodeApiResponse>(url, request)
     );
 };

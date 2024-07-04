@@ -1,4 +1,5 @@
 import * as api from "../http/apis/credit-assessment";
+import { CreditAssessmentRefreshQrCodeResponse } from "./refresh-response";
 import { CreditAssessmentSignResponse } from "./sign-response";
 import { CreditAssessmentStatusResponse } from "./status-response";
 
@@ -31,3 +32,11 @@ export const cancelSigning = (caseId: string) => api.cancelSigning(caseId);
 export const accept = (caseId: string) => api.accept(caseId);
 
 export const decline = (caseId: string) => api.decline(caseId);
+
+export const refresh = (caseId: string) =>
+    api
+        .refresh(caseId)
+        .then(
+            (response) =>
+                new CreditAssessmentRefreshQrCodeResponse(response, caseId)
+        );

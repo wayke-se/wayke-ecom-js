@@ -430,6 +430,10 @@ factory.define("ICreditAssessmentSignApiResponse", [
     "autoLaunchUrl",
 ]);
 
+factory.define("ICreditAssessmentRefreshQrCodeApiResponse", [
+    "qrCodeAsBase64",
+]);
+
 factory.define("IPaymentResponse", [
     "payment",
     "url"

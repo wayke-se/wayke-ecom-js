@@ -1,6 +1,7 @@
 import {
     ICreditAssessmentCase,
     ICreditAssessmentInquiry,
+    ICreditAssessmentRefreshQrCodeApiResponse,
     ICreditAssessmentSignApiResponse,
     ICreditAssessmentSignRequest,
     ICreditAssessmentStatusApiResponse,
@@ -8,7 +9,10 @@ import {
 import * as http from "../index";
 import { requestCaseStatus } from "./credit-assessment/get-status";
 import { requestNewCase } from "./credit-assessment/new-case";
-import { requestSignCase } from "./credit-assessment/sign";
+import {
+    requestRefreshQrCode,
+    requestSignCase,
+} from "./credit-assessment/sign";
 import { requestCancelSignCase } from "./credit-assessment/cancel-sign";
 import { requestDeclineCase } from "./credit-assessment/decline";
 import { requestAcceptCase } from "./credit-assessment/accept";
@@ -43,3 +47,8 @@ export const decline = (caseId: string): Promise<boolean> =>
 
 export const accept = (caseId: string): Promise<boolean> =>
     requestAcceptCase(caseId).then(() => true);
+
+export const refresh = (
+    caseId: string
+): Promise<ICreditAssessmentRefreshQrCodeApiResponse> =>
+    requestRefreshQrCode(caseId).then(validate);

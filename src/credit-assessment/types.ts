@@ -139,3 +139,12 @@ export interface ICreditAssessmentSignResponse {
     getMethod: () => AuthMethod;
     getCaseId: () => string;
 }
+
+export interface ICreditAssessmentRefreshQrCodeApiResponse {
+    qrCodeAsBase64: string;
+}
+
+export interface ICreditAssessmentQrCodeResponse {
+    getQrCode: () => string;
+    getCaseId: () => string;
+}
