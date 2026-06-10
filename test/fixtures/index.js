@@ -189,6 +189,7 @@ factory.define("IOrderOptionsResponse", [
     "payment".asListOfFixtures("IOrderPayment", 2),
     "tradeIn".asBoolean(),
     "unavailable".asBoolean(),
+    "reserved".asBoolean(),
     "paymentRequired".asBoolean()
 ]);
 
