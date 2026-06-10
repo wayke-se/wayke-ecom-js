@@ -1,6 +1,3 @@
-[![build status](https://api.travis-ci.org/wayke-se/wayke-ecom-js.svg?branch=master)](https://api.travis-ci.org/wayke-se/wayke-ecom-js.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/wayke-se/wayke-ecom-js/badge.svg?branch=master)](https://coveralls.io/github/wayke-se/wayke-ecom-js?branch=master)
-
 # SDK for consuming Waykes e-commerce APIs
 
 This project aims to provide a simple, yet powerful, way to integrate Waykes e-commerce functionality into retailers own websites.
