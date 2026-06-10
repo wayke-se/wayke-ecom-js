@@ -145,6 +145,10 @@ export class OrderOptionsResponse implements IOrderOptionsResponse {
         return this.response.unavailable;
     }
 
+    public isReserved() {
+        return !!this.response.reserved;
+    }
+
     public isPaymentRequired() {
         return this.response.paymentRequired;
     }

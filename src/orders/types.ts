@@ -46,6 +46,7 @@ export interface IOrderOptionsResponse {
     getContactInformation(): IContactInformation | undefined;
     allowsTradeIn(): boolean;
     isUnavailable(): boolean;
+    isReserved(): boolean;
 }
 
 export interface IOrderInsuranceRequest {
@@ -83,6 +84,7 @@ export interface IOrderOptionsResponseData {
     payment: IPaymentOptionResponseData[];
     tradeIn: boolean;
     unavailable: boolean;
+    reserved?: boolean;
     paymentRequired: boolean;
 }
 

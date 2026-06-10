@@ -237,6 +237,16 @@ describe("OrderOptionsResponse", () => {
         });
     });
 
+    describe(":isReserved()", () => {
+        it("returns the reserved flag from the response object", () => {
+            const response = fixture("IOrderOptionsResponse");
+            const expected = response.reserved;
+            const actual = new OrderOptionsResponse(response).isReserved();
+
+            expect(actual).toEqual(expected);
+        });
+    });
+
     describe(":isPaymentRequired()", () => {
         it("returns the paymentRequired flag from the response object", () => {
             const response = fixture("IOrderOptionsResponse");
