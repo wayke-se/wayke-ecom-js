@@ -42,5 +42,11 @@ jobs:
       - name: Build Javascript
         run: npm run build
 
+      # pika emits files: ["dist-*/"] which modern npm no longer matches,
+      # producing a tarball with only the main entrypoint. pkg/ contains
+      # nothing but build output, so drop the field and include everything.
+      - name: Remove broken files glob from pkg/package.json
+        run: node -e "const fs=require('fs');const p='./pkg/package.json';const j=JSON.parse(fs.readFileSync(p,'utf8'));delete j.files;fs.writeFileSync(p,JSON.stringify(j,null,2)+'\n')"
+
       - name: Publish package to npm
         run: npm publish ./pkg --access public --provenance --tag ${{ github.ref_name == 'master' && 'latest' || 'next' }}
